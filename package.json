@@ -1,6 +1,6 @@
 {
   "name": "front-end",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve cine-front --port 4202 --host 0.0.0.0",
