@@ -1,0 +1,47 @@
+{
+  "name": "front-end",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start:front": "ng serve cine-front --port 4202 --host 0.0.0.0",
+    "start:back": "ng serve cine-back --port 4203 --host 0.0.0.0",
+    "patchVersion": "npm --no-git-tag-version version patch",
+    "build:front:patch": "npm run patchVersion && ng build cine-front --base-href /cinePosDeploy/cinePosFront/ --configuration production --output-hashing=all",
+    "build:back:patch": "npm run patchVersion && ng build cine-back --base-href /cinePosDeploy/cinePosBack/ --configuration production --output-hashing=all",
+    "build:patch": "npm run patchVersion && ng build cine-front --base-href /cinePosDeploy/cinePosFront/ --configuration production && ng build cine-back --base-href /cinePosDeploy/cinePosBack/ --configuration production --output-hashing=all",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^14.2.0",
+    "@angular/common": "^14.2.0",
+    "@angular/compiler": "^14.2.0",
+    "@angular/core": "^14.2.0",
+    "@angular/forms": "^14.2.0",
+    "@angular/platform-browser": "^14.2.0",
+    "@angular/platform-browser-dynamic": "^14.2.0",
+    "@angular/router": "^14.2.0",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^14.2.11",
+    "@angular/cli": "~14.2.0",
+    "@angular/compiler-cli": "^14.2.0",
+    "@types/jasmine": "~4.0.0",
+    "autoprefixer": "^10.4.14",
+    "jasmine-core": "~4.3.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.1",
+    "typescript": "~4.7.2"
+  }
+}
