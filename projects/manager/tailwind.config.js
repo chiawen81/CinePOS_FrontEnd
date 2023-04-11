@@ -4,15 +4,15 @@
 
 module.exports = {
   content: [
-    "projects/cine-front/src/**/*.html",
-    "projects/cine-front/src/**/*.scss"
+    "projects/manager/src/**/*.html",
+    "projects/manager/src/**/*.scss"
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         blue: {
-          500: '#4287f5',
+          500: '#da42f5',
         }
       }
     },

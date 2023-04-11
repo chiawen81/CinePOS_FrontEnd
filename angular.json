@@ -3,32 +3,32 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cine-front": {
+    "staff": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/cine-front",
-      "sourceRoot": "projects/cine-front/src",
+      "root": "projects/staff",
+      "sourceRoot": "projects/staff/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cinePosDeploy/cine-front",
-            "index": "projects/cine-front/src/index.html",
-            "main": "projects/cine-front/src/main.ts",
-            "polyfills": "projects/cine-front/src/polyfills.ts",
-            "tsConfig": "projects/cine-front/tsconfig.app.json",
+            "outputPath": "dist/CinePOS_FrontEnd/staff",
+            "index": "projects/staff/src/index.html",
+            "main": "projects/staff/src/main.ts",
+            "polyfills": "projects/staff/src/polyfills.ts",
+            "tsConfig": "projects/staff/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/cine-front/src/favicon.ico",
-              "projects/cine-front/src/assets"
+              "projects/staff/src/favicon.ico",
+              "projects/staff/src/assets"
             ],
             "styles": [
-              "projects/cine-front/src/styles.scss"
+              "projects/staff/src/styles.scss"
             ],
             "scripts": []
           },
@@ -48,8 +48,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "projects/cine-front/src/environments/environment.ts",
-                  "with": "projects/cine-front/src/environments/environment.prod.ts"
+                  "replace": "projects/staff/src/environments/environment.ts",
+                  "with": "projects/staff/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cine-front:build:production"
+              "browserTarget": "staff:build:production"
             },
             "development": {
-              "browserTarget": "cine-front:build:development"
+              "browserTarget": "staff:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,55 +80,55 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cine-front:build"
+            "browserTarget": "staff:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/cine-front/src/test.ts",
-            "polyfills": "projects/cine-front/src/polyfills.ts",
-            "tsConfig": "projects/cine-front/tsconfig.spec.json",
-            "karmaConfig": "projects/cine-front/karma.conf.js",
+            "main": "projects/staff/src/test.ts",
+            "polyfills": "projects/staff/src/polyfills.ts",
+            "tsConfig": "projects/staff/tsconfig.spec.json",
+            "karmaConfig": "projects/staff/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/cine-front/src/favicon.ico",
-              "projects/cine-front/src/assets"
+              "projects/staff/src/favicon.ico",
+              "projects/staff/src/assets"
             ],
             "styles": [
-              "projects/cine-front/src/styles.scss"
+              "projects/staff/src/styles.scss"
             ],
             "scripts": []
           }
         }
       }
     },
-    "cine-back": {
+    "manager": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/cine-back",
-      "sourceRoot": "projects/cine-back/src",
+      "root": "projects/manager",
+      "sourceRoot": "projects/manager/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cinePosDeploy/cine-back",
-            "index": "projects/cine-back/src/index.html",
-            "main": "projects/cine-back/src/main.ts",
-            "polyfills": "projects/cine-back/src/polyfills.ts",
-            "tsConfig": "projects/cine-back/tsconfig.app.json",
+            "outputPath": "dist/CinePOS_FrontEnd/manager",
+            "index": "projects/manager/src/index.html",
+            "main": "projects/manager/src/main.ts",
+            "polyfills": "projects/manager/src/polyfills.ts",
+            "tsConfig": "projects/manager/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/cine-back/src/favicon.ico",
-              "projects/cine-back/src/assets"
+              "projects/manager/src/favicon.ico",
+              "projects/manager/src/assets"
             ],
             "styles": [
-              "projects/cine-back/src/styles.scss"
+              "projects/manager/src/styles.scss"
             ],
             "scripts": []
           },
@@ -148,8 +148,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "projects/cine-back/src/environments/environment.ts",
-                  "with": "projects/cine-back/src/environments/environment.prod.ts"
+                  "replace": "projects/manager/src/environments/environment.ts",
+                  "with": "projects/manager/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -169,10 +169,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cine-back:build:production"
+              "browserTarget": "manager:build:production"
             },
             "development": {
-              "browserTarget": "cine-back:build:development"
+              "browserTarget": "manager:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -180,23 +180,23 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cine-back:build"
+            "browserTarget": "manager:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/cine-back/src/test.ts",
-            "polyfills": "projects/cine-back/src/polyfills.ts",
-            "tsConfig": "projects/cine-back/tsconfig.spec.json",
-            "karmaConfig": "projects/cine-back/karma.conf.js",
+            "main": "projects/manager/src/test.ts",
+            "polyfills": "projects/manager/src/polyfills.ts",
+            "tsConfig": "projects/manager/tsconfig.spec.json",
+            "karmaConfig": "projects/manager/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/cine-back/src/favicon.ico",
-              "projects/cine-back/src/assets"
+              "projects/manager/src/favicon.ico",
+              "projects/manager/src/assets"
             ],
             "styles": [
-              "projects/cine-back/src/styles.scss"
+              "projects/manager/src/styles.scss"
             ],
             "scripts": []
           }
