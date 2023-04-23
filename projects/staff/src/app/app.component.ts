@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { STATIC_ROUTES } from './core/constant/routes.constant';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { STATIC_ROUTES } from './core/constant/routes.constant';
 })
 export class AppComponent implements OnInit {
   title = 'staff';
-
+  currentVersion = environment.appVersion;
   constructor(
     private router: Router
   ) { }
@@ -25,8 +26,10 @@ export class AppComponent implements OnInit {
       }
     })
 
-
   }
 
+  toLogin(){
+    this.router.navigate([STATIC_ROUTES.LOGIN])
+  }
 
 }
