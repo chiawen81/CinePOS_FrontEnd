@@ -9,6 +9,7 @@
     "build:front:patch": "npm run patchVersion && ng build staff --base-href /CinePOS_FrontEnd/staff/ --configuration production --output-hashing=all",
     "build:back:patch": "npm run patchVersion && ng build manager --base-href /CinePOS_FrontEnd/manager/ --configuration production --output-hashing=all",
     "build:patch": "npm run patchVersion && ng build staff --base-href /CinePOS_FrontEnd/staff/ --configuration production && ng build manager --base-href /CinePOS_FrontEnd/manager/ --configuration production --output-hashing=all",
+    "deploy": "npx angular-cli-ghpages --dir=dist/CinePOS_FrontEnd",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",

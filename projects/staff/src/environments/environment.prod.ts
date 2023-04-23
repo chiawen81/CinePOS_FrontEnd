@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  appVersion: require('package.json').version + '-prod',
+  production: true,
+  DEFAULT_IP: '',
 };
