@@ -7,6 +7,14 @@ import { HeadersModule } from './features/headers/headers.module';
 import { ShopCartModule } from './features/shop-cart/shop-cart.module';
 
 import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+
+const materialModules = [
+  MatInputModule,
+  MatSliderModule,
+];
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -16,7 +24,10 @@ import { MatInputModule } from '@angular/material/input';
     AppRoutingModule,
     HeadersModule,
     ShopCartModule,
-    MatInputModule
+    ...materialModules,
+  ],
+  exports: [
+    ...materialModules
   ],
   providers: [],
   bootstrap: [AppComponent]

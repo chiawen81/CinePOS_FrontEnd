@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './features/login/components/login.component';
 import { ShareLibsComponent } from './share-libs.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatInputModule } from '@angular/material/input';
 
 
+const materialModules = [
+  MatInputModule,
+  MatSliderModule,
+];
 
 
 @NgModule({
@@ -11,6 +17,7 @@ import { ShareLibsComponent } from './share-libs.component';
     LoginComponent
   ],
   imports: [
+    ...materialModules
   ],
   exports: [
     ShareLibsComponent,
