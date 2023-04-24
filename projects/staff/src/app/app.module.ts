@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeadersModule } from './features/headers/headers.module';
 import { ShopCartModule } from './features/shop-cart/shop-cart.module';
 
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +15,8 @@ import { ShopCartModule } from './features/shop-cart/shop-cart.module';
     BrowserModule,
     AppRoutingModule,
     HeadersModule,
-    ShopCartModule
+    ShopCartModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
