@@ -129,7 +129,8 @@
               "projects/manager/src/assets"
             ],
             "styles": [
-              "projects/manager/src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/manager/src/styles/styles.scss"
             ],
             "scripts": []
           },

@@ -1,1 +1,10 @@
-<div class="bg-blue-500 text-white p-4">Hello World!</div>
+<app-header *ngIf="!isLoginPage"></app-header>
+<main>
+  <router-outlet></router-outlet>
+  <span>{{currentVersion}}</span>
+</main>
+
+<app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
+
+
+
