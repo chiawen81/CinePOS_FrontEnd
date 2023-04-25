@@ -15,6 +15,11 @@ const materialModules = [
   MatSliderModule,
 ];
 
+const featureModules = [
+  HeadersModule,
+  ShopCartModule,
+];
+
 
 @NgModule({
   declarations: [
@@ -24,8 +29,7 @@ const materialModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HeadersModule,
-    ShopCartModule,
+    ...featureModules,
     ...materialModules,
   ],
   exports: [

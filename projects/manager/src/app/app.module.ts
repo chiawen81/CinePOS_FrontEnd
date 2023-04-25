@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadersModule } from './features/headers/headers.module';
-import { ShopCartModule } from './features/shop-cart/shop-cart.module';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
@@ -15,6 +14,9 @@ const materialModules = [
   MatSliderModule,
 ];
 
+const featureModules = [
+  HeadersModule
+];
 
 @NgModule({
   declarations: [
@@ -24,8 +26,7 @@ const materialModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HeadersModule,
-    ShopCartModule,
+    ...featureModules,
     ...materialModules,
   ],
   exports: [
