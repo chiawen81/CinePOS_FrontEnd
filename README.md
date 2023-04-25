@@ -20,4 +20,4 @@ Run `npm run build:back:patch` to build the project. The build artifacts will be
 
 ## Deploy
 
-Run `npm run Deploy`.
+Run `npm run deploy`.
