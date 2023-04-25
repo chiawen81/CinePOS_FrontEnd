@@ -1,18 +1,38 @@
-<section class="">
-  <div class="flex">
+<section class="w-72">
+  <div class="flex justify-center items-center w-full">
     <!-- <img src="" alt="logo"> -->
     <h1>CinePos</h1>
   </div>
 
-  <form class="example-form">
+  <form class="example-form w-full mt-6" [formGroup]="form">
     <ul>
+      <!-- 帳號 -->
       <li>
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Favorite food</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="">
+        <mat-form-field class="example-full-width w-full" appearance="fill" [class.mb-4]="form.get('staffId')?.errors?.['englishNumberInvalid']">
+          <mat-label>帳號</mat-label>
+          <input matInput toUpperCase noWhiteSpace placeholder="請輸入帳號"  formControlName="staffId" type="text">
+          <mat-error *ngIf="form.get('staffId')?.errors?.['englishNumberInvalid']">
+            {{ form.get('staffId')?.errors?.['englishNumberInvalid'] }}
+          </mat-error>
         </mat-form-field>
       </li>
+      <!-- 密碼 -->
+      <li>
+        <mat-form-field class="example-full-width w-full" appearance="fill">
+          <mat-label>密碼</mat-label>
+          <input matInput placeholder="請輸入密碼" formControlName="password" type="password">
+        </mat-form-field>
+      </li>
+      <!-- 登入 -->
+      <li>
+        <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="!form.valid">登入</button>
+      </li>
+      <!-- 忘記密碼 -->
+      <li class="text-center mt-2">
+        <button mat-button type="button">忘記密碼</button>
+      </li>
     </ul>
+
   </form>
 </section>
 

@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './features/login/components/login.component';
 import { ShareLibsComponent } from './share-libs.component';
-import { MatSliderModule } from '@angular/material/slider';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { CoreDirectivesModule } from './core/directives/core-directives.module';
+import { CommonModule } from '@angular/common';
 
 
 const materialModules = [
   MatInputModule,
-  MatSliderModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatIconModule
 ];
 
 
@@ -17,6 +25,9 @@ const materialModules = [
     LoginComponent
   ],
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CoreDirectivesModule,
     ...materialModules
   ],
   exports: [
