@@ -1,6 +1,9 @@
 <app-header *ngIf="!isLoginPage"></app-header>
-<span>{{currentVersion}}</span>
-<p class="bg-primary">123</p>
+<main>
+  <router-outlet></router-outlet>
+  <span>{{currentVersion}}</span>
+</main>
 
 <app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
-<router-outlet></router-outlet>
+
+
