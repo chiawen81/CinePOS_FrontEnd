@@ -9,7 +9,7 @@ import { catchError, map, tap } from "rxjs/operators";
 @Injectable({
     providedIn: 'root'
 })
-export class EnvironmentConfigurationService {
+export class EnvService {
 
     private httpClient: HttpClient = new HttpClient(this._handler);
     private configuration: any;

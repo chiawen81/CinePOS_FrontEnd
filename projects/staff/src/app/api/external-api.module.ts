@@ -1,7 +1,7 @@
 import { FactoryProvider, InjectionToken, NgModule } from "@angular/core";
-import { EnvironmentConfigurationService } from "../services/environment-configuration.service";
 import { ApiModule as CinePosApiModule } from "./cinePOS-api/api.module";
 import { BASE_PATH as CINE_POS_BASE_PATH } from "./cinePOS-api";
+import { EnvService } from "../core/services/env/env.service";
 
 
 
@@ -13,18 +13,16 @@ import { BASE_PATH as CINE_POS_BASE_PATH } from "./cinePOS-api";
  function apiUrlProvider(token: InjectionToken<string>, path: string): FactoryProvider {
     return {
         provide: token,
-        useFactory: (configService: EnvironmentConfigurationService) => {
+        useFactory: (configService: EnvService) => {
             const config = configService.environmentConfig;
             const objProperties = path.split('.');
             const result = objProperties.reduce((a, b) => a[b], config);
-
             if (!!result) {
                 return result;
             }
-
             throw `env.json 找不到 ${path}，請檢查！`
         },
-        deps: [EnvironmentConfigurationService],
+        deps: [EnvService],
         multi: true
     }
 }

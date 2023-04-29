@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../features/member-center/services/login.service';
+import { LoginReq } from '../../api/cinePOS-api';
+import { Router } from '@angular/router';
+import { STATIC_ROUTES } from '../../core/constant/routes.constant';
 
 @Component({
   selector: 'app-login-page',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private loginService: LoginService,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
+
+  }
+
+  login($event: LoginReq): void {
+    this.loginService.logInPost$($event)
+      .subscribe(() => {
+        this.router.navigate([STATIC_ROUTES.HOME]);
+      })
   }
 
 }

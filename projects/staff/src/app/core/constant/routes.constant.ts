@@ -1,4 +1,7 @@
 export const STATIC_ROUTES = {
-  // 登入頁
+  /**主畫面 */
+  HOME: '/',
+  /**登入頁 */
   LOGIN: 'login',
+
 }

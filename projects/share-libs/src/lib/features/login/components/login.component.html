@@ -4,7 +4,7 @@
     <h1>CinePos</h1>
   </div>
 
-  <form class="example-form w-full mt-6" [formGroup]="form">
+  <form class="example-form w-full mt-6" [formGroup]="form" (ngSubmit)="onSubmit()">
     <ul>
       <!-- 帳號 -->
       <li>
@@ -25,7 +25,7 @@
       </li>
       <!-- 登入 -->
       <li>
-        <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="!form.valid">登入</button>
+        <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="form.invalid">登入</button>
       </li>
       <!-- 忘記密碼 -->
       <li class="text-center mt-2">

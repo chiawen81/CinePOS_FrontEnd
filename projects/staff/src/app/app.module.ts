@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,6 +9,9 @@ import { ShopCartModule } from './features/shop-cart/shop-cart.module';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
+import { ExternalApiModule } from './api/external-api.module';
+import { HttpClientModule } from '@angular/common/http';
+import { EnvService } from './core/services/env/env.service';
 
 const materialModules = [
   MatInputModule,
@@ -29,13 +32,22 @@ const featureModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ExternalApiModule,
+    HttpClientModule,
     ...featureModules,
     ...materialModules,
   ],
   exports: [
     ...materialModules
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
+      deps: [EnvService],
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
