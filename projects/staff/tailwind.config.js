@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-
-
 module.exports = {
   purge: {
     enabled: true, // 每次編譯都觀測(若沒寫預設false則只會在正式機時才會偵測)
@@ -14,8 +12,28 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#8988FF',
-        secondary: '#222222',
+        primary: {
+          100: '#DABDFF',
+          200: '#C39BFF',
+          300: '#AD79FF',
+          400: '#9756FF',
+          500: '#9C6DFF',
+          600: '#8346FF',
+          700: '#6A1EFF',
+          800: '#5900E6',
+          900: '#4700BF',
+        },
+        secondary: {
+          100: '#B3F3FF',
+          200: '#99E9FF',
+          300: '#7FDFFF',
+          400: '#66D5FF',
+          500: '#71DDFF',
+          600: '#4DC6E6',
+          700: '#29AFCC',
+          800: '#0087A3',
+          900: '#00627A',
+        },
         dark: '#151515'
       }
     },

@@ -1,0 +1,58 @@
+@import "../../../../../node_modules/@angular/material/theming";
+@include mat-core();
+$mat-primary: (
+  100: theme('colors.primary.100'),
+  200: theme('colors.primary.200'),
+  300: theme('colors.primary.300'),
+  400: theme('colors.primary.400'),
+  500: theme('colors.primary.500'),
+  600: theme('colors.primary.600'),
+  700: theme('colors.primary.700'),
+  800: theme('colors.primary.800'),
+  900: theme('colors.primary.900'),
+  contrast: ()
+);
+
+$mat-secondary: (
+  100: theme('colors.secondary.100'),
+  200: theme('colors.secondary.200'),
+  300: theme('colors.secondary.300'),
+  400: theme('colors.secondary.400'),
+  500: theme('colors.secondary.500'),
+  600: theme('colors.secondary.600'),
+  700: theme('colors.secondary.700'),
+  800: theme('colors.secondary.800'),
+  900: theme('colors.secondary.900'),
+  contrast: ()
+);
+$custom-primary: mat-palette($mat-primary);
+$custom-secondary: mat-palette($mat-secondary);
+$custom-warn: mat-palette($mat-red);
+$my-theme: mat-dark-theme($custom-primary, $custom-secondary, $custom-warn);
+@include angular-material-theme($my-theme);
+
+button{
+  &.mat-primary {
+    background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
+    border-radius: 12px;
+  }
+  &.mat-button-disabled{
+    background: rgba(255, 255, 255, 0.12) !important;
+  }
+}
+
+.mat-form-field-appearance-fill{
+  .mat-form-field-flex {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+  }
+  .mat-form-field-underline::before{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 16px !important;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+
+}
+
