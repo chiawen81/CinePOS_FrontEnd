@@ -12,6 +12,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { ExternalApiModule } from './api/external-api.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvService } from './core/services/env/env.service';
+import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 
 const materialModules = [
   MatInputModule,
@@ -36,6 +37,7 @@ const featureModules = [
     HttpClientModule,
     ...featureModules,
     ...materialModules,
+    ShareLibsModule
   ],
   exports: [
     ...materialModules

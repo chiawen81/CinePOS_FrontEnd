@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
+import { LayoutComponent } from './core/components/layout/layout.component';
+import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+
 
 const materialModules = [
   MatInputModule,
@@ -24,7 +27,8 @@ const featureModules = [
   declarations: [
     AppComponent,
     DashboardPageComponent,
-    TimetablePageComponent
+    TimetablePageComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +36,7 @@ const featureModules = [
     AppRoutingModule,
     ...featureModules,
     ...materialModules,
+    ShareLibsModule
   ],
   exports: [
     ...materialModules

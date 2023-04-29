@@ -1,12 +1,6 @@
-<lib-loading></lib-loading>
-
 <app-header *ngIf="!isLoginPage"></app-header>
 <main>
   <router-outlet></router-outlet>
   <span>{{currentVersion}}</span>
 </main>
-
-<app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
-
-
 

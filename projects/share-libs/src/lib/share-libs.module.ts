@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { CoreDirectivesModule } from './core/directives/core-directives.module';
 import { CommonModule } from '@angular/common';
+import { LoadingComponent } from './features/loading/components/loading.component';
+import { LoadingService } from './features/loading/loading.service';
+import { LoadingInterceptor } from './features/loading/loading.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 const materialModules = [
@@ -22,7 +26,8 @@ const materialModules = [
 @NgModule({
   declarations: [
     ShareLibsComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +37,16 @@ const materialModules = [
   ],
   exports: [
     ShareLibsComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent,
+  ],
+  providers:[
+    LoadingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
   ]
 })
 export class ShareLibsModule { }

@@ -1,27 +1,23 @@
-import { LoadingService } from './../../../share-libs/src/lib/features/loading/loading.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { STATIC_ROUTES } from './core/constant/routes.constant';
-import { environment } from '../environments/environment';
+import { environment } from 'projects/manager/src/environments/environment';
+import { STATIC_ROUTES } from '../../constant/routes.constant';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'staff';
+export class LayoutComponent implements OnInit {
+  title = 'manager';
   currentVersion = environment.appVersion;
   constructor(
-    private router: Router,
-    private loadingService :LoadingService
+    private router: Router
   ) { }
 
   isLoginPage = true;
 
   ngOnInit(): void {
-    // this.loadingService.loading(true);
-
     // 判斷路由是否為登入頁，若是則隱藏header跟購物車
     this.router.events.pipe(
     ).subscribe((event) => {
@@ -35,5 +31,4 @@ export class AppComponent implements OnInit {
   toLogin(){
     this.router.navigate([STATIC_ROUTES.LOGIN])
   }
-
 }
