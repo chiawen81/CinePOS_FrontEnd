@@ -8,6 +8,8 @@ import { HeadersModule } from './features/headers/headers.module';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
+import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
 
 const materialModules = [
   MatInputModule,
@@ -20,7 +22,9 @@ const featureModules = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardPageComponent,
+    TimetablePageComponent
   ],
   imports: [
     BrowserModule,
