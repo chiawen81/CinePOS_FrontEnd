@@ -1,7 +1,8 @@
 import { FactoryProvider, InjectionToken, NgModule } from "@angular/core";
-import { EnvironmentConfigurationService } from "../core/services/environment-configuration.service";
+import { EnvironmentConfigurationService } from "../services/environment-configuration.service";
 import { ApiModule as OpenApiModule } from "./open-api/api.module";
 import { BASE_PATH as FRONT_STAGE_BASE_PATH } from "./open-api";
+
 
 
 /**
