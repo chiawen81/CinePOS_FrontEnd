@@ -34,6 +34,7 @@ jobs:
           docker build -t fangchiawen/cinepos_frontend:${{ github.sha }} .
           docker images
           docker push fangchiawen/cinepos_frontend:${{ github.sha }}
+
       # - name: Build and update Docker image     # 寫法二：用套件
       #   uses: docker/build-push-action@v2
       #   with:
@@ -44,14 +45,19 @@ jobs:
       - name: Run Docker image
         run: |
           docker run -d --rm -p 4200:4200 fangchiawen/cinepos_frontend:latest
+
       - name: Set Git identity
         run: |
           git config --global user.email "fangchiawen@gmail.com"
           git config --global user.name "chiawen81"
+
+      - name: Build the app
+        run: |
+          npm install
+          npm run build:patch
+
       - name: Deploy the app to GitHub Pages
         run: |
-          npm install angular-cli-ghpages
-          npm run build:patch
           npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
