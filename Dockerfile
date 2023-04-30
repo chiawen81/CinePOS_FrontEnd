@@ -1,5 +1,5 @@
 # 基於官方的 Node.js 16 映像檔建立映像檔
-FROM node:16
+FROM node:16.20.0
 
 # 安裝 Angular CLI
 RUN npm install @angular/cli
