@@ -36,6 +36,11 @@ jobs:
           push: true
           tags: fangchiawen/cinepos_frontend:latest
 
+      - name: Run Docker image
+        run: |
+          docker run -d --rm -p 4200:4200 fangchiawen/cinepos_frontend:latest
+
+
       - name: Deploy the app to GitHub Pages
         run: |
           npm run deploy
