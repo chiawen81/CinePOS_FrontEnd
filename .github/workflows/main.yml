@@ -53,8 +53,8 @@ jobs:
 
       - name: Deploy the app to GitHub Pages
         run: |
-          npm install @angular/cli
-          npm run build:patch -- --deleteOutputPath=false
-          npx angular-cli-ghpages --dir=dist/CinePOS_FrontEnd
+          npm install -g angular-cli-ghpages
+          npm run build:patch --deleteOutputPath=false
+          npx angular-cli-ghpages --dir=dist/CinePOS_FrontEnd --no-silent
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
