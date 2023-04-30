@@ -50,6 +50,10 @@ jobs:
         run: |
           docker run -d --rm -p 4200:4200 fangchiawen/cinepos_frontend:latest
 
+      - name: Set Git identity
+        run: |
+          git config --global user.email "fangchiawen@gmail.com"
+          git config --global user.name "chiawen81"
 
       - name: Deploy the app to GitHub Pages
         run: |
