@@ -43,6 +43,7 @@ jobs:
 
       - name: Deploy the app to GitHub Pages
         run: |
+          npm run build:patch
           npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
