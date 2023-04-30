@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { englishNumberFormatValidator } from '../../../core/validators/english-number-format.validator';
 import { LoginReq } from 'projects/staff/src/app/api/cinePOS-api';
@@ -10,6 +10,7 @@ import { LoginReq } from 'projects/staff/src/app/api/cinePOS-api';
 })
 export class LoginComponent implements OnInit {
   @Output() loginDataEmit = new EventEmitter<LoginReq>();
+  @Input() logoSrc = '';
 
   constructor(
     private fb: UntypedFormBuilder,

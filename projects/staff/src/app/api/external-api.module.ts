@@ -29,7 +29,7 @@ import { EnvService } from "../core/services/env/env.service";
 
 @NgModule({
     providers: [
-        apiUrlProvider(CINE_POS_BASE_PATH, 'apiUrl.cinePosApi'),
+        apiUrlProvider(CINE_POS_BASE_PATH, 'cinePosApi'),
     ],
     imports: [
       CinePosApiModule

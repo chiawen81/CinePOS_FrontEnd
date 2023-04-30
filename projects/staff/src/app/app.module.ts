@@ -17,6 +17,7 @@ import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
+  
 ];
 
 const featureModules = [
@@ -33,7 +34,7 @@ const featureModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ExternalApiModule,
+    // ExternalApiModule,
     HttpClientModule,
     ...featureModules,
     ...materialModules,
@@ -43,12 +44,12 @@ const featureModules = [
     ...materialModules
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
-      deps: [EnvService],
-      multi: true
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
+    //   deps: [EnvService],
+    //   multi: true
+    // },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,24 @@
-<lib-loading></lib-loading>
+<div class="relative h-screen">
+  <lib-loading></lib-loading>
+  <ul class="absolute w-full h-full top-0 left-0 -z-10">
+    <li class="absolute top-0 left-0">
+      <img class="w-96" src="assets/images/bg/bg1.png" alt="bg1">
+    </li>
+    <li class="absolute bottom-28 -left-3">
+      <img class="w-72" src="assets/images/bg/bg2.png" alt="bg2">
+    </li>
+    <li class="absolute top-10 right-56">
+      <img class="w-72" src="assets/images/bg/bg3.png" alt="bg3">
+    </li>
+    <li class="absolute bottom-0 right-96">
+      <img class="w-72" src="assets/images/bg/bg4.png" alt="bg4">
+    </li>
+  </ul>
 
-<app-header *ngIf="!isLoginPage"></app-header>
-<main>
-  <router-outlet></router-outlet>
-  <span>{{currentVersion}}</span>
-</main>
+  <app-header *ngIf="!isLoginPage"></app-header>
+  <main class="flex">
 
-<app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
-
-
-
+    <app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
+    <router-outlet></router-outlet>
+  </main>
+</div>

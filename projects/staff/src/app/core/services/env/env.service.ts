@@ -3,6 +3,7 @@ import { HttpClient, HttpBackend } from "@angular/common/http";
 import { Inject, Injectable, Optional, PLATFORM_ID } from "@angular/core";
 import { REQUEST } from "@nguniversal/express-engine/tokens";
 import { Request } from 'express';
+import { environment } from "projects/staff/src/environments/environment";
 import { Observable, throwError } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
@@ -26,7 +27,7 @@ export class EnvService {
             ? `${this.request.protocol}://${this.request.get('host')}`
             : '';
 
-        return this.httpClient.get(protocolHost + '/CinePOS_FrontEnd/staff/assets/env/env.json')
+        return this.httpClient.get(protocolHost + environment.cinePosApi)
             .pipe(
                 map(res => {
                     this.configuration = res;

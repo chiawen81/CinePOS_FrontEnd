@@ -34,10 +34,15 @@ $my-theme: mat-dark-theme($custom-primary, $custom-secondary, $custom-warn);
 button{
   &.mat-primary {
     background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
-    border-radius: 12px;
+    @apply rounded-xl tracking-widest;
   }
   &.mat-button-disabled{
     background: rgba(255, 255, 255, 0.12) !important;
+  }
+  &.mat-warn{
+    background: theme('colors.warn.200');
+    color: theme('colors.warn.100') !important;
+    @apply rounded-xl tracking-widest;
   }
 }
 
@@ -45,14 +50,12 @@ button{
   .mat-form-field-flex {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 16px !important;
-  }
-  .mat-form-field-underline::before{
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 16px !important;
+    background-color: theme('colors.dark.200');
+    padding: 0.8rem !important;
+    padding-bottom: 0px !important;
   }
   .mat-form-field-underline {
     display: none;
   }
-
 }
 

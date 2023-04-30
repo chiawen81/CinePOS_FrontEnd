@@ -1,13 +1,13 @@
-<section class="w-72">
+<section class="w-80">
   <div class="flex justify-center items-center w-full">
-    <!-- <img src="" alt="logo"> -->
-    <h1>CinePos</h1>
+    <img [src]="logoSrc" alt="logo">
+    <h1 class="ml-4 text-4xl">CinePOS</h1>
   </div>
 
-  <form class="example-form w-full mt-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="example-form w-full mt-14" [formGroup]="form" (ngSubmit)="onSubmit()">
     <ul>
       <!-- 帳號 -->
-      <li>
+      <li >
         <mat-form-field class="example-full-width w-full" appearance="fill" [class.mb-4]="form.get('staffId')?.errors?.['englishNumberInvalid']">
           <mat-label>帳號</mat-label>
           <input matInput toUpperCase noWhiteSpace placeholder="請輸入帳號"  formControlName="staffId" type="text">
@@ -17,7 +17,7 @@
         </mat-form-field>
       </li>
       <!-- 密碼 -->
-      <li>
+      <li class="-mt-2">
         <mat-form-field class="example-full-width w-full" appearance="fill">
           <mat-label>密碼</mat-label>
           <input matInput placeholder="請輸入密碼" formControlName="password" type="password">
