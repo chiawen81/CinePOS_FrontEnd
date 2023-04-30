@@ -1,5 +1,8 @@
-# 基於官方的 Node.js 14 映像檔建立映像檔
+# 基於官方的 Node.js 16 映像檔建立映像檔
 FROM node:16
+
+# 安裝 Angular CLI
+RUN npm install -g @angular/cli
 
 # 將當前目錄內容複製到容器內的 /app 目錄
 COPY . /app
