@@ -13,9 +13,6 @@ WORKDIR /app
 # 執行指令安裝相依套件
 RUN npm install
 
-# 執行指令建立 production 環境的專案 build
-RUN npm run build:patch
-
 # 設定容器對外的埠號
 EXPOSE 4200
 
