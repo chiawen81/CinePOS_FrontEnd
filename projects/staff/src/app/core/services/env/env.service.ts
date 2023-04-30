@@ -26,7 +26,7 @@ export class EnvService {
             ? `${this.request.protocol}://${this.request.get('host')}`
             : '';
 
-        return this.httpClient.get(protocolHost + '/assets/env/env.json')
+        return this.httpClient.get(protocolHost + '/CinePOS_FrontEnd/staff/assets/env/env.json')
             .pipe(
                 map(res => {
                     this.configuration = res;
