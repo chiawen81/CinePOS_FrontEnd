@@ -1,0 +1,12 @@
+@import "../../../../../node_modules/tailwindcss/base";
+@import "../../../../../node_modules/tailwindcss/components";
+@import "../../../../../node_modules/tailwindcss/utilities";
+
+@layer base {
+  h1 {
+    @apply text-5xl
+  }
+  ul{
+    @apply list-none
+  }
+}

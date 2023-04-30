@@ -1,6 +1,6 @@
 {
   "name": "CinePOS_FrontEnd",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
@@ -13,15 +13,20 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "swagger:get-staff": "java -jar swagger-codegen-cli-3.0.31.jar generate -i http://localhost:3005/swagger.json -l typescript-angular -o ./projects/staff/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
+    "swagger:get-manager": "java -jar swagger-codegen-cli-3.0.31.jar generate -i http://localhost:3005/swagger.json -l typescript-angular -o ./projects/manager/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
+    "swagger:get-share-libs": "java -jar swagger-codegen-cli-3.0.31.jar generate -i http://localhost:3005/swagger.json -l typescript-angular -o ./projects/share-libs/src/lib/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
+    "@angular/cdk": "^14.2.7",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
     "@angular/forms": "^14.2.0",
+    "@angular/material": "^14.2.7",
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
@@ -33,6 +38,7 @@
     "@angular-devkit/build-angular": "^14.2.11",
     "@angular/cli": "~14.2.0",
     "@angular/compiler-cli": "^14.2.0",
+    "@nguniversal/express-engine": "^14.2.3",
     "@types/jasmine": "~4.0.0",
     "autoprefixer": "^10.4.14",
     "jasmine-core": "~4.3.0",

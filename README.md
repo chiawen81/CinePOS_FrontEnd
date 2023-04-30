@@ -12,6 +12,7 @@ Run `npm run start:back` for a dev server. Navigate to `http://localhost:4203/`.
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
+
 使用 語意化版本 2.0.0 `https://semver.org/lang/zh-TW/`
 
 Run `npm run build:patch` to build the project. The build artifacts will be stored in the `dist/CinePOS_FrontEnd/staff` directory and `dist/CinePOS_FrontEnd/manager`.
