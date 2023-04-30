@@ -36,15 +36,11 @@ jobs:
       #     push: true
       #     tags: fangchiawen/cinepos_frontend:latest
 
-      - name: Build Docker image
+      - name: Build and update Docker image
         run: |
-          docker build -t fangchiawen/cinepos_frontend:latest .
+          docker build -t fangchiawen/cinepos_frontend:${{ github.sha }} .
           docker images
-
-      - name: Push Docker image
-        run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push fangchiawen/cinepos_frontend:latest
+          docker push fangchiawen/cinepos_frontend:${{ github.sha }}
 
       - name: Run Docker image
         run: |
