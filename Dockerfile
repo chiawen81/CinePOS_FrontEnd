@@ -2,7 +2,7 @@
 FROM node:16
 
 # 安裝 Angular CLI
-RUN npm install -g @angular/cli
+RUN npm install @angular/cli
 
 # 將當前目錄內容複製到容器內的 /app 目錄
 COPY . /app
