@@ -53,6 +53,7 @@ jobs:
 
       - name: Deploy the app to GitHub Pages
         run: |
+          npm install @angular/cli
           npm run build:patch
           npm run deploy
         env:
