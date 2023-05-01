@@ -15,10 +15,11 @@
     </li>
   </ul>
 
-  <app-header *ngIf="!isLoginPage"></app-header>
-  <main class="flex">
-
+  <app-header *ngIf="!isLoginPage" [menuType]="menuType"></app-header>
+  <main class="flex items-stretch">
     <app-shop-cart *ngIf="!isLoginPage"></app-shop-cart>
-    <router-outlet></router-outlet>
+    <section class="py-3 px-4 section-router relative">
+      <router-outlet></router-outlet>
+    </section>
   </main>
 </div>

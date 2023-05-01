@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { STATIC_ROUTES } from './core/constant/routes.constant';
 import { environment } from '../environments/environment';
+import { MenuType } from './core/constant/menu.type';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,23 @@ export class AppComponent implements OnInit {
   ) { }
 
   isLoginPage = true;
+  menuType:MenuType = 'None';
 
   ngOnInit(): void {
     // 判斷路由是否為登入頁，若是則隱藏header跟購物車
     this.router.events.pipe(
     ).subscribe((event) => {
       if (event instanceof NavigationEnd) {
+
         this.isLoginPage = event.url === `/${STATIC_ROUTES.LOGIN}` ? true : false;
+        // 切換menuType
+        if((event.url).includes(STATIC_ROUTES.BOOKING.ROOT)){
+          this.menuType = 'Booking';
+        }else if((event.url).includes(STATIC_ROUTES.REFUND)){
+          this.menuType = 'Refund';
+        }else{
+          this.menuType = 'None';
+        }
       }
     })
 

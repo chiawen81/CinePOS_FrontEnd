@@ -18,7 +18,6 @@ import { DialogModule } from './features/dialog/dialog.module';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
-
 ];
 
 const featureModules = [

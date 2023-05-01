@@ -1,18 +1,18 @@
 <header class="flex justify-between items-center bg-dark-400 py-3 px-10">
   <ul class="flex items-center">
     <li class="mr-16">
-      <button type="button">
+      <button type="button" (click)="goHome()">
         <img class="w-10" src="assets/images/logo/logo.svg" alt="logo">
       </button>
     </li>
     <li>
-      <button type="button" class="px-5 text-lg" (click)="active = true;isTicket = true">
-        <span class="pb-1" [class.border-b]="active&&isTicket">訂票</span>
+      <button type="button" class="px-5 text-lg" (click)="goBooking()">
+        <span class="pb-1" [class.border-b]="menuType==='Booking'">訂票</span>
       </button>
     </li>
     <li>
-      <button type="button" class="px-5 text-lg" (click)="active = true;isTicket = false">
-        <span class="pb-1" [class.border-b]="active&&!isTicket">退票</span>
+      <button type="button" class="px-5 text-lg" (click)="goRefund()">
+        <span class="pb-1" [class.border-b]="menuType==='Refund'">退票</span>
       </button>
     </li>
   </ul>
@@ -24,7 +24,7 @@
       </button>
     </li>
     <li class="ml-6">
-      <button type="button" class="text-sm text-gray-400 border border-light-500 px-4 py-2 rounded-lg">
+      <button type="button" (click)="logOut()" class="text-sm text-gray-400 border border-light-500 px-4 py-2 rounded-lg">
         登出
       </button>
     </li>
