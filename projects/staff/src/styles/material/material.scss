@@ -59,3 +59,9 @@ button{
   }
 }
 
+.mat-dialog-container{
+  background: theme('colors.dark.200') !important;
+  @apply rounded-xl tracking-widest #{!important};
+  
+}
+

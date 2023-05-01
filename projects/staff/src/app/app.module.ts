@@ -13,16 +13,18 @@ import { ExternalApiModule } from './api/external-api.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvService } from './core/services/env/env.service';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+import { DialogModule } from './features/dialog/dialog.module';
 
 const materialModules = [
   MatInputModule,
   MatSliderModule,
-  
+
 ];
 
 const featureModules = [
   HeadersModule,
   ShopCartModule,
+  DialogModule
 ];
 
 
