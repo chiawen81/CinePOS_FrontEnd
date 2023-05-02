@@ -45,12 +45,12 @@ const featureModules = [
     ...materialModules
   ],
   providers: [
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
-    //   deps: [EnvService],
-    //   multi: true
-    // },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
+      deps: [EnvService],
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

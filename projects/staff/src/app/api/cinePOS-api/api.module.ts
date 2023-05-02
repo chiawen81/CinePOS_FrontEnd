@@ -3,16 +3,16 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { AccountService } from './api/account.service';
-import { MemberService } from './api/member.service';
+import { ManagerService } from './api/manager.service';
+import { StaffService } from './api/staff.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    AccountService,
-    MemberService ]
+    ManagerService,
+    StaffService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {
