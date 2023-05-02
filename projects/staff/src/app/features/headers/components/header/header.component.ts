@@ -27,9 +27,9 @@ export class HeaderComponent implements OnInit {
   @Input() menuType:MenuType = 'None';
 
   profileData: ProfileData = {
-    staffId: '14231',
-    name: '陳小狗',
-    imgUrl: 'assets/images/angular-icon.webp'
+    staffId: '',
+    name: '',
+    imgUrl: ''
   }
 
   active = false;
@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.profileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
   }
 
   openProfile(): void {
@@ -62,7 +63,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([STATIC_ROUTES.REFUND]);
   }
   logOut(): void{
-    this.storageService.removeLocalStorage(StorageEnum.token);
+    this.storageService.clearLocalStorage();
     this.router.navigate([STATIC_ROUTES.LOGIN]);
   }
 }

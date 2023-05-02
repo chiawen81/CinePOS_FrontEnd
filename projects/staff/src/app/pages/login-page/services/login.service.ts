@@ -3,6 +3,7 @@ import { filter, Observable, tap } from 'rxjs';
 import { LoginRes, StaffService } from '../../../api/cinePOS-api';
 import { StorageEnum } from '../../../core/enums/storage/storage-enum';
 import { StorageService } from '../../../core/services/storage/storage.service';
+import { ProfileData } from '../../../core/interface/profile-data';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,12 @@ export class LoginService {
         filter(res => res.code === 1),
         tap((res) => {
           this.storageService.setLocalStorage(StorageEnum.token,res.data.token);
-          this.storageService.setLocalStorage(StorageEnum.name,res.data.name);
+          const profileData:ProfileData = {
+            name: res.data.name!,
+            staffId: res.data.staffId!,
+            imgUrl: 'assets/images/angular-icon.webp'
+          }
+          this.storageService.setLocalStorage(StorageEnum.profileData,profileData);
         })
       )
   }

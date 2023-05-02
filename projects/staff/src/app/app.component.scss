@@ -3,5 +3,5 @@ main{
 }
 .section-router{
   width: calc(100% -  240px);
-  
+  @apply py-3 px-4;
 }
