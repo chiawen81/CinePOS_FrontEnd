@@ -13,13 +13,14 @@ import { LoadingComponent } from './features/loading/components/loading.componen
 import { LoadingService } from './features/loading/loading.service';
 import { LoadingInterceptor } from './features/loading/loading.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
   MatInputModule,
   MatButtonModule,
   MatFormFieldModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule
 ];
 
 
@@ -46,7 +47,7 @@ const materialModules = [
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
-    },
+    }
   ]
 })
 export class ShareLibsModule { }

@@ -4,7 +4,7 @@ export enum StorageEnum {
    * */
   token = 'token',
   /**
-   * 姓名
+   * 會員資料
    * */
-  name = 'name'
+  profileData = 'profileData'
 }

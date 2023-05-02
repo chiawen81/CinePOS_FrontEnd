@@ -10,9 +10,12 @@ import { ShopCartModule } from './features/shop-cart/shop-cart.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { ExternalApiModule } from './api/external-api.module';
-import { HttpClientModule } from '@angular/common/http';
-import { EnvService } from './core/services/env/env.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+import { DialogModule } from './features/dialog/dialog.module';
+import { environment } from '../environments/environment';
+import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
+import { ApiHeaderInterceptor } from './core/interceptor/api-header';
 
 const materialModules = [
   MatInputModule,
@@ -22,6 +25,7 @@ const materialModules = [
 const featureModules = [
   HeadersModule,
   ShopCartModule,
+  DialogModule
 ];
 
 
@@ -33,22 +37,22 @@ const featureModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ExternalApiModule,
     HttpClientModule,
     ...featureModules,
     ...materialModules,
-    ShareLibsModule
+    ShareLibsModule,
+    CinePosApiModule.forRoot(() => new Configuration()),
   ],
   exports: [
     ...materialModules
   ],
   providers: [
+    ExternalApiModule.apiUrlProvider(BASE_PATH, environment.cinePosApi),
     {
-      provide: APP_INITIALIZER,
-      useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
-      deps: [EnvService],
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiHeaderInterceptor,
       multi: true
-    },
+    }
   ],
   bootstrap: [AppComponent]
 })

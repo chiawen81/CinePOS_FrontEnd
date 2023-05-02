@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -9,7 +10,8 @@ import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
     ShopCartComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
   ],
   exports: [
     ShopCartComponent

@@ -3,9 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  channel: 'CinePOS_FrontEnd',
   appVersion: require('package.json').version + '-dev',
   production: false,
   DEFAULT_IP: '',
+  cinePosApi: "https://api-t.cine-pos.com"
 };
 
 /*

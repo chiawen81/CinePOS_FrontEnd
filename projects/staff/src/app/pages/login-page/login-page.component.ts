@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../features/member-center/services/login.service';
 import { LoginReq } from '../../api/cinePOS-api';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from '../../core/constant/routes.constant';
+import { environment } from 'projects/staff/src/environments/environment';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,13 +16,13 @@ export class LoginPageComponent implements OnInit {
     private loginService: LoginService,
     private router:Router
   ) { }
-
+  currentVersion = environment.appVersion;
   ngOnInit(): void {
 
   }
 
   login($event: LoginReq): void {
-    this.loginService.logInPost$($event)
+    this.loginService.v1StaffLoginPost$($event)
       .subscribe(() => {
         this.router.navigate([STATIC_ROUTES.HOME]);
       })

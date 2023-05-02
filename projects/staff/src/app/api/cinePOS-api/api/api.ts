@@ -1,5 +1,5 @@
-export * from './account.service';
-import { AccountService } from './account.service';
-export * from './member.service';
-import { MemberService } from './member.service';
-export const APIS = [AccountService, MemberService];
+export * from './manager.service';
+import { ManagerService } from './manager.service';
+export * from './staff.service';
+import { StaffService } from './staff.service';
+export const APIS = [ManagerService, StaffService];
