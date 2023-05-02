@@ -43,11 +43,7 @@ export class HeaderComponent implements OnInit {
     this.componentInjector.injectComponent(ProfileGialogComponent);
     this.dialog.open(ProfileGialogComponent, {
         width: '450px',
-        data: {
-          name: this.profileData.name,
-          imgUrl: this.profileData.imgUrl,
-          staffId: this.profileData.staffId
-        }
+        data: this.profileData
       }
     );
   }
