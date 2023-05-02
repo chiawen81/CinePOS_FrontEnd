@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EnvService } from './core/services/env/env.service';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { DialogModule } from './features/dialog/dialog.module';
+import { BASE_PATH } from './api/cinePOS-api';
+import { environment } from '../environments/environment';
 
 const materialModules = [
   MatInputModule,
@@ -35,7 +37,7 @@ const featureModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    // ExternalApiModule,
+    ExternalApiModule,
     HttpClientModule,
     ...featureModules,
     ...materialModules,
@@ -45,13 +47,9 @@ const featureModules = [
     ...materialModules
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (configService: EnvService) => () => configService.loadEnvironment(),
-      deps: [EnvService],
-      multi: true
-    },
+    ExternalApiModule.apiUrlProvider(BASE_PATH, environment.cinePosApi)
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

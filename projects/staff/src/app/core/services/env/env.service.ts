@@ -26,11 +26,12 @@ export class EnvService {
         const protocolHost = isPlatformServer(this.platformId)
             ? `${this.request.protocol}://${this.request.get('host')}`
             : '';
-
-        return this.httpClient.get(protocolHost + environment.cinePosApi)
+        console.log('protocolHost',protocolHost);
+        return this.httpClient.get(protocolHost + 'assets/images/bg')
             .pipe(
                 map(res => {
                     this.configuration = res;
+                    console.log('this.configuration',this.configuration);
                     return res;
                 }),
                 catchError(err => {
