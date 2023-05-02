@@ -1,6 +1,10 @@
 {
   "name": "CinePOS_FrontEnd",
+<<<<<<< HEAD
   "version": "0.0.8",
+=======
+  "version": "0.0.12",
+>>>>>>> origin/develop
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
@@ -32,7 +36,8 @@
     "@angular/router": "^14.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "angular-cli-ghpages": "^1.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.11",
