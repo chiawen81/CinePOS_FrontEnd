@@ -14,6 +14,8 @@ import { LoadingService } from './features/loading/loading.service';
 import { LoadingInterceptor } from './features/loading/loading.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { TextDialogComponent } from './features/text-dialog/components/text-dialog.component';
+
 
 const materialModules = [
   MatInputModule,
@@ -29,6 +31,7 @@ const materialModules = [
     ShareLibsComponent,
     LoginComponent,
     LoadingComponent,
+    TextDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ const materialModules = [
     ShareLibsComponent,
     LoginComponent,
     LoadingComponent,
+    TextDialogComponent,
   ],
   providers:[
     LoadingService,
@@ -47,6 +51,10 @@ const materialModules = [
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
+    },
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
     }
   ]
 })

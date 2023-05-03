@@ -16,6 +16,7 @@ import { DialogModule } from './features/dialog/dialog.module';
 import { environment } from '../environments/environment';
 import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
 import { ApiHeaderInterceptor } from './core/interceptor/api-header';
+import { ErrorHeaderInterceptor } from './core/interceptor/error-interceptor';
 
 const materialModules = [
   MatInputModule,
@@ -51,6 +52,11 @@ const featureModules = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiHeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHeaderInterceptor,
       multi: true
     }
   ],

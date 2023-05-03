@@ -11,6 +11,10 @@ export * from './lib/share-libs.module';
  */
 export * from './lib/features/login/components/login.component';
 /**
+ * 純文字彈跳視窗
+ */
+export * from './lib/features/text-dialog/components/text-dialog.component';
+/**
  * Loading 服務
  */
 export * from './lib/features/loading/loading.service';

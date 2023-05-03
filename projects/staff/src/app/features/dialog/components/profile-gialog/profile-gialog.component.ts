@@ -14,7 +14,6 @@ export class ProfileGialogComponent implements OnInit {
 
 
   constructor(
-    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: ProfileData,
     private fb: UntypedFormBuilder,
     private dialogService: DialogService
