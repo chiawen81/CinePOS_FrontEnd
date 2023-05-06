@@ -37,6 +37,10 @@ export const STATIC_ROUTES = {
   /**
    * 明細
    */
-  DETAIL: 'detail'
+  DETAIL: 'detail',
 
+  /**
+   * 共用元件範例
+   */
+  SAMPLE: 'sample'
 }
