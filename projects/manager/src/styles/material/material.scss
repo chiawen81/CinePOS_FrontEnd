@@ -29,11 +29,11 @@ $custom-primary: mat-palette($mat-primary);
 $custom-secondary: mat-palette($mat-secondary);
 $custom-warn: mat-palette($mat-red);
 $my-theme: mat-dark-theme($custom-primary, $custom-secondary, $custom-warn);
-// @include angular-material-theme($my-theme);
+@include angular-material-theme($my-theme);
 
 button {
   &.mat-primary {
-    // background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
+    background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
     @apply rounded-xl tracking-widest;
   }
 
@@ -41,18 +41,18 @@ button {
     background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  // &.mat-warn {
-  //   background: theme('colors.warn.200');
-  //   color: theme('colors.warn.100') !important;
-  //   @apply rounded-xl tracking-widest;
-  // }
+  &.mat-warn {
+    background: theme('colors.warn.200');
+    color: theme('colors.warn.100') !important;
+    @apply rounded-xl tracking-widest;
+  }
 }
 
 .mat-form-field-appearance-fill {
   .mat-form-field-flex {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 16px !important;
-    // background-color: theme('colors.dark.200');
+    background-color: theme('colors.dark.200');
     padding: 0.8rem !important;
     padding-bottom: 0px !important;
   }
@@ -62,8 +62,8 @@ button {
   }
 }
 
-// .mat-dialog-container {
-//   background: theme('colors.dark.200') !important;
-//   @apply rounded-xl tracking-widest #{!important};
+.mat-dialog-container {
+  background: theme('colors.dark.200') !important;
+  @apply rounded-xl tracking-widest #{!important};
 
-// }
+}
