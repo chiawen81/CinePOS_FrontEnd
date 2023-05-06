@@ -1,0 +1,15 @@
+<table #cineTable>
+    <ng-content></ng-content>
+    <tbody *ngIf="checkIsEmpty">
+        <tr class="no-data">
+            <td [attr.colspan]="thCount">
+                <div class="no-data-hint">
+                    <div class="text-center">
+                        
+                        <p>查無資料</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
