@@ -12,6 +12,9 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+import { TableModule } from './features/table/table.module';
+import { SamplePageComponent } from './pages/sample-page/sample-page.component';
+import { CardModule } from './features/card/card.module';
 
 
 const materialModules = [
@@ -20,7 +23,9 @@ const materialModules = [
 ];
 
 const featureModules = [
-  HeadersModule
+  HeadersModule,
+  TableModule,
+  CardModule
 ];
 
 @NgModule({
@@ -29,6 +34,7 @@ const featureModules = [
     DashboardPageComponent,
     TimetablePageComponent,
     LayoutComponent,
+    SamplePageComponent,
   ],
   imports: [
     BrowserModule,

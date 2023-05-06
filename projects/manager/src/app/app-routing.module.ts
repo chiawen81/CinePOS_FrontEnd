@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { STATIC_ROUTES } from './core/constant/routes.constant';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
+import { SamplePageComponent } from './pages/sample-page/sample-page.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:STATIC_ROUTES.TIMETABLE,
     component: TimetablePageComponent
+  },
+  {
+    path:STATIC_ROUTES.SAMPLE,
+    component: SamplePageComponent
   },
   {
     path: STATIC_ROUTES.LOGIN,

@@ -1,0 +1,25 @@
+<cine-card>
+    <cine-card-header>查詢結果</cine-card-header>
+    <cine-card-content>
+        <cine-table>
+            <thead>
+                <tr>
+                    <th>標題</th>
+                    <th>導演</th>
+                    <th>年份</th>
+                    <th>分類</th>
+                    <th>評分</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let paramItem of sampleList">
+                    <td data-title="標題">{{ paramItem.title }}</td>
+                    <td data-title="導演">{{ paramItem.director }}</td>
+                    <td data-title="年份">{{ paramItem.year }}</td>
+                    <td data-title="分類">{{ paramItem.genre || '-' }}</td>
+                    <td data-title="評分">{{ paramItem.rating }}</td>
+                </tr>
+            </tbody>
+        </cine-table>
+    </cine-card-content>
+</cine-card>
