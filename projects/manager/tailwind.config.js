@@ -11,6 +11,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        sm: '480px',
+        md: '768px',
+        lg: '976px',
+        xl: '1440px',
+      },
       colors: {
         primary: {
           100: '#DABDFF',
@@ -52,6 +58,20 @@ module.exports = {
           100: '#DD6A76',
           200: '#39282B'
         }
+      },
+      fontFamily: {
+        sans: ['Graphik', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+      },
+      fontSize: (() => {
+        const result = {};
+        for (let i = 1; i <= 100; i++) {
+          result[`${i}`] = `${i}px`;
+        }
+        return result;
+      })(),
+      spacing: Object.fromEntries(Array.from({ length: 1400 }, (_, i) => [(i + 1).toString(), `${i + 1}px`])),
+      borderRadius: {
       }
     },
   },
