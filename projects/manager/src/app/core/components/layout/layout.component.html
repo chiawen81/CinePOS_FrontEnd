@@ -1,6 +1,10 @@
-<app-header *ngIf="!isLoginPage"></app-header>
-<main>
-  <router-outlet></router-outlet>
-  <span>{{currentVersion}}</span>
-</main>
-
+<div class="flex">
+  <app-side-nav class="h-full" [ngStyle]="{'width':'20%'}"> </app-side-nav>
+  <div>
+    <app-header [ngStyle]="{'width':'80%'}" *ngIf="!isLoginPage"></app-header>
+    <main class="p-4">
+      <router-outlet></router-outlet>
+      <span>{{currentVersion}}</span>
+    </main>
+  </div>
+</div>
