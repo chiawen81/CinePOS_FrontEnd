@@ -31,6 +31,10 @@ const routes: Routes = [
     path: STATIC_ROUTES.LOGIN,
     loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
