@@ -1,0 +1,13 @@
+  .utility-common-back {
+
+    // 選單
+    .form-select {
+      ::ng-deep {
+        mat-form-field {
+          .mat-form-field-wrapper {
+            padding-bottom: 0 !important;
+          }
+        }
+      }
+    }
+  }
