@@ -1,8 +1,8 @@
 <div class="flex">
-  <app-side-nav class="h-full" [ngStyle]="{'width':'20%'}"> </app-side-nav>
-  <div [ngStyle]="{'width':'80%'}">
+  <app-side-nav> </app-side-nav>
+  <div class="h-full layout-content">
     <app-header class="w-full" *ngIf="!isLoginPage"></app-header>
-    <main class="px-30 py-15 w-full">
+    <main class="px-30 py-15 w-full mb-80">
       <router-outlet></router-outlet>
       <span>{{currentVersion}}</span>
     </main>

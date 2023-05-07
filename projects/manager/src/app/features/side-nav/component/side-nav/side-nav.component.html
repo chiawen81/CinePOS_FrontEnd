@@ -1,29 +1,32 @@
 <div class="wrapper">
-  <img class="logo" src="assets/images/logo/logo-w-gradient.svg" alt="">
-  <ul class="menu">
-    <ng-container *ngFor="let mainItem of sideNavData">
-      <li class="text-15">
-        <img src="{{mainItem.iconFilePath}}" alt="">
-        <span>{{mainItem.title}}</span>
-      </li>
-      <ul class="sub-menu" *ngIf="mainItem.subMenu.length">
-        <li class="text-13" *ngFor="let subItem of mainItem.subMenu;let subIdx=index">
-          <a href="{{subItem.url}}">{{subItem.title}}</a>
+  <div class="container">
+    <img class="logo" src="assets/images/logo/logo-w-gradient.svg" alt="">
+    <ul class="menu">
+      <ng-container *ngFor="let mainItem of sideNavData">
+        <li class="text-15">
+          <img src="{{mainItem.iconFilePath}}" alt="">
+          <span>{{mainItem.title}}</span>
         </li>
-      </ul>
-    </ng-container>
-  </ul>
+        <ul class="sub-menu" *ngIf="mainItem.subMenu.length">
+          <li class="text-13" *ngFor="let subItem of mainItem.subMenu;let subIdx=index">
+            <a href="{{subItem.url}}">{{subItem.title}}</a>
+          </li>
+        </ul>
+      </ng-container>
+    </ul>
 
-  <div class="fotter text-12">
-    <div class="logout flex flex-row justify-between">
-      <div class="flex flex-col">
-        <span>A0001 方佳文</span>
-        <span class="jobtitle">總部 營運部 專員</span>
+    <div class="fotter text-12">
+      <div class="logout flex flex-row justify-between">
+        <div class="flex flex-col">
+          <span>A0001 方佳文</span>
+          <span class="jobtitle">總部 營運部 專員</span>
+        </div>
+        <button class="btn gray">登出</button>
       </div>
-      <button class="btn gray">登出</button>
-    </div>
-    <div class="copyright">
-      Copyright © 2023 CineTech. All rights reserved.
+      <div class="copyright">
+        Copyright © 2023 CineTech. All rights reserved.
+      </div>
     </div>
   </div>
+
 </div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadersModule } from './features/headers/components/headers.module';
@@ -17,7 +16,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
+import { MatButtonModule } from '@angular/material/button';
 
 const materialModules = [
   MatInputModule,
@@ -75,6 +76,9 @@ export class MyDateAdapter extends NativeDateAdapter {
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    CoreDirectivesModule,
   ],
   exports: [
     ...materialModules
