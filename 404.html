@@ -18,7 +18,7 @@
       }
 
       document.title = title;
-      document.querySelector("meta[http-equiv='refresh']").setAttribute("content", "0;URL='" + redirectTo + "'");
+      location.replace(redirectTo);
     })();
   </script>
   <meta http-equiv="refresh" content="" />
