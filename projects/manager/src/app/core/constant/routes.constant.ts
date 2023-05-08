@@ -37,7 +37,7 @@ export const STATIC_ROUTES = {
   /**
    * 明細
    */
-  DETAIL: 'detail',,
+  DETAIL: 'detail',
 
   /**
    * UI 元件庫
