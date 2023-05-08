@@ -1,1 +1,171 @@
-<p>movie-detail-page works!</p>
+<div class="wrapper-page utility-common-back">
+  <div class="form-select flex justify-end mb-10 ">
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>請選擇</mat-label>
+      <mat-select>
+        <mat-option [value]="1">上映中</mat-option>
+        <mat-option [value]="2">選項二</mat-option>
+        <mat-option [value]="3">選項三</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-common-back utility-common-back mb-50">
+    <h3 class="form-area-title">基本資訊</h3>
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>電影中文名</span>
+      <div class="form-content">
+        <input class="form-input w-300" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>電影英文名</span>
+      <div class="form-content">
+        <input class="form-input w-300" type="text">
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">預定上映日期</span>
+      <div class="form-content">
+        <div class="form-date">
+          <mat-form-field class="w-300">
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-common-back utility-common-back mb-20">
+    <h3 class="form-area-title">電影資訊</h3>
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>導演</span>
+      <div class="form-content">
+        <input class="form-input w-300" type="text">
+      </div>
+    </div>
+
+    <div class="row align-items-start">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>主演</span>
+      <div class="form-content flex flex-col">
+        <div>
+          <input class="form-input w-300 mr-10" type="text">
+          <button mat-raised-button class="secondary btn-icon mr-10">+</button>
+        </div>
+        <input class="form-input w-300 mr-10 mt-5" type="text">
+        <input class="form-input w-300 mr-10 mt-5" type="text">
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>片長</span>
+      <div class="form-content">
+        <input class="form-input w-300 mr-10" type="text">分鐘
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">分級</span>
+      <div class="form-content">
+        <div class="form-radio list-row text-12">
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button class='mr-25' [value]="1">普通</mat-radio-button>
+            <mat-radio-button class='mr-25' [value]="2">保護</mat-radio-button>
+            <mat-radio-button class='mr-25' [value]="3">輔12</mat-radio-button>
+            <mat-radio-button class='mr-25' [value]="4">輔15</mat-radio-button>
+            <mat-radio-button class='mr-25' [value]="5">限制</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>劇情類型</span>
+      <div class="form-content">
+        <div class="form-select select-small">
+          <mat-form-field class="w-300" appearance="fill">
+            <mat-label>請選擇</mat-label>
+            <mat-select multiple>
+              <mat-option [value]="1">選項一</mat-option>
+              <mat-option [value]="2">選項二</mat-option>
+              <mat-option [value]="3">選項三</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p class="text-12 mt-5 text-warn-100">這裡是錯誤訊息</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>支援硬體設備</span>
+      <div class="form-content">
+        <div class="form-select">
+          <mat-form-field class="w-300" appearance="fill">
+            <mat-label>請選擇</mat-label>
+            <mat-select multiple>
+              <mat-option [value]="1">選項一</mat-option>
+              <mat-option [value]="2">選項二</mat-option>
+              <mat-option [value]="3">選項三</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p class="text-12 mt-5 text-warn-100">這裡是錯誤訊息</p>
+      </div>
+    </div>
+
+    <div class="row align-items-start">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>電影介紹</span>
+      <div class="form-content">
+        <button mat-raised-button class="secondary">一鍵潤飾</button>
+        <textarea class="form-input input-textarea h-80 mt-10" name="" id="" cols="30" rows="10"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">封片圖片</span>
+      <div class="form-content">
+        <button mat-raised-button class="secondary">上傳檔案</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>預告片連結</span>
+      <div class="form-content">
+        <input class="form-input w-full mr-10" type="text">
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>發行商</span>
+      <div class="form-content">
+        <div class="form-select">
+          <mat-form-field class="w-300" appearance="fill">
+            <mat-label>請選擇</mat-label>
+            <mat-select>
+              <mat-option [value]="1">選項一</mat-option>
+              <mat-option [value]="2">選項二</mat-option>
+              <mat-option [value]="3">選項三</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p class="text-12 mt-5 text-warn-100">這裡是錯誤訊息</p>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" type="submit" class="w-60 float-right">送出</button>
+
+</div>
