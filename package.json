@@ -1,6 +1,6 @@
 {
   "name": "CinePOS_FrontEnd",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
