@@ -1,0 +1,147 @@
+<div class="wrapper-page utility-common-back">
+  <!--————————————  表單元件 -————————————-->
+  <div class="form-common-back mb-50">
+    <h3 class="form-area-title">表單元件</h3>
+    <!--————  一般input ————-->
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>一般input</span>
+      <div class="form-content">
+        <input class="form-input w-300" type="text">
+      </div>
+    </div>
+
+    <!--————  很多input ————-->
+    <div class="row align-items-start">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>很多input</span>
+      <div class="form-content flex flex-col">
+        <div>
+          <input class="form-input w-300 mr-10" type="text">
+          <button mat-raised-button class="secondary btn-icon mr-10">+</button>
+        </div>
+        <input class="form-input w-300 mr-10 mt-5" type="text">
+        <input class="form-input w-300 mr-10 mt-5" type="text">
+      </div>
+    </div>
+
+    <!--————  文字框 ————-->
+    <div class="row align-items-start">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>文字框</span>
+      <div class="form-content">
+        <textarea class="form-input input-textarea h-80" name="" id="" cols="30" rows="10"></textarea>
+      </div>
+    </div>
+
+    <!--————  選單（單選） ————-->
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>選單（單選）</span>
+      <div class="form-content">
+        <div class="form-select">
+          <mat-form-field class="w-300" appearance="fill">
+            <mat-select>
+              <mat-option [value]="null">請選擇</mat-option>
+              <mat-option [value]="1">選項一</mat-option>
+              <mat-option [value]="2">選項二</mat-option>
+              <mat-option [value]="3">選項三</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p class="text-12 mt-5 text-warn-100">這裡是錯誤訊息</p>
+      </div>
+    </div>
+
+    <!--————  選單（多選） ————-->
+    <div class="row">
+      <span class="form-title">
+        <i class="text-warn-100">*</i>選單（多選）</span>
+      <div class="form-content">
+        <div class="form-select">
+          <mat-form-field class="w-300" appearance="fill">
+            <mat-label>請選擇</mat-label>
+            <mat-select multiple>
+              <mat-option [value]="1">選項一</mat-option>
+              <mat-option [value]="2">選項二</mat-option>
+              <mat-option [value]="3">選項三</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p class="text-12 mt-5 text-warn-100">這裡是錯誤訊息</p>
+      </div>
+    </div>
+
+    <!--————  radio(橫) ————-->
+    <div class="row">
+      <span class="form-title">radio橫排</span>
+      <div class="form-content">
+        <div class="form-radio list-row text-12">
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button class='mr-25' [value]="1">Option 1</mat-radio-button>
+            <mat-radio-button class='mr-25' [value]="2">Option 2</mat-radio-button>
+            <mat-radio-button [value]="3">Option 3</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <!--————  radio(直) ————-->
+    <div class="row align-items-start">
+      <span class="form-title">radio直排</span>
+      <div class="form-content">
+        <div class="form-radio">
+          <mat-radio-group aria-label="Select an option" class="list-column text-12">
+            <mat-radio-button class='mb-12' [value]="1">Option 1</mat-radio-button>
+            <mat-radio-button class='mb-12' [value]="2">Option 2</mat-radio-button>
+            <mat-radio-button [value]="3">Option 3</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <!--————  純文字 ————-->
+    <div class="row">
+      <span class="form-title">純文字</span>
+      <div class="form-content">
+        <p class="form-text">保護級</p>
+      </div>
+    </div>
+
+    <!--————  日期 ————-->
+    <div class="row">
+      <span class="form-title">日期</span>
+      <div class="form-content">
+        <div class="form-date">
+          <mat-form-field class="w-300">
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!--————————————  其它元件 -————————————-->
+  <div class="form-common-back">
+    <h3 class="form-area-title">其它元件</h3>
+
+    <!--————  按鈕 ————-->
+    <div class="row">
+      <span class="form-title">按鈕</span>
+      <div class="form-content flex">
+        <button class="btn gray small">登出</button>
+        <button class="btn gray medium">登出</button>
+        <button mat-raised-button class="secondary mr-10">登出</button>
+        <button mat-raised-button color="primary" type="submit" class="w-60">送出</button>
+      </div>
+    </div>
+  </div>
+
+</div>
