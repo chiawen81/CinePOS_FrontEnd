@@ -12,7 +12,7 @@ export const STATIC_ROUTES = {
   /**
    * 座位表
    */
-  SEATING_PLAN:'seating-plan',
+  SEATING_PLAN: 'seating-plan',
 
   /**
    * 時刻表
@@ -37,7 +37,12 @@ export const STATIC_ROUTES = {
   /**
    * 明細
    */
-  DETAIL: 'detail',
+  DETAIL: 'detail',,
+
+  /**
+   * UI 元件庫
+   */
+  GUIDELINE: 'guideline',
 
   /**
    * 共用元件範例

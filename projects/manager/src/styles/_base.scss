@@ -1,2 +1,7 @@
 @import "../app/features/table/table.component.scss";
 @import "../app/features/card/card.component.scss";
+
+body {
+  @apply bg-dark-400 text-white tracking-widest font-normal font-semibold;
+  font-weight: 400;
+}
