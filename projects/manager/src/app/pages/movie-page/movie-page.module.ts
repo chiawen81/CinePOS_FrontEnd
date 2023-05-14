@@ -9,6 +9,20 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+import { ManagerService } from '../../api/cinePOS-api';
+import { HttpClientModule } from '@angular/common/http';
+
+const materialModules = [
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatInputModule,
+  MatButtonModule,
+];
 
 @NgModule({
   declarations: [
@@ -17,15 +31,15 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MoviePageRoutingModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
-
-  ]
+    ...materialModules,
+    ShareLibsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
+  ],
+  providers: [ManagerService],
 })
 
 export class MoviePageModule { }

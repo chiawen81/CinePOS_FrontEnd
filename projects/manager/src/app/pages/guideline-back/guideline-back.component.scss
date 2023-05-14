@@ -52,7 +52,7 @@
     color: #DDDDDD;
 
     &.input-textarea {
-      height: 100px !important;
+      height: 200px !important;
       width: 100% !important;
     }
   }
@@ -126,7 +126,7 @@
     }
 
     &.list-row {
-      height: 48px;
+      height: auto;
       display: flex;
       flex-direction: row;
       align-items: center;
