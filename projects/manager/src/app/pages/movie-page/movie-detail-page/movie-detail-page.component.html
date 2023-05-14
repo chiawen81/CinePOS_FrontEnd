@@ -132,13 +132,11 @@
       <span class="form-title">
         <i class="text-warn-100">*</i>封片圖片</span>
       <div class="form-content">
-        <button mat-raised-button class="secondary" type="submit" (click)="submit()">上傳檔案</button>
+        <button mat-raised-button class="secondary" type="submit" (click)="fileUpload.click()">上傳檔案</button>
         <input
-               formControlName="file"
-               id="file"
                type="file"
-               class="form-control"
-               (change)="onFileChange($event)">
+               class="hidden" #fileUpload
+               (change)="onFileSelect($event)">
         <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(posterUrl)}}</p>
         <img *ngIf="posterUrl?.value" src="{{posterUrl.value}}" alt="" class="h-300 w-auto mt-10">
       </div>

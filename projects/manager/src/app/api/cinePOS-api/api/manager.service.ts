@@ -28,6 +28,8 @@ import { MovieDetailCreateParameter } from '../model/movieDetailCreateParameter'
 import { MovieDetailCreateSuccess } from '../model/movieDetailCreateSuccess';
 import { MovieDetailGetInfoFailed } from '../model/movieDetailGetInfoFailed';
 import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
+import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
+import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
 import { UserPostStickerReFailed } from '../model/userPostStickerReFailed';
 import { UserPostStickerRes } from '../model/userPostStickerRes';
 import { UserProfileRes } from '../model/userProfileRes';
@@ -148,6 +150,53 @@ export class ManagerService {
 
         return this.httpClient.request<MovieDetailGetInfoSuccess>('get',`${this.basePath}/v1/manager/movie/${encodeURIComponent(String(id))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新單一電影資訊
+     * 
+     * @param body 更新單一電影資訊參數
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailUpdateSuccess>;
+    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1ManagerMoviePatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<MovieDetailUpdateSuccess>('patch',`${this.basePath}/v1/manager/movie`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -299,17 +348,17 @@ export class ManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public v1ManagerUserProfileStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<UserPostStickerRes>;
-    public v1ManagerUserProfileStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserPostStickerRes>>;
-    public v1ManagerUserProfileStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserPostStickerRes>>;
-    public v1ManagerUserProfileStickerStaffIdPostForm(image: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<UserPostStickerRes>;
+    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserPostStickerRes>>;
+    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserPostStickerRes>>;
+    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (image === null || image === undefined) {
-            throw new Error('Required parameter image was null or undefined when calling v1ManagerUserProfileStickerStaffIdPost.');
+            throw new Error('Required parameter image was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
         }
 
         if (staffId === null || staffId === undefined) {
-            throw new Error('Required parameter staffId was null or undefined when calling v1ManagerUserProfileStickerStaffIdPost.');
+            throw new Error('Required parameter staffId was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -346,7 +395,7 @@ export class ManagerService {
             formParams = formParams.append('image', <any>image) as any || formParams;
         }
 
-        return this.httpClient.request<UserPostStickerRes>('post',`${this.basePath}/v1/manager/user/profile/sticker/${encodeURIComponent(String(staffId))}`,
+        return this.httpClient.request<UserPostStickerRes>('post',`${this.basePath}/v1/manager/user/sticker/${encodeURIComponent(String(staffId))}`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

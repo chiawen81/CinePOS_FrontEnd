@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { ManagerService } from '../../api/cinePOS-api';
-import { HttpClientModule } from '@angular/common/http';
+import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
 
 const materialModules = [
   MatInputModule,
@@ -27,7 +27,8 @@ const materialModules = [
 @NgModule({
   declarations: [
     MoviePageComponent,
-    MovieDetailPageComponent
+    MovieDetailPageComponent,
+    MovieViewPageComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +38,6 @@ const materialModules = [
     ShareLibsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
   ],
   providers: [ManagerService],
 })
