@@ -11,7 +11,7 @@ const routes: Routes = [
       { path: '', component: MoviePageComponent },
       { path: `${STATIC_ROUTES.DETAIL}/${STATIC_ROUTES.CREATE}`, component: MovieDetailPageComponent },
       { path: STATIC_ROUTES.DETAIL + '/:id', component: MovieDetailPageComponent },
-      { path: STATIC_ROUTES.DETAIL + STATIC_ROUTES.EDIT + '/:id', component: MovieDetailPageComponent },
+      { path: `${STATIC_ROUTES.DETAIL}/${STATIC_ROUTES.EDIT}/:id`, component: MovieDetailPageComponent },
     ]
   }
 ];
