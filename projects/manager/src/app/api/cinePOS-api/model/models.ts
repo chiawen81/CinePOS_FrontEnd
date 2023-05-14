@@ -16,6 +16,8 @@ export * from './movieDetailGetInfoFailed';
 export * from './movieDetailGetInfoSuccess';
 export * from './movieDetailRes';
 export * from './movieDetailResReleaseDate';
+export * from './movieDetailUpdateFaild';
+export * from './movieDetailUpdateSuccess';
 export * from './profileStaffIdBody';
 export * from './userPostStickerReFailed';
 export * from './userPostStickerRes';
