@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
 import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, UserPostStickerRes, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
+import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
 
 
 @Injectable({
@@ -44,8 +45,8 @@ export class MoviePageService {
 
 
   // 更新電影資訊
-  updateMovieDetail(para: MovieDetailCreateParameter): Observable<MovieDetailCreateSuccess> {
-    return this._ManagerService.v1ManagerMoviePost(para)
+  updateMovieDetail(para: MovieDetailCreateParameter): Observable<MovieDetailUpdateSuccess> {
+    return this._ManagerService.v1ManagerMoviePatch(para)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)

@@ -28,6 +28,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ApiHeaderInterceptor } from './core/interceptor/api-header';
 import { ErrorInterceptor } from './core/interceptor/error-interceptor';
 import { ApiModule as CinePosApiModule, BASE_PATH, Configuration } from "./api/cinePOS-api";
+import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 
 const materialModules = [
   MatInputModule,
@@ -110,8 +111,14 @@ export class MyDateAdapter extends NativeDateAdapter {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
-    }
+    },
+    { provide: APP_BASE_HREF, useFactory: getBaseHref, deps: [PlatformLocation] },
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function getBaseHref(platformLocation: PlatformLocation): string {
+  return platformLocation.getBaseHrefFromDOM();
+}

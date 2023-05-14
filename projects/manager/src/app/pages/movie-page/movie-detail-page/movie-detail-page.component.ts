@@ -39,7 +39,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   get distributor() { return this.formGroup.get('distributor') as FormControl; }            // 發行商
   get posterUrl() { return this.formGroup.get('posterUrl') as FormControl; }                // 海報連結
 
-
   constructor(
     private _Route: ActivatedRoute,
     private _MoviePageService: MoviePageService,
@@ -50,23 +49,22 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initForm();
     this.isEdit = (this._Route.snapshot?.url[1]?.path) === 'edit';
-    this.login();
-    setTimeout(() => {
-      if (this.isEdit) {
-        this.getMovieInfoAPI(this._Route.snapshot.params['id']); // API- 取得電影資訊
-
-      } else {
-        this.addCast();
-      };
-      this.getOptionAPI();                                       // API- 取得選項資料
-    });
-
     console.log('isEdit', this.isEdit, this._Route.snapshot);
+
+    this.login();                                              // 登入 (====之後串了真正登入要刪掉)
+    this.getOptionAPI();                                       // API- 取得選項資料
+
+    if (this.isEdit) {
+      // 編輯狀態
+      this.getMovieInfoAPI(this._Route.snapshot.params['id']); // API- 取得電影資訊
+
+    } else {
+      // 新增狀態
+      this.addCast();
+    };
   }
 
   ngAfterViewInit() {
-
-
     this._ChangeDetectorRef.detectChanges();
   }
 
@@ -136,7 +134,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     let errorMsg = "";
     let error = control.errors;
 
-    if (error) {
+    if (error && (control.touched || control.dirty)) {
       if (error['required']) {
         errorMsg = "此為必填欄位";
       } else if (error['pattern']) {
@@ -200,10 +198,14 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   // ————————————————————————————————  API  ————————————————————————————————
   // API- 取得電影資訊
   getMovieInfoAPI(id: string) {
-    this._MoviePageService.getMovieDetail(id).subscribe(res => {
-      console.log(res)
-      this.movieInfoAPI = res.data;
-      this.setForm(this.movieInfoAPI);
+    setTimeout(() => {
+      this._MoviePageService.getMovieDetail(id).subscribe(res => {
+        console.log(res)
+        this.movieInfoAPI = res.data;
+        this._ChangeDetectorRef.detectChanges();
+
+        this.setForm(this.movieInfoAPI);
+      });
     });
   }
 
@@ -232,10 +234,10 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
   // API- 更新電影資訊
   patchUpdateMovieDetailAPI(para: any) {
-    // this._MoviePageService.updateMovieDetail(para).subscribe(res => {
-    //   console.log('新增電影資訊-成功res', res);
-    //   alert(res.message);
-    // });
+    this._MoviePageService.updateMovieDetail(para).subscribe(res => {
+      console.log('更新電影資訊-成功res', res);
+      alert(res.message);
+    });
   }
 
 
@@ -257,6 +259,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       { name: '驚悚', value: 12 },
       { name: '犯罪', value: 13 },
     ];
+    this._ChangeDetectorRef.detectChanges();
 
     this.provideVersionOptions = [
       { name: '2D', value: 1 },
@@ -264,6 +267,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       { name: 'IMAX', value: 3 },
       { name: '4DX', value: 4 },
     ];
+    this._ChangeDetectorRef.detectChanges();
 
     this.rateOptions = [
       { name: '普通級', value: 0 },
@@ -291,8 +295,10 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   }
 
 
-
   getFormConsole() {
     console.log('formGroup- 取值', this.formGroup);
   }
+
+
+
 }
