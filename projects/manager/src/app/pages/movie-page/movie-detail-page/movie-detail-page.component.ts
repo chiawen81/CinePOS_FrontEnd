@@ -1,12 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { MoviePageService } from './../services/movie-page.service';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StorageEnum } from 'projects/staff/src/app/core/enums/storage/storage-enum';
 import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
 import { StorageService } from 'projects/staff/src/app/core/services/storage/storage.service';
-import { StaffService } from '../../../api/cinePOS-api';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -40,16 +38,12 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   get trailerLink() { return this.formGroup.get('trailerLink') as FormControl; }            // 預告片連結
   get distributor() { return this.formGroup.get('distributor') as FormControl; }            // 發行商
   get posterUrl() { return this.formGroup.get('posterUrl') as FormControl; }                // 海報連結
-  get file() { return this.formGroup.get('file') as FormControl; }                          // 海報檔案
-  get fileSource() { return this.formGroup.get('fileSource') as FormControl; }              // 海報檔案（暫存）
 
 
   constructor(
     private _Route: ActivatedRoute,
     private _MoviePageService: MoviePageService,
-    private _StaffService: StaffService,
     private _StorageService: StorageService,
-    private _Http: HttpClient,
     private _ChangeDetectorRef: ChangeDetectorRef,
   ) { }
 
@@ -64,7 +58,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       } else {
         this.addCast();
       };
-      this.getOptionAPI();                                    // API- 取得選項資料
+      this.getOptionAPI();                                       // API- 取得選項資料
     });
 
     console.log('isEdit', this.isEdit, this._Route.snapshot);
@@ -93,8 +87,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       trailerLink: new FormControl("", [Validators.pattern(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/)]),
       distributor: new FormControl("",),
       posterUrl: new FormControl("", [Validators.required]),
-      file: new FormControl(null),
-      fileSource: new FormControl('', [Validators.required])
     });
   }
 
@@ -125,34 +117,18 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     this.cast.removeAt(idx);
   }
 
-  onFileChange(event: any) {
+
+
+  // 上傳檔案- 選擇檔案
+  onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.formGroup.patchValue({
-        fileSource: file
-      });
-    }
+      console.log('上傳檔案原始檔', file);
+
+      this.postPosterAPI(file);
+    };
   }
 
-  submit() {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRlYzMxOTc3ZmRlZThmYTBiYzc1NyIsInN0YWZmSWQiOiJBMDAwMSIsImlhdCI6MTY4NDA2MzY5MywiZXhwIjoxNjg0MzIyODkzfQ.UEtXscjKI8S2vrKJvbcEJBAr07t7KSV1McqAWt1lePo";
-    this._StorageService.setLocalStorage(StorageEnum.token, token);
-    const profileData: ProfileData = {
-      name: "文文編輯頁測試",
-      staffId: "A0001",
-      imgUrl: 'assets/images/angular-icon.webp'
-    }
-    this._StorageService.setLocalStorage(StorageEnum.profileData, profileData);
-
-    const formData = new FormData();
-    formData.append('image', this.fileSource.value);
-    console.log('formData', formData);
-    console.log('file', this.file.value)
-    console.log('fileSource', this.fileSource.value)
-    this._StaffService.v1StaffUserProfileStaffIdPostForm(this.fileSource.value, "A0001").subscribe(res => {
-      console.log(res);
-    })
-  }
 
 
   // 共用- 錯誤訊息
@@ -172,14 +148,94 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   }
 
 
+
+  // 送單- 整理參數
+  getCreateMovieDetailPara() {
+    let para = {
+      id: this.id.value,
+      title: this.title.value,
+      enTitle: this.enTitle.value,
+      genre: this.genre.value,
+      runtime: this.runtime.value,
+      provideVersion: this.provideVersion.value,
+      rate: this.rate.value,
+      director: this.director.value,
+      cast: this.cast.value,
+      description: this.description.value,
+      status: this.status.value,
+      releaseDate: this.releaseDate.value,
+      trailerLink: this.trailerLink.value,
+      distributor: this.distributor.value,
+      posterUrl: this.posterUrl.value,
+    };
+    console.log('送單參數', para);
+
+    return para;
+  }
+
+
+
+  // 送單
+  submit() {
+    console.log(this.formGroup);
+    if (this.formGroup.valid) {
+      let para = this.getCreateMovieDetailPara();                // 整理參數
+
+      if (this.isEdit) {
+        this.patchUpdateMovieDetailAPI(para);                    // API- 更新電影資訊
+      } else {
+        this.postCreateMovieDetailAPI(para);                     // API- 新增電影資訊
+      };
+
+    } else {
+      this.formGroup.markAllAsTouched();
+      alert("請填寫必填欄位");
+    };
+  }
+
+
+
+
+
   // ————————————————————————————————  API  ————————————————————————————————
   // API- 取得電影資訊
   getMovieInfoAPI(id: string) {
-    this._MoviePageService.v1ManagerMovieIdGet(id).subscribe(res => {
+    this._MoviePageService.getMovieDetail(id).subscribe(res => {
       console.log(res)
       this.movieInfoAPI = res.data;
       this.setForm(this.movieInfoAPI);
     });
+  }
+
+
+
+  // API- 上傳檔案(暫時借用上傳大頭貼) ====待處理====
+  postPosterAPI(file: Blob) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    this._MoviePageService.uploadImage(file, "B0001").subscribe(res => {
+      console.log('上傳檔案成功response', res);
+      this.posterUrl.setValue(res.data?.stickerUrl);
+    });
+  }
+
+
+  // API- 新增電影資訊
+  postCreateMovieDetailAPI(para: any) {
+    this._MoviePageService.createMovieDetail(para).subscribe(res => {
+      console.log('新增電影資訊-成功res', res);
+      alert(res.message);
+    });
+  }
+
+
+  // API- 更新電影資訊
+  patchUpdateMovieDetailAPI(para: any) {
+    // this._MoviePageService.updateMovieDetail(para).subscribe(res => {
+    //   console.log('新增電影資訊-成功res', res);
+    //   alert(res.message);
+    // });
   }
 
 
@@ -221,6 +277,8 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   }
 
 
+
+  // 登入
   login() {
     let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDA1MTEyNiwiZXhwIjoxNjg0MzEwMzI2fQ.LTT8tH9va3GaO8o7K1u9ekAOYoKYWWWTEEigN32ziOg";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
@@ -231,6 +289,8 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     }
     this._StorageService.setLocalStorage(StorageEnum.profileData, profileData);
   }
+
+
 
   getFormConsole() {
     console.log('formGroup- 取值', this.formGroup);
