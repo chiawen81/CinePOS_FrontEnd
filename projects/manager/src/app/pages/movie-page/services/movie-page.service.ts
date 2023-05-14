@@ -10,11 +10,11 @@ import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieD
 export class MoviePageService {
 
   constructor(
-    private managerService: ManagerService,
+    private _ManagerService: ManagerService,
   ) { }
 
   v1ManagerMovieIdGet(id: string): Observable<MovieDetailGetInfoSuccess> {
-    return this.managerService.v1ManagerMovieIdGet(id)
+    return this._ManagerService.v1ManagerMovieIdGet(id)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)
