@@ -22,10 +22,11 @@ import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter }
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
+  MatPaginatorModule
 ];
 
 const featureModules = [
