@@ -22,7 +22,7 @@ export const STATIC_ROUTES = {
   /**
    * 儀錶板
    */
-  DASHBOARD: 'Dashboard',
+  DASHBOARD: 'dashboard',
 
   /**
    * 新增
@@ -47,5 +47,10 @@ export const STATIC_ROUTES = {
   /**
    * 共用元件範例
    */
-  SAMPLE: 'sample'
+  SAMPLE: 'sample',
+
+  /** 
+   * 列表
+   */
+  LIST : 'list'
 }

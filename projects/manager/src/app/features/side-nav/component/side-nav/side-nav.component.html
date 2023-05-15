@@ -9,7 +9,7 @@
         </li>
         <ul class="sub-menu" *ngIf="mainItem.subMenu.length">
           <li class="text-13" *ngFor="let subItem of mainItem.subMenu;let subIdx=index">
-            <a href="{{subItem.url}}">{{subItem.title}}</a>
+            <a [routerLink]="subItem.url">{{subItem.title}}</a>
           </li>
         </ul>
       </ng-container>
