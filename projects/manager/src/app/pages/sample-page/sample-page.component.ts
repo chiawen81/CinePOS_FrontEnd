@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CinePageSet } from '../../share/pagination/page-set';
+import { SAMPLE_LIST_MOCK } from './mock';
 
 @Component({
   selector: 'app-sample-page',
@@ -7,18 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SamplePageComponent implements OnInit {
 
-  sampleList:any[] = [
-    { title: "The Shawshank Redemption", director: "Frank Darabont", year: 1994, genre: "Drama", rating: 9.3 },
-    { title: "The Godfather", director: "Francis Ford Coppola", year: 1972, genre: "Crime, Drama", rating: 9.2 },
-    { title: "The Dark Knight", director: "Christopher Nolan", year: 2008, genre: "Action, Crime, Drama", rating: 9.0 },
-    { title: "Schindler's List", director: "Steven Spielberg", year: 1993, genre: "Biography, Drama, History", rating: 8.9 },
-    { title: "Pulp Fiction", director: "Quentin Tarantino", year: 1994, genre: "Crime, Drama", rating: 8.9 }
-  ]
+  sampleList: any[] = SAMPLE_LIST_MOCK;
+  displayList: any[] = SAMPLE_LIST_MOCK;
+  pageSet1 = new CinePageSet();
 
   constructor() { }
 
   ngOnInit(): void {
+    this.pageSet1.initialize(this.sampleList.length);
+
+
+    // DEMO 才前端切
+    this.displayList = this.pageSet1.slicePage(this.sampleList, this.pageSet1.currentPage, this.pageSet1.currentPageSize);
+
   }
 
+  handlePageEvent($event: any) {
+    console.log($event);
+    this.pageSet1.currentPage = $event.pageIndex +1 ;
+    this.displayList = this.pageSet1.slicePage(this.sampleList, this.pageSet1.currentPage , this.pageSet1.currentPageSize);
 
+  }
 }

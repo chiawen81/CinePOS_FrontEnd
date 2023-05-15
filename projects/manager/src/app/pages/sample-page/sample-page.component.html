@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let paramItem of sampleList">
+                <tr *ngFor="let paramItem of displayList">
                     <td data-title="標題">{{ paramItem.title }}</td>
                     <td data-title="導演">{{ paramItem.director }}</td>
                     <td data-title="年份">{{ paramItem.year }}</td>
@@ -21,5 +21,10 @@
                 </tr>
             </tbody>
         </cine-table>
+
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="pageSet1.totalCounts"
+            [pageSize]="pageSet1.currentPageSize" [showFirstLastButtons]="true"
+            [pageIndex]="pageSet1.currentPage-1" aria-label="Select page">
+        </mat-paginator>
     </cine-card-content>
 </cine-card>
