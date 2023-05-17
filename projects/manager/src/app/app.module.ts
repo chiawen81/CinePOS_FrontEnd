@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { DxSchedulerModule } from 'devextreme-angular';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
@@ -86,6 +87,7 @@ export class MyDateAdapter extends NativeDateAdapter {
     MatButtonModule,
     ReactiveFormsModule,
     CoreDirectivesModule,
+    DxSchedulerModule
   ],
   exports: [
     ...materialModules

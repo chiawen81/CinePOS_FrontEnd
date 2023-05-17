@@ -11,7 +11,7 @@ export class SideNavComponent implements OnInit {
     {
       title: "電影資訊",
       iconFilePath: "assets/images/icon/menu-movie-info.svg",
-      url: "/",
+      url: "",
       subMenu: [
         {
           title: "電影資訊列表頁",
@@ -29,7 +29,7 @@ export class SideNavComponent implements OnInit {
     }, {
       title: "影廳管理",
       iconFilePath: "assets/images/icon/menu-seat.svg",
-      url: "/",
+      url: "",
       subMenu: [
         {
           title: "影廳列表",

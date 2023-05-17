@@ -1,0 +1,31 @@
+.timetable{
+    // .dx-scheduler-header{
+    //     display: none;
+    // }
+    .dx-scheduler-container{
+        background-color: transparent;
+        // @apply bg-dark-200;
+    }
+    .dx-scheduler-work-space{
+        background-color:transparent;
+        // @apply bg-dark-200;
+        border: 0;
+    }
+    .dx-scheduler-timeline .dx-scheduler-appointment{
+        @apply rounded-large;
+    }
+    .dx-scheduler-appointment-content{
+        display: flex;
+        align-items: center;
+    }
+    .dx-scheduler-timeline.dx-scheduler-work-space-both-scrollbar .dx-scheduler-header-panel{
+        border: none;
+    }
+    .dx-scheduler-timeline.dx-scheduler-work-space-both-scrollbar .dx-scheduler-header-panel-empty-cell{
+        border-bottom: none;
+    }
+    .dx-scheduler-group-flex-container .dx-scheduler-group-row:last-child .dx-scheduler-group-header {
+        border-top: 0;
+        border-bottom: 0;
+    }
+}
