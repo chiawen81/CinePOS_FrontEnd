@@ -54,6 +54,27 @@ export class TimetableService {
     return this.request(HTTP_METHOD.DELETE, {}, url);
   }
 
+  updateTimetable(param: {
+    _id: string,
+    movieId: string,
+    theaterId: string,
+    startTime: number,
+    endTime: number
+  }) {
+    const url = `timetable/update`
+    return this.request(HTTP_METHOD.PATCH, param, url);
+  }
+
+  createTimetable(param: {
+    movieId: string,
+    theaterId: string,
+    startTime: Date,
+    endTime: Date
+  }) {
+    const url = `timetable/create`
+    return this.request(HTTP_METHOD.POST, param, url);
+  }
+
   /**
  * call HTTP 主要方法
  * @param method http method

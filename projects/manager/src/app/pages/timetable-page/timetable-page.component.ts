@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DxSchedulerComponent } from 'devextreme-angular';
 import Query from 'devextreme/data/query';
 import { MovieData, RateCode, TheatreData, TimetableService } from './services/timetable.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-timetable-page',
@@ -50,7 +51,9 @@ export class TimetablePageComponent implements OnInit {
 
 
   constructor(
-    private timetableService: TimetableService) { }
+    private timetableService: TimetableService) {
+      this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+     }
   ngOnInit(): void {
     this.getTimetableList()
   }
@@ -65,7 +68,7 @@ export class TimetablePageComponent implements OnInit {
         this.theatreData = this.getTheaters(filterData);
         console.log(this.theatreData);
         this.moviesData = this.getMovies(filterData);
-        console.log(this.moviesData);
+        console.log('moviesData', this.moviesData);
       }
     })
   }
@@ -115,7 +118,7 @@ export class TimetablePageComponent implements OnInit {
 
         if (!movieMap[movieId]) {
           movieMap[movieId] = true;
-          movies.push({ text: movieTitle, id: movieId, color, duration,rate });
+          movies.push({ text: movieTitle, id: movieId, color, duration, rate });
           // theaters.push({ text: theaterName, id: id });
         }
       }
@@ -144,13 +147,71 @@ export class TimetablePageComponent implements OnInit {
     return theaters;
   }
 
+  updateAppointment(event: any) {
+    console.log('upate', event);
+    const param = {
+      _id: event.newData._id,
+      movieId: event.newData.movieId,
+      theaterId: event.newData.theatreId,
+      startTime: event.newData.startDate,
+      endTime: event.newData.endDate
+    }
+    this.timetableService.updateTimetable(param).subscribe((res) => {
+      if (res) {
+        alert(res.message);
+        this.getTimetableList();
+      }
+    })
+  }
+
   deleteAppointment(event?: any) {
     console.log(event);
-    this.timetableService.deleteTimetable(event.appointmentData._id).subscribe((res)=>{
-      if(res){
+    this.timetableService.deleteTimetable(event.appointmentData._id).subscribe((res) => {
+      if (res) {
         alert(res.message);
       }
     });
+  }
+
+  onAppointmentAdd(e: any) {
+    const moviesData = this.moviesData.filter((item)=>{
+      return item.id = e.itemElement.id;
+    });
+    console.log(e);
+    console.log(e.itemElement);
+    console.log(e.itemElement.id);
+    const param = {
+      movieId: e.itemElement.id,
+      theaterId: e.itemData.theatreId,
+      startTime: new Date(e.itemData.startDate),
+      endTime: moment(e.itemData.startDate).add('minute',moviesData[0].duration).toDate()
+    }
+    console.log(param);
+    this.timetableService.createTimetable(param).subscribe((res)=>{
+      if(res){
+        alert(res.message);
+        this.getTimetableList();
+      }
+    })
+    // if (index >= 0) {
+    // this.tasks.splice(index, 1);
+    // this.data.push(e.fromData);
+    // }
+  }
+
+  onListDragStart(e: any) {
+    
+    e.cancel = true;
+  }
+
+  onItemDragStart(e: any) {
+    e.itemData = e.fromData;
+  }
+
+  onItemDragEnd(e: any) {
+    if (e.toData) {
+      e.cancel = true;
+    }
   }
 
   formatTime(date: Date): string {
