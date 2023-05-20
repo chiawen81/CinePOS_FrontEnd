@@ -11,8 +11,10 @@
                 <div *dxTemplate="let data of 'timeCellTemplate'"class="text-white" >
                     {{data.date.getHours()}}:{{(data.date.getMinutes() < 10 ? '0' : '') + data.date.getMinutes()}}
                 </div>
-                <dxi-resource fieldExpr="movieId" [dataSource]="moviesData">
+                <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
                 </dxi-resource>
+                <!-- <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
+                </dxi-resource> -->
                 <dxi-resource fieldExpr="rate"  label="movieRate" [useColorAsDefault]="true" [dataSource]="movieRate">
                 </dxi-resource>
                 <dxi-resource fieldExpr="theatreId" [dataSource]="theatreData">
@@ -42,7 +44,7 @@
     </div>
     <div class="content grid grid-cols-3 gap-10 mt-20">
         <ng-container *ngFor="let item of moviesData">
-            <div class="rounded-large p-16"  style="width: 200px;height: 122px;" [ngStyle]="{background: getColor(item['id'])}">
+            <div class="rounded-large p-16"  style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
                 <div class="font-bold">{{ item.text }}</div>
                 <div class="flex">
                     <div class="dropdown-appointment-dates">
