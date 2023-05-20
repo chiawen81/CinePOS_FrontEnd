@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { DxSchedulerModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
@@ -72,6 +73,7 @@ export class MyDateAdapter extends NativeDateAdapter {
     LayoutComponent,
     SamplePageComponent,
     GuidelineBackComponent,
+    RatePipe,
   ],
   imports: [
     BrowserModule,

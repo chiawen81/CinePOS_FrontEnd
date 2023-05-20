@@ -4,34 +4,36 @@
             <dx-scheduler id="scheduler" [dataSource]="data" [views]="['timelineDay']" currentView="timelineDay"
                 [firstDayOfWeek]="0" [startDayHour]="0" [endDayHour]="24" [showAllDayPanel]="false"
                 [groups]="['theatreId']" [currentDate]="currentDate" [crossScrollingEnabled]="true" [cellDuration]="30"
-                [height]="600"  appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
-                (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
+                [height]="600" appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
+                (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
+                (onAppointmentDeleting)="deleteAppointment($event)"
+                >
                 <dxo-editing [allowAdding]="false"></dxo-editing>
-
-                <div *dxTemplate="let data of 'timeCellTemplate'"class="text-white" >
-                    {{data.date.getHours()}}:{{(data.date.getMinutes() < 10 ? '0' : '') + data.date.getMinutes()}}
-                </div>
-                <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
-                </dxi-resource>
-                <!-- <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
-                </dxi-resource> -->
-                <dxi-resource fieldExpr="rate"  label="movieRate" [useColorAsDefault]="true" [dataSource]="movieRate">
-                </dxi-resource>
-                <dxi-resource fieldExpr="theatreId" [dataSource]="theatreData">
-                </dxi-resource>
-
-                <div *dxTemplate="let model of 'appointment-template'">
-                    <div class="showtime-preview text-white p-12 flex w-full justify-between">
-                        <div>{{ getMovieById(model.targetedAppointmentData.movieId).text }}</div>
-                        <div class="flex">
-                            <div class="dropdown-appointment-dates">
-                                時長
-                            </div>
-                            <div class="px-12">|</div>
-                            <div>{{model.targetedAppointmentData.rateName}}</div>
+                <div *dxTemplate="let data of 'timeCellTemplate'" class="text-white">
+                    {{data.date.getHours()}}:{{(data.date.getMinutes() < 10 ? '0' : '' ) + data.date.getMinutes()}}
                         </div>
-                    </div>
-                </div>
+                        <dxi-resource fieldExpr="movieId" [useColorAsDefault]="true" [dataSource]="moviesData">
+                        </dxi-resource>
+                        <!-- <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
+                </dxi-resource> -->
+                        <dxi-resource fieldExpr="rate" label="movieRate" [useColorAsDefault]="true"
+                            [dataSource]="movieRate">
+                        </dxi-resource>
+                        <dxi-resource fieldExpr="theatreId" [dataSource]="theatreData">
+                        </dxi-resource>
+
+                        <div *dxTemplate="let model of 'appointment-template'">
+                            <div class="showtime-preview text-white p-12 flex w-full justify-between">
+                                <div>{{ getMovieById(model.targetedAppointmentData.movieId).text }}</div>
+                                <div class="flex">
+                                    <div class="dropdown-appointment-dates">
+                                        {{model.targetedAppointmentData.movie.runtime}}
+                                    </div>
+                                    <div class="px-12">|</div>
+                                    <div>{{model.targetedAppointmentData.movie.rate | rate}}</div>
+                                </div>
+                            </div>
+                        </div>
             </dx-scheduler>
         </div>
     </div>
@@ -39,19 +41,19 @@
 <div class="w-full bg-dark-300  p-20" style="height: 350px;">
     <div class="title flex justify-between">
         <div>電影列表</div>
-        
+
         <input class="form-input w-300 mr-10" type="text">
     </div>
     <div class="content grid grid-cols-3 gap-10 mt-20">
         <ng-container *ngFor="let item of moviesData">
-            <div class="rounded-large p-16"  style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
+            <div class="rounded-large p-16" style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
                 <div class="font-bold">{{ item.text }}</div>
                 <div class="flex">
                     <div class="dropdown-appointment-dates">
-                        時長
+                        {{item.duration}}
                     </div>
                     <div class="px-12">|</div>
-                    <div>xx級</div>
+                    <div>{{item.rate | rate}}</div>
                 </div>
             </div>
         </ng-container>

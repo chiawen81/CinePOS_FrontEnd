@@ -41,7 +41,8 @@ export class TimetablePageComponent implements OnInit {
       color: '#442727',
     },
   ];;
-  currentDate: Date = new Date('2023-05-11');
+  currentDate: Date = new Date('2023-07-15');
+  // currentDate: Date = new Date();
 
   moviesData: MovieData[] = [];
 
@@ -49,29 +50,14 @@ export class TimetablePageComponent implements OnInit {
 
 
   constructor(
-    private service: TimetableService) {
-    // this.data = service.getTimetableList();
-    // this.moviesData = service.getMoviesData();
-    // this.theatreData = service.getTheatreData();
-  }
+    private timetableService: TimetableService) { }
   ngOnInit(): void {
     this.getTimetableList()
   }
 
   getTimetableList() {
-    this.service.getTimetableList().subscribe((res) => {
+    this.timetableService.getTimetableList().subscribe((res) => {
       if (res.data) {
-        // this.data = [
-        //   {
-        //       theatreId: '645a210ad658869fb83b1b8b',
-        //       movieId: '646785bacd6bad64c7a1b40f',
-        //       startDate: new Date('2023-05-20T08:00:00.000Z'),
-        //       endDate: new Date('2023-05-20T10:00:00.000Z'),
-        //       rate: 1,
-        //       // rateName: '普遍級'      
-        //     }
-        // ];
-        // this.data = this.mapTimetable(res.data.timetable);
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
         console.log(this.data);
@@ -114,7 +100,7 @@ export class TimetablePageComponent implements OnInit {
     }
   }
 
-  getMovies(data:any[]): MovieData[] {
+  getMovies(data: any[]): MovieData[] {
     const movieMap: { [key: string]: boolean } = {};
     const movies: MovieData[] = [];
 
@@ -124,11 +110,12 @@ export class TimetablePageComponent implements OnInit {
         const movieTitle = entry.movie.title;
         const color = entry.color;
         const duration = entry.movie.runtime;
+        const rate = entry.movie.rate;
 
 
         if (!movieMap[movieId]) {
           movieMap[movieId] = true;
-          movies.push({ text: movieTitle, id: movieId,color,duration });
+          movies.push({ text: movieTitle, id: movieId, color, duration,rate });
           // theaters.push({ text: theaterName, id: id });
         }
       }
@@ -137,7 +124,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   /** TODO: 應該要get所有的廳院 */
-  getTheaters(data:any[]): TheatreData[] {
+  getTheaters(data: any[]): TheatreData[] {
     const theaterMap: { [key: string]: boolean } = {};
     const theaters: TheatreData[] = [];
 
@@ -155,6 +142,15 @@ export class TimetablePageComponent implements OnInit {
       }
     }
     return theaters;
+  }
+
+  deleteAppointment(event?: any) {
+    console.log(event);
+    this.timetableService.deleteTimetable(event.appointmentData._id).subscribe((res)=>{
+      if(res){
+        alert(res.message);
+      }
+    });
   }
 
   formatTime(date: Date): string {

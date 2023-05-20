@@ -43,18 +43,15 @@ export class TimetableService {
 
   ) { }
 
-  getTheatreData() {
-    return theatreData;
-  }
-
-  // getMoviesData() {
-  //   return moviesData;
-  // }
-
   getTimetableList() {
     // return data;
     const url = 'timetable/list'
-    return this.request(HTTP_METHOD.GET,{startTime:1675123200000,endTime:1684161614000},url);
+    return this.request(HTTP_METHOD.GET, { startTime: 1689350400000, endTime: 1689436800000 }, url);
+  }
+
+  deleteTimetable(id: string) {
+    const url = `timetable/${id}`
+    return this.request(HTTP_METHOD.DELETE, {}, url);
   }
 
   /**
@@ -182,6 +179,8 @@ export class MovieData {
 
   color: string;
 
+  rate: RateCode
+
   constructor(data: MovieData) {
     this.id = data.id;
     this.text = data.text;
@@ -190,6 +189,7 @@ export class MovieData {
     this.image = data.image;
     this.duration = data.duration;
     this.color = data.color;
+    this.rate = data.rate;
   }
 }
 
@@ -331,10 +331,10 @@ const theatreData: TheatreData[] = [{
 // }
 // ];
 
-export enum RateCode{
+export enum RateCode {
   g = 0,
   pg = 6,
   pg12 = 12,
   pg15 = 15,
-  r =18
+  r = 18
 }
