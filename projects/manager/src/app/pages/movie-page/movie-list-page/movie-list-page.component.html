@@ -1,53 +1,89 @@
-<div class="wrapper-page utility-common-back" [formGroup]="formGroup">
-  <div class="form-common-back utility-common-back mb-50">
-    <div class="row">
-      <span class="form-title">上映狀態</span>
-      <div class="form-content">
-        <div class="form-radio list-row text-12">
-          <mat-radio-group aria-label="Select an option" formControlName="status">
-            <mat-radio-button class='mr-25' *ngFor="let item of statusOptions" [value]="item.value">{{item.name}}</mat-radio-button>
-          </mat-radio-group>
+<div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
+  <cine-card class="mb-50">
+    <cine-card-header>查詢條件</cine-card-header>
+    <cine-card-content>
+      <div class="row">
+        <span class="form-title">上映狀態</span>
+        <div class="form-content">
+          <div class="form-select select-small">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>請選擇</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let item of statusOptions" [value]="item.value">{{item?.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <span class="form-title">查詢期間</span>
-      <div class="form-content">
-        <div class="form-date">
-          <mat-form-field class="w-300">
-            <input matInput [matDatepicker]="picker" formControlName="searchDateS">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <span>~</span>
-        <div class="form-date">
-          <mat-form-field class="w-300">
-            <input matInput [matDatepicker]="picker" formControlName="searchDateE">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+      <div class="row">
+        <span class="form-title">查詢期間</span>
+        <div class="form-content">
+          <div class="form-date">
+            <mat-form-field class="w-300">
+              <input matInput [matDatepicker]="picker1" [formControl]="searchDateS">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <span class="ml-10 mr-10">~</span>
+            <mat-form-field class="w-300">
+              <input matInput [matDatepicker]="picker2"
+                     [formControl]="searchDateE">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <span class="form-title">電影名稱</span>
-      <div class="form-content">
-        <mat-form-field class="w-100" appearance="fill">
-          <mat-label>請選擇</mat-label>
-          <mat-select formControlName="title">
-            <mat-option [value]="-1">已下線</mat-option>
-            <mat-option [value]="0">籌備中</mat-option>
-            <mat-option [value]="1">上映中</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="row">
+        <span class="form-title">電影名稱</span>
+        <div class="form-content flex flex-row justify-between">
+          <input class="form-input w-300" type="text" formControlName="title">
+          <button mat-raised-button color="primary" type="submit" class="w-60 float-right">查詢</button>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <button mat-raised-button color="primary" type="submit" class="w-60 float-right">查詢</button>
+    </cine-card-content>
+  </cine-card>
+
+
+
+  <cine-card>
+    <cine-card-header>查詢結果</cine-card-header>
+    <cine-card-content>
+      <cine-table>
+        <thead>
+          <tr>
+            <th>系統編號</th>
+            <th>上線狀態</th>
+            <th>電影名稱</th>
+            <th>電影類型</th>
+            <th>分級</th>
+            <th>上映日期</th>
+            <th>支援設備</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let paramItem of displayList">
+            <td data-title="系統編號">{{ paramItem.title }}</td>
+            <td data-title="上線狀態">{{ paramItem.title }}</td>
+            <td data-title="電影名稱">{{ paramItem.title }}</td>
+            <td data-title="電影類型">{{ paramItem.genre || '-' }}</td>
+            <td data-title="分級">{{ paramItem.director }}</td>
+            <td data-title="上映日期">{{ paramItem.director }}</td>
+            <td data-title="支援設備">{{ paramItem.director }}</td>
+          </tr>
+        </tbody>
+      </cine-table>
+
+      <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="pageSet1.totalCounts"
+                     [pageSize]="pageSet1.currentPageSize" [showFirstLastButtons]="true"
+                     [pageIndex]="pageSet1.currentPage-1" aria-label="Select page">
+      </mat-paginator>
+    </cine-card-content>
+  </cine-card>
+
 </div>

@@ -270,7 +270,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
   // 登入
   login(): void {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY0NzMwMywiZXhwIjoxNjg0OTA2NTAzfQ.6Iv6V2vSUKHS9NJHCInQFDQ9kxTmlN3b9w0zse44Z9U";
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY1Njk2NSwiZXhwIjoxNjg0OTE2MTY1fQ.F0wkHVM6fZq-VXWP7S3ngUwM6yHswjD1IPP5S9Uu7B4";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
     const profileData: ProfileData = {
       name: "文文編輯頁測試",

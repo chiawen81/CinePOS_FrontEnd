@@ -11,11 +11,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
-import { ManagerService } from '../../api/cinePOS-api';
 import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
 import { MovieListPageComponent } from './movie-list-page/movie-list-page.component';
 import { CardModule } from '../../features/card/card.module';
-import { SamplePageComponent } from '../sample-page/sample-page.component';
+import { TableModule } from '../../features/table/table.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 const materialModules = [
@@ -25,6 +25,7 @@ const materialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonModule,
+  MatPaginatorModule
 ];
 
 @NgModule({
@@ -42,6 +43,7 @@ const materialModules = [
     MoviePageRoutingModule,
     ShareLibsModule,
     CardModule,
+    TableModule,
     ...materialModules,
 
   ]
