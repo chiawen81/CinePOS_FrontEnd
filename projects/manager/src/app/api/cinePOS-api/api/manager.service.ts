@@ -25,12 +25,14 @@ import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
+import { ManagerMovieListSuccess } from '../model/managerMovieListSuccess';
 import { MovieDetailCreateFaild } from '../model/movieDetailCreateFaild';
 import { MovieDetailCreateParameter } from '../model/movieDetailCreateParameter';
 import { MovieDetailCreateSuccess } from '../model/movieDetailCreateSuccess';
 import { MovieDetailGetInfoFailed } from '../model/movieDetailGetInfoFailed';
 import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
+import { MovieDetailUpdateParameter } from '../model/movieDetailUpdateParameter';
 import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
 import { UserProfileRes } from '../model/userProfileRes';
 
@@ -159,16 +161,75 @@ export class ManagerService {
     }
 
     /**
+     * 查詢電影資訊列表
+     * 
+     * @param status 上映狀態
+     * @param searchDateS 查詢起日
+     * @param searchDateE 查詢迄日
+     * @param title 電影中文名
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'body', reportProgress?: boolean): Observable<ManagerMovieListSuccess>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ManagerMovieListSuccess>>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ManagerMovieListSuccess>>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (status !== undefined && status !== null) {
+            queryParameters = queryParameters.set('status', <any>status);
+        }
+        if (searchDateS !== undefined && searchDateS !== null) {
+            queryParameters = queryParameters.set('searchDateS', <any>searchDateS);
+        }
+        if (searchDateE !== undefined && searchDateE !== null) {
+            queryParameters = queryParameters.set('searchDateE', <any>searchDateE);
+        }
+        if (title !== undefined && title !== null) {
+            queryParameters = queryParameters.set('title', <any>title);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ManagerMovieListSuccess>('get',`${this.basePath}/v1/manager/movie/list`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 更新單一電影資訊
      * 
      * @param body 更新單一電影資訊參數
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailUpdateSuccess>;
-    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailUpdateSuccess>>;
-    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailUpdateSuccess>>;
-    public v1ManagerMoviePatch(body: MovieDetailCreateParameter, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailUpdateSuccess>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling v1ManagerMoviePatch.');

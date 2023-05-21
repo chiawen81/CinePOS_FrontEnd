@@ -26,7 +26,7 @@
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <span class="ml-10 mr-10">~</span>
+            <span class="ml-10 mr-10">～</span>
             <mat-form-field class="w-300">
               <input matInput [matDatepicker]="picker2"
                      [formControl]="searchDateE">
@@ -35,6 +35,8 @@
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
+          <p *ngIf="formGroup.hasError('dateRangeRequire')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeRequire')}}</p>
+          <p *ngIf="formGroup.hasError('dateRangeOrder')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeOrder')}}</p>
         </div>
       </div>
 
@@ -42,7 +44,7 @@
         <span class="form-title">電影名稱</span>
         <div class="form-content flex flex-row justify-between">
           <input class="form-input w-300" type="text" formControlName="title">
-          <button mat-raised-button color="primary" type="submit" class="w-60 float-right">查詢</button>
+          <button mat-raised-button color="primary" type="submit" class="w-60 float-right" (click)="search()">查詢</button>
         </div>
       </div>
 
@@ -54,7 +56,8 @@
   <cine-card>
     <cine-card-header>查詢結果</cine-card-header>
     <cine-card-content>
-      <cine-table>
+      <p *ngIf="!movieListView?.length" class="p-50 text-center">沒有符合條件的資料！</p>
+      <cine-table *ngIf="movieListView?.length">
         <thead>
           <tr>
             <th>系統編號</th>
@@ -64,17 +67,35 @@
             <th>分級</th>
             <th>上映日期</th>
             <th>支援設備</th>
+            <th>功能</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let paramItem of displayList">
-            <td data-title="系統編號">{{ paramItem.title }}</td>
-            <td data-title="上線狀態">{{ paramItem.title }}</td>
-            <td data-title="電影名稱">{{ paramItem.title }}</td>
-            <td data-title="電影類型">{{ paramItem.genre || '-' }}</td>
-            <td data-title="分級">{{ paramItem.director }}</td>
-            <td data-title="上映日期">{{ paramItem.director }}</td>
-            <td data-title="支援設備">{{ paramItem.director }}</td>
+          <tr *ngFor="let item of movieListView">
+            <td data-title="系統編號">{{ item._id }}</td>
+            <td data-title="上線狀態">{{ item.statusName}}</td>
+            <td data-title="電影名稱">{{ item.title }}</td>
+            <td data-title="電影類型">
+              <span *ngIf="!item.genreName">-</span>
+              <span *ngFor="let subItem of item.genreName;let subIdx=index">{{subItem}}</span>
+            </td>
+            <td data-title="分級">{{ item.rateName }}</td>
+            <td data-title="上映日期">{{ item.releaseDate | date:'YYYY/MM/dd'}}</td>
+            <td data-title="支援設備">
+              <span *ngIf="!item.provideVersionName">-</span>
+              <span *ngFor="let subItem of item.provideVersionName">{{subItem}}</span>
+            </td>
+            <td>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60">發佈</button>
+              </span>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15">下架</button>
+              </span>
+              <span>
+                <button mat-raised-button color="primary" type="submit" class="w-60">刪除</button>
+              </span>
+            </td>
           </tr>
         </tbody>
       </cine-table>

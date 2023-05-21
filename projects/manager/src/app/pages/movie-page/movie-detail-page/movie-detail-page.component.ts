@@ -5,10 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageEnum } from 'projects/staff/src/app/core/enums/storage/storage-enum';
 import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
 import { StorageService } from 'projects/staff/src/app/core/services/storage/storage.service';
-import { MovieDetailCreateParameter, MovieDetailRes } from '../../../api/cinePOS-api';
+import { MovieDetailRes } from '../../../api/cinePOS-api';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api/model/commonOptionSuccessDataItem';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { range } from 'rxjs';
+import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
+import { MovieDetailCreateParameterCustomer } from '../../../core/interface/movie';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -19,6 +21,7 @@ import { range } from 'rxjs';
 export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   isEdit: boolean = false;                                                                  // 是否為編輯頁（true：是）
   formGroup!: FormGroup;
+  movieId: string = "";                                                                     // 電影編號
 
   /* API */
   movieInfoAPI!: MovieDetailRes;                                                            // API- 電影資訊
@@ -28,7 +31,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   statusOptions: CommonOptionSuccessDataItem[] = [];                                        // API- 選項：狀態
 
   /* 表單取值 */
-  get id() { return this.formGroup.get('id') as FormControl; }                              // 電影ID
   get title() { return this.formGroup.get('title') as FormControl; }                        // 電影名稱
   get enTitle() { return this.formGroup.get('enTitle') as FormControl; }                    // 電影英文名稱
   get genre() { return this.formGroup.get('genre') as FormControl; }                        // 電影類型
@@ -62,7 +64,8 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
     if (this.isEdit) {
       // 編輯狀態
-      this.getMovieInfoAPI(this._Route.snapshot.params['id']); // API- 取得電影資訊
+      this.movieId = this._Route.snapshot.params['id'];
+      this.getMovieInfoAPI(this.movieId); // API- 取得電影資訊
 
     } else {
       // 新增狀態
@@ -76,7 +79,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      id: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
       enTitle: new FormControl("", [Validators.pattern(/^[a-zA-Z0-9\s]*$/)]),
       genre: new FormControl(null, [Validators.required]),
@@ -154,9 +156,9 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 送單- 整理參數
-  getCreateMovieDetailPara(): MovieDetailCreateParameter {
-    let para: MovieDetailCreateParameter = {
-      id: this.id.value,
+  getCreateMovieDetailPara(isEdit: boolean): MovieDetailCreateParameterCustomer | MovieDetailUpdateParameter {
+    let para: MovieDetailCreateParameterCustomer | MovieDetailUpdateParameter = {
+      _id: this.movieId,
       title: this.title.value,
       enTitle: this.enTitle.value,
       genre: this.genre.value,
@@ -172,6 +174,10 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       distributor: this.distributor.value,
       posterUrl: this.posterUrl.value,
     };
+
+    if (!isEdit) {
+      delete para._id;
+    };
     console.log('送單參數', para);
 
     return para;
@@ -183,12 +189,13 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   submit(): void {
     console.log(this.formGroup);
     if (this.formGroup.valid) {
-      let para = this.getCreateMovieDetailPara();                // 整理參數
-
       if (this.isEdit) {
-        this.patchUpdateMovieDetailAPI(para);                    // API- 更新電影資訊
+        let para = this.getCreateMovieDetailPara(true);                                        // 整理參數
+        this.patchUpdateMovieDetailAPI(para as MovieDetailUpdateParameter);                    // API- 更新電影資訊
+
       } else {
-        this.postCreateMovieDetailAPI(para);                     // API- 新增電影資訊
+        let para = this.getCreateMovieDetailPara(false);                                       // 整理參數
+        this.postCreateMovieDetailAPI(para as MovieDetailCreateParameterCustomer);             // API- 新增電影資訊
       };
 
     } else {
@@ -231,7 +238,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // API- 新增電影資訊
-  postCreateMovieDetailAPI(para: MovieDetailCreateParameter): void {
+  postCreateMovieDetailAPI(para: MovieDetailCreateParameterCustomer): void {
     this._MoviePageService.createMovieDetail(para).subscribe(res => {
       console.log('新增電影資訊-成功res', res);
       alert(res.message);
@@ -240,7 +247,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // API- 更新電影資訊
-  patchUpdateMovieDetailAPI(para: MovieDetailCreateParameter): void {
+  patchUpdateMovieDetailAPI(para: MovieDetailUpdateParameter): void {
     this._MoviePageService.updateMovieDetail(para).subscribe(res => {
       console.log('更新電影資訊-成功res', res);
       alert(res.message);

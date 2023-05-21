@@ -4,6 +4,9 @@ import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, }
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
 import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
+import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
+import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
+import { MovieDetailCreateParameterCustomer } from '../../../core/interface/movie';
 
 
 @Injectable({
@@ -15,6 +18,16 @@ export class MoviePageService {
     private _ManagerService: ManagerService,
   ) { }
 
+  // 更新電影資訊
+  getMovieList(status: number, searchDateS: string, searchDateE: string, title: string): Observable<ManagerMovieListSuccess> {
+    return this._ManagerService.v1ManagerMovieListGet(status, searchDateS, searchDateE, title)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1)
+      )
+  }
+
+
   // 取得電影資訊
   getMovieDetail(id: string): Observable<MovieDetailGetInfoSuccess> {
     return this._ManagerService.v1ManagerMovieIdGet(id)
@@ -25,19 +38,9 @@ export class MoviePageService {
   }
 
 
-  // 上傳圖片(用大頭貼先暫待====待處理====)
-  uploadImage(image: Blob, staffId: string,): Observable<CommonUploadSuccess> {
-    return this._ManagerService.v1ManagerUserStickerStaffIdPostForm(image, staffId)
-      .pipe(
-        tap(res => res.code !== 1 && alert(res.message)),
-        filter(res => res.code === 1)
-      )
-  }
-
-
   // 新增電影資訊
-  createMovieDetail(para: MovieDetailCreateParameter): Observable<MovieDetailCreateSuccess> {
-    return this._ManagerService.v1ManagerMoviePost(para)
+  createMovieDetail(para: MovieDetailCreateParameterCustomer): Observable<MovieDetailCreateSuccess> {
+    return this._ManagerService.v1ManagerMoviePost(para as MovieDetailCreateParameter)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)
@@ -46,7 +49,7 @@ export class MoviePageService {
 
 
   // 更新電影資訊
-  updateMovieDetail(para: MovieDetailCreateParameter): Observable<MovieDetailUpdateSuccess> {
+  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccess> {
     return this._ManagerService.v1ManagerMoviePatch(para)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
