@@ -23,7 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { DxSchedulerModule } from 'devextreme-angular';
+import { DxSchedulerModule,DxDraggableModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
 const materialModules = [
@@ -91,7 +91,8 @@ export class MyDateAdapter extends NativeDateAdapter {
     ReactiveFormsModule,
     CoreDirectivesModule,
     DxSchedulerModule,
-    HttpClientModule
+    HttpClientModule,
+    DxDraggableModule
   ],
   exports: [
     ...materialModules
