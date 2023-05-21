@@ -1,0 +1,53 @@
+<div class="wrapper-page utility-common-back" [formGroup]="formGroup">
+  <div class="form-common-back utility-common-back mb-50">
+    <div class="row">
+      <span class="form-title">上映狀態</span>
+      <div class="form-content">
+        <div class="form-radio list-row text-12">
+          <mat-radio-group aria-label="Select an option" formControlName="status">
+            <mat-radio-button class='mr-25' *ngFor="let item of statusOptions" [value]="item.value">{{item.name}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">查詢期間</span>
+      <div class="form-content">
+        <div class="form-date">
+          <mat-form-field class="w-300">
+            <input matInput [matDatepicker]="picker" formControlName="searchDateS">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <span>~</span>
+        <div class="form-date">
+          <mat-form-field class="w-300">
+            <input matInput [matDatepicker]="picker" formControlName="searchDateE">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="form-title">電影名稱</span>
+      <div class="form-content">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>請選擇</mat-label>
+          <mat-select formControlName="title">
+            <mat-option [value]="-1">已下線</mat-option>
+            <mat-option [value]="0">籌備中</mat-option>
+            <mat-option [value]="1">上映中</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" class="w-60 float-right">查詢</button>
+</div>

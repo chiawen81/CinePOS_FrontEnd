@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { ManagerService } from '../../api/cinePOS-api';
 import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
+import { MovieListPageComponent } from './movie-list-page/movie-list-page.component';
 
 const materialModules = [
   MatInputModule,
@@ -28,7 +29,8 @@ const materialModules = [
   declarations: [
     MoviePageComponent,
     MovieDetailPageComponent,
-    MovieViewPageComponent
+    MovieViewPageComponent,
+    MovieListPageComponent
   ],
   imports: [
     CommonModule,
