@@ -17,33 +17,9 @@ export class TimetablePageComponent implements OnInit {
 
   // data: Data[];
   data: any[] = [];
-  movieRate = [
-    {
-      text: '普遍級',
-      id: 1,
-      color: '#363E31',
-    }, {
-      text: '保護級',
-      id: 2,
-      color: '#273B44',
-    },
-    {
-      text: '輔導級12+',
-      id: 3,
-      color: '#3E3928',
-    },
-    {
-      text: '輔導級15+',
-      id: 4,
-      color: '#473729',
-    }, {
-      text: '限制級',
-      id: 5,
-      color: '#442727',
-    },
-  ];;
-  currentDate: Date = new Date('2023-07-15');
-  // currentDate: Date = new Date();
+
+  // currentDate: Date = new Date('2023-07-15');
+  currentDate: Date = new Date();
 
   moviesData: MovieData[] = [];
 
@@ -75,8 +51,8 @@ export class TimetablePageComponent implements OnInit {
 
   mapTimetable(data: any[]) {
     const result = data.map((item) => {
-      item.startDate = new Date(item.startTime);
-      item.endDate = new Date(item.endTime);
+      item.startDate = new Date(item.startDate);
+      item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
       item.color = this.transformRateColor(item.movie.rate);
       item.movieId = item.movieId._id;
@@ -153,8 +129,8 @@ export class TimetablePageComponent implements OnInit {
       _id: event.newData._id,
       movieId: event.newData.movieId,
       theaterId: event.newData.theatreId,
-      startTime: event.newData.startDate,
-      endTime: event.newData.endDate
+      startDate: event.newData.startDate,
+      endDate: event.newData.endDate
     }
     this.timetableService.updateTimetable(param).subscribe((res) => {
       if (res) {
@@ -183,8 +159,8 @@ export class TimetablePageComponent implements OnInit {
     const param = {
       movieId: e.itemElement.id,
       theaterId: e.itemData.theatreId,
-      startTime: new Date(e.itemData.startDate),
-      endTime: moment(e.itemData.startDate).add('minute',moviesData[0].duration).toDate()
+      startDate: new Date(e.itemData.startDate),
+      endDate: moment(e.itemData.startDate).add('minute',moviesData[0].duration).toDate()
     }
     console.log(param);
     this.timetableService.createTimetable(param).subscribe((res)=>{
@@ -193,10 +169,6 @@ export class TimetablePageComponent implements OnInit {
         this.getTimetableList();
       }
     })
-    // if (index >= 0) {
-    // this.tasks.splice(index, 1);
-    // this.data.push(e.fromData);
-    // }
   }
 
   onListDragStart(e: any) {
@@ -223,93 +195,73 @@ export class TimetablePageComponent implements OnInit {
   pad(number: number): string {
     return (number < 10 ? '0' : '') + number;
   }
-  onAppointmentFormOpening(data: any) {
-    const that = this;
-    const form = data.form;
-    let movieInfo = that.getMovieById(data.appointmentData.movieId) || {};
-    let startDate = data.appointmentData.startDate;
+  // onAppointmentFormOpening(data: any) {
+  //   const that = this;
+  //   const form = data.form;
+  //   let movieInfo = that.getMovieById(data.appointmentData.movieId) || {};
+  //   let startDate = data.appointmentData.startDate;
 
-    form.option('items', [{
-      label: {
-        text: 'Movie',
-      },
-      editorType: 'dxSelectBox',
-      dataField: 'movieId',
-      editorOptions: {
-        items: that.moviesData,
-        displayExpr: 'text',
-        valueExpr: 'id',
-        onValueChanged(args: any) {
-          movieInfo = that.getMovieById(args.value);
+  //   form.option('items', [{
+  //     label: {
+  //       text: 'Movie',
+  //     },
+  //     editorType: 'dxSelectBox',
+  //     dataField: 'movieId',
+  //     editorOptions: {
+  //       items: that.moviesData,
+  //       displayExpr: 'text',
+  //       valueExpr: 'id',
+  //       onValueChanged(args: any) {
+  //         movieInfo = that.getMovieById(args.value);
 
-          form.updateData('director', movieInfo.director);
-          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
-        },
-      },
-    }, {
-      label: {
-        text: 'Director',
-      },
-      name: 'director',
-      editorType: 'dxTextBox',
-      editorOptions: {
-        value: movieInfo.director,
-        readOnly: true,
-      },
-    }, {
-      dataField: 'startDate',
-      editorType: 'dxDateBox',
-      editorOptions: {
-        width: '100%',
-        type: 'datetime',
-        onValueChanged(args: any) {
-          startDate = args.value;
-          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
-        },
-      },
-    }, {
-      name: 'endDate',
-      dataField: 'endDate',
-      editorType: 'dxDateBox',
-      editorOptions: {
-        width: '100%',
-        type: 'datetime',
-        readOnly: true,
-      },
-    }, {
-      dataField: 'price',
-      editorType: 'dxRadioGroup',
-      editorOptions: {
-        dataSource: [5, 10, 15, 20],
-        itemTemplate(itemData: any) {
-          return `$${itemData}`;
-        },
-      },
-    }]);
-  }
-
-  getDataObj(objData: any) {
-    if (this.data) {
-      for (let i = 0; i < this.data.length; i++) {
-        if (this.data[i]['startDate'].getTime() === objData.startDate.getTime() && this.data[i]['theatreId'] === objData.theatreId) { return this.data[i]; }
-      }
-
-    }
-    return null;
-  }
+  //         form.updateData('director', movieInfo.director);
+  //         form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
+  //       },
+  //     },
+  //   }, {
+  //     label: {
+  //       text: 'Director',
+  //     },
+  //     name: 'director',
+  //     editorType: 'dxTextBox',
+  //     editorOptions: {
+  //       value: movieInfo.director,
+  //       readOnly: true,
+  //     },
+  //   }, {
+  //     dataField: 'startDate',
+  //     editorType: 'dxDateBox',
+  //     editorOptions: {
+  //       width: '100%',
+  //       type: 'datetime',
+  //       onValueChanged(args: any) {
+  //         startDate = args.value;
+  //         form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
+  //       },
+  //     },
+  //   }, {
+  //     name: 'endDate',
+  //     dataField: 'endDate',
+  //     editorType: 'dxDateBox',
+  //     editorOptions: {
+  //       width: '100%',
+  //       type: 'datetime',
+  //       readOnly: true,
+  //     },
+  //   }, {
+  //     dataField: 'price',
+  //     editorType: 'dxRadioGroup',
+  //     editorOptions: {
+  //       dataSource: [5, 10, 15, 20],
+  //       itemTemplate(itemData: any) {
+  //         return `$${itemData}`;
+  //       },
+  //     },
+  //   }]);
+  // }
 
   getMovieById(id: string) {
     return Query(this.moviesData).filter(['id', '=', id]).toArray()[0];
   }
 
-  getColor(id: number) {
-    const item = this.movieRate.filter((item) => {
-      return item.id === id
-    });
-    if (item.length > 0) {
-
-      return item[0].color;
-    }
-    return '';
-  }
 }

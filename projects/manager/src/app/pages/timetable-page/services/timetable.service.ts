@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Observable, catchError, filter, throwError } from 'rxjs';
 
 /** Request Method */
@@ -46,7 +47,11 @@ export class TimetableService {
   getTimetableList() {
     // return data;
     const url = 'timetable/list'
-    return this.request(HTTP_METHOD.GET, { startTime: 1689350400000, endTime: 1689436800000 }, url);
+    const startDate = moment().startOf('week').valueOf();
+    const endDate = moment(startDate).add('day', 7).valueOf();
+    console.log('startDate',moment().startOf('week'),', endDate',moment(startDate).add('day', 7));
+    
+    return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
   }
 
   deleteTimetable(id: string) {
@@ -58,8 +63,8 @@ export class TimetableService {
     _id: string,
     movieId: string,
     theaterId: string,
-    startTime: number,
-    endTime: number
+    startDate: number,
+    endDate: number
   }) {
     const url = `timetable/update`
     return this.request(HTTP_METHOD.PATCH, param, url);
@@ -68,8 +73,8 @@ export class TimetableService {
   createTimetable(param: {
     movieId: string,
     theaterId: string,
-    startTime: Date,
-    endTime: Date
+    startDate: Date,
+    endDate: Date
   }) {
     const url = `timetable/create`
     return this.request(HTTP_METHOD.POST, param, url);
