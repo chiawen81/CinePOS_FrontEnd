@@ -2,9 +2,6 @@ import { MoviePageService } from './../services/movie-page.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { StorageEnum } from 'projects/staff/src/app/core/enums/storage/storage-enum';
-import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
-import { StorageService } from 'projects/staff/src/app/core/services/storage/storage.service';
 import { MovieDetailRes } from '../../../api/cinePOS-api';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api/model/commonOptionSuccessDataItem';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
@@ -50,7 +47,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     private _Route: ActivatedRoute,
     private _MoviePageService: MoviePageService,
     private _CommonAPIService: CommonAPIService,
-    private _StorageService: StorageService,
     private _ChangeDetectorRef: ChangeDetectorRef,
   ) { }
 
@@ -59,7 +55,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     this.isEdit = (this._Route.snapshot?.url[1]?.path) === 'edit';
     console.log('isEdit', this.isEdit, this._Route.snapshot);
 
-    this.login();                                              // 登入 (====之後串了真正登入要刪掉)
+    this._MoviePageService.login();                            // 登入 (====之後串了真正登入要刪掉)
     this.getOptionAPI();                                       // API- 取得選項資料
 
     if (this.isEdit) {
@@ -273,19 +269,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-  // 登入
-  login(): void {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY1Njk2NSwiZXhwIjoxNjg0OTE2MTY1fQ.F0wkHVM6fZq-VXWP7S3ngUwM6yHswjD1IPP5S9Uu7B4";
-    this._StorageService.setLocalStorage(StorageEnum.token, token);
-    const profileData: ProfileData = {
-      name: "文文編輯頁測試",
-      staffId: "B0001",
-      imgUrl: 'assets/images/angular-icon.webp'
-    }
-    this._StorageService.setLocalStorage(StorageEnum.profileData, profileData);
-  }
 
 
   getFormConsole() {

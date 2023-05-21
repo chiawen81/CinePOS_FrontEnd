@@ -1,13 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MoviePageService } from '../services/movie-page.service';
-import { StorageService } from '../../../core/services/storage/storage.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CinePageSet } from '../../../share/pagination/page-set';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { ManagerMovieListPara, ManagerMovieListSuccessDataInnerCustomer } from '../../../core/interface/movie';
-import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
-import { StorageEnum } from '../../../core/enums/storage/storage-enum';
+
 
 @Component({
   selector: 'app-movie-list-page',
@@ -30,7 +28,6 @@ export class MovieListPageComponent implements OnInit {
   get title() { return this.formGroup.get('title') as FormControl; }                        // 電影名稱
 
   constructor(
-    private _StorageService: StorageService,
     private _MoviePageService: MoviePageService,
     private _CommonAPIService: CommonAPIService,
     private _ChangeDetectorRef: ChangeDetectorRef,
@@ -38,7 +35,7 @@ export class MovieListPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.login();                                                                           // 登入 (====之後串了真正登入要刪掉)
+    this._MoviePageService.login();                                                         // 登入 (====之後串了真正登入要刪掉)
     this.getOptionAPI(4);                                                                   // API- 取得選項資料
   }
 
@@ -147,17 +144,5 @@ export class MovieListPageComponent implements OnInit {
   }
 
 
-
-  // 登入
-  login(): void {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY1Njk2NSwiZXhwIjoxNjg0OTE2MTY1fQ.F0wkHVM6fZq-VXWP7S3ngUwM6yHswjD1IPP5S9Uu7B4";
-    this._StorageService.setLocalStorage(StorageEnum.token, token);
-    const profileData: ProfileData = {
-      name: "文文編輯頁測試",
-      staffId: "B0001",
-      imgUrl: 'assets/images/angular-icon.webp'
-    }
-    this._StorageService.setLocalStorage(StorageEnum.profileData, profileData);
-  }
 
 }
