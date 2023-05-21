@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { ManagerService } from '../../api/cinePOS-api';
 import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
+import { CardModule } from '../../features/card/card.module';
+
 
 const materialModules = [
   MatInputModule,
@@ -34,12 +36,14 @@ const materialModules = [
     CommonModule,
     ReactiveFormsModule,
     MoviePageRoutingModule,
-    ...materialModules,
-    ShareLibsModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [ManagerService],
+    MatRadioModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatButtonModule,
+
+  ]
 })
 
 export class MoviePageModule { }

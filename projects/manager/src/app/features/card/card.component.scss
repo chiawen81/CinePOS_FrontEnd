@@ -1,25 +1,30 @@
 $radius: 12px;
-$background: #363636;
+$background: #222222;
 $text-color: #DDDDDD;
 $box-shadow:0px 4px 40px 0px #00000066;
 
 .cine-card {
     display: block;
-    padding: 10px 15px;
+    padding: 25px 30px;
 
     box-shadow:$box-shadow;
     background-color: $background;
     border-radius: $radius;
-
+    border: 1px solid rgba(255, 255, 255, 0.1);
     .cine-card-header {
-        display: flex;
-        align-items: center;
-        align-self: center;
-        font-size: 22px;
-        font-weight: bold;
-        padding: 8px;
-        border-radius: $radius;
-        color: $text-color;
+        // display: flex;
+        // align-items: center;
+        // align-self: center;
+        // font-size: 22px;
+        // font-weight: bold;
+        // padding: 8px;
+        // border-radius: $radius;
+        // color: $text-color;
+        padding-bottom: 12px;
+        font-size: 16px;
+        color: rgba(221, 221, 221, 0.5);
+        font-weight: 400;
+        display: block;
     }
 
     .merc-card-content {
