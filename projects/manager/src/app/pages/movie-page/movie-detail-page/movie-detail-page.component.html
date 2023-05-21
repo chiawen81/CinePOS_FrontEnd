@@ -4,9 +4,7 @@
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>請選擇</mat-label>
         <mat-select formControlName="status">
-          <mat-option [value]="-1">已下線</mat-option>
-          <mat-option [value]="0">籌備中</mat-option>
-          <mat-option [value]="1">上映中</mat-option>
+          <mat-option *ngFor="let item of statusOptions" [value]="item.value">{{item?.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(status)}}</p>

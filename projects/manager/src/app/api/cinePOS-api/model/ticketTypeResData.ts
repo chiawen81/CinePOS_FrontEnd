@@ -10,7 +10,17 @@
  * Do not edit the class manually.
  */
 
-export interface UserPostStickerReFailed { 
-    code?: number;
-    message?: string;
+export interface TicketTypeResData { 
+    /**
+     * id
+     */
+    id: string;
+    /**
+     * 票種名稱
+     */
+    type: string;
+    /**
+     * 票價
+     */
+    price: number;
 }

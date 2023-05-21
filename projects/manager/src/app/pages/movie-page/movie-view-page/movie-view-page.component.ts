@@ -34,7 +34,7 @@ export class MovieViewPageComponent implements OnInit {
 
   // ————————————————————————————————  API  ————————————————————————————————
   // API- 取得電影資訊
-  getMovieInfoAPI(id: string) {
+  getMovieInfoAPI(id: string): void {
     setTimeout(() => {
       this._MoviePageService.getMovieDetail(id).subscribe(res => {
         console.log(res)
@@ -46,7 +46,7 @@ export class MovieViewPageComponent implements OnInit {
 
 
   // 登入
-  login() {
+  login(): void {
     let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY0NzMwMywiZXhwIjoxNjg0OTA2NTAzfQ.6Iv6V2vSUKHS9NJHCInQFDQ9kxTmlN3b9w0zse44Z9U";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
     const profileData: ProfileData = {

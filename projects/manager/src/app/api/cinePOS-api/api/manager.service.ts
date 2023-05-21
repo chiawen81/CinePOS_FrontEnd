@@ -17,8 +17,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { CommonResFailed } from '../model/commonResFailed';
 import { CommonResFailedAuthInvalid } from '../model/commonResFailedAuthInvalid';
 import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
+import { CommonUploadSuccess } from '../model/commonUploadSuccess';
 import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
@@ -30,8 +32,6 @@ import { MovieDetailGetInfoFailed } from '../model/movieDetailGetInfoFailed';
 import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
 import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
-import { UserPostStickerReFailed } from '../model/userPostStickerReFailed';
-import { UserPostStickerRes } from '../model/userPostStickerRes';
 import { UserProfileRes } from '../model/userProfileRes';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -343,18 +343,18 @@ export class ManagerService {
     /**
      * 上傳管理人員大頭貼
      * 
-     * @param image 
+     * @param upload 
      * @param staffId 員編
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<UserPostStickerRes>;
-    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserPostStickerRes>>;
-    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserPostStickerRes>>;
-    public v1ManagerUserStickerStaffIdPostForm(image: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<CommonUploadSuccess>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonUploadSuccess>>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonUploadSuccess>>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (image === null || image === undefined) {
-            throw new Error('Required parameter image was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
+        if (upload === null || upload === undefined) {
+            throw new Error('Required parameter upload was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
         }
 
         if (staffId === null || staffId === undefined) {
@@ -391,11 +391,11 @@ export class ManagerService {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         }
 
-        if (image !== undefined) {
-            formParams = formParams.append('image', <any>image) as any || formParams;
+        if (upload !== undefined) {
+            formParams = formParams.append('upload', <any>upload) as any || formParams;
         }
 
-        return this.httpClient.request<UserPostStickerRes>('post',`${this.basePath}/v1/manager/user/sticker/${encodeURIComponent(String(staffId))}`,
+        return this.httpClient.request<CommonUploadSuccess>('post',`${this.basePath}/v1/manager/user/sticker/${encodeURIComponent(String(staffId))}`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

@@ -1,6 +1,6 @@
 <div class="wrapper-page form-common-back utility-common-back">
   <div class="form-select flex justify-end mb-10">
-    <p class="form-text">{{movieInfoAPI?.status}}</p>
+    <p class="form-text">{{movieInfoAPI?.statusName}}</p>
   </div>
 
   <cine-card class="mb-50">
@@ -59,21 +59,21 @@
       <div class="row">
         <span class="form-title">分級</span>
         <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.rate}}</p>
+          <p class="form-text">{{movieInfoAPI?.rateName}}</p>
         </div>
       </div>
 
       <div class="row">
         <span class="form-title">劇情類型</span>
         <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.genre}}</p>
+          <p class="form-text">{{movieInfoAPI?.genreName}}</p>
         </div>
       </div>
 
       <div class="row">
         <span class="form-title">支援硬體設備</span>
         <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.provideVersion}}</p>
+          <p class="form-text">{{movieInfoAPI?.provideVersionName}}</p>
         </div>
       </div>
 

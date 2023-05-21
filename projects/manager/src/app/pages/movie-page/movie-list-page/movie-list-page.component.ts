@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MoviePageService } from '../services/movie-page.service';
 import { StorageService } from '../../../core/services/storage/storage.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 
 @Component({
   selector: 'app-movie-list-page',
@@ -13,7 +14,7 @@ export class MovieListPageComponent implements OnInit {
   formGroup!: FormGroup;
 
   /* API */
-  statusOptions: any;                                                                       // API- 選項：狀態
+  statusOptions: CommonOptionSuccessDataItem[] = [];                                        // API- 選項：狀態
 
   /* 表單取值 */
   get status() { return this.formGroup.get('status') as FormControl; }                      // 上映狀態

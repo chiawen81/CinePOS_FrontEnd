@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
-import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, UserPostStickerRes, } from '../../../api/cinePOS-api';
+import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
+import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class MoviePageService {
 
 
   // 上傳圖片(用大頭貼先暫待====待處理====)
-  uploadImage(image: Blob, staffId: string,): Observable<UserPostStickerRes> {
+  uploadImage(image: Blob, staffId: string,): Observable<CommonUploadSuccess> {
     return this._ManagerService.v1ManagerUserStickerStaffIdPostForm(image, staffId)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),

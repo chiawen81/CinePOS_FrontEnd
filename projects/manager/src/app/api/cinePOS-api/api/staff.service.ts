@@ -17,15 +17,17 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { CommonResFailed } from '../model/commonResFailed';
 import { CommonResFailedFieldInvalid } from '../model/commonResFailedFieldInvalid';
 import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
 import { CommonResFailedWrongPassword } from '../model/commonResFailedWrongPassword';
+import { CommonUploadSuccess } from '../model/commonUploadSuccess';
 import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
-import { UserPostStickerReFailed } from '../model/userPostStickerReFailed';
-import { UserPostStickerRes } from '../model/userPostStickerRes';
+import { TicketTypeReq } from '../model/ticketTypeReq';
+import { TicketTypeRes } from '../model/ticketTypeRes';
 import { UserProfileRes } from '../model/userProfileRes';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -101,6 +103,89 @@ export class StaffService {
         }
 
         return this.httpClient.request<LoginRes>('post',`${this.basePath}/v1/staff/login`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得票種
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffTicketTypeGet(observe?: 'body', reportProgress?: boolean): Observable<TicketTypeRes>;
+    public v1StaffTicketTypeGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TicketTypeRes>>;
+    public v1StaffTicketTypeGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TicketTypeRes>>;
+    public v1StaffTicketTypeGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<TicketTypeRes>('get',`${this.basePath}/v1/staff/ticketType`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 新增票種
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffTicketTypePost(body: TicketTypeReq, observe?: 'body', reportProgress?: boolean): Observable<TicketTypeRes>;
+    public v1StaffTicketTypePost(body: TicketTypeReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TicketTypeRes>>;
+    public v1StaffTicketTypePost(body: TicketTypeReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TicketTypeRes>>;
+    public v1StaffTicketTypePost(body: TicketTypeReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffTicketTypePost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<TicketTypeRes>('post',`${this.basePath}/v1/staff/ticketType`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -202,18 +287,18 @@ export class StaffService {
     /**
      * 上傳櫃台人員大頭貼
      * 
-     * @param image 
+     * @param upload 
      * @param staffId 員編
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public v1StaffUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<UserPostStickerRes>;
-    public v1StaffUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserPostStickerRes>>;
-    public v1StaffUserStickerStaffIdPostForm(image: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserPostStickerRes>>;
-    public v1StaffUserStickerStaffIdPostForm(image: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public v1StaffUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<CommonUploadSuccess>;
+    public v1StaffUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonUploadSuccess>>;
+    public v1StaffUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonUploadSuccess>>;
+    public v1StaffUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (image === null || image === undefined) {
-            throw new Error('Required parameter image was null or undefined when calling v1StaffUserStickerStaffIdPost.');
+        if (upload === null || upload === undefined) {
+            throw new Error('Required parameter upload was null or undefined when calling v1StaffUserStickerStaffIdPost.');
         }
 
         if (staffId === null || staffId === undefined) {
@@ -250,11 +335,11 @@ export class StaffService {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         }
 
-        if (image !== undefined) {
-            formParams = formParams.append('image', <any>image) as any || formParams;
+        if (upload !== undefined) {
+            formParams = formParams.append('upload', <any>upload) as any || formParams;
         }
 
-        return this.httpClient.request<UserPostStickerRes>('post',`${this.basePath}/v1/staff/user/sticker/${encodeURIComponent(String(staffId))}`,
+        return this.httpClient.request<CommonUploadSuccess>('post',`${this.basePath}/v1/staff/user/sticker/${encodeURIComponent(String(staffId))}`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

@@ -5,6 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageEnum } from 'projects/staff/src/app/core/enums/storage/storage-enum';
 import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
 import { StorageService } from 'projects/staff/src/app/core/services/storage/storage.service';
+import { MovieDetailCreateParameter, MovieDetailRes } from '../../../api/cinePOS-api';
+import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api/model/commonOptionSuccessDataItem';
+import { CommonAPIService } from '../../../core/services/common-api/common.service';
+import { range } from 'rxjs';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -17,10 +21,11 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   formGroup!: FormGroup;
 
   /* API */
-  movieInfoAPI: any;                                                                        // API- 電影資訊
-  rateOptions: any;                                                                         // API- 選項：分級
-  genreOptions: any;                                                                        // API- 選項：電影類型
-  provideVersionOptions: any;                                                               // API- 選項：提供設備
+  movieInfoAPI!: MovieDetailRes;                                                            // API- 電影資訊
+  genreOptions: CommonOptionSuccessDataItem[] = [];                                         // API- 選項：電影類型
+  provideVersionOptions: CommonOptionSuccessDataItem[] = [];                                // API- 選項：提供設備
+  rateOptions: CommonOptionSuccessDataItem[] = [];                                          // API- 選項：分級
+  statusOptions: CommonOptionSuccessDataItem[] = [];                                        // API- 選項：狀態
 
   /* 表單取值 */
   get id() { return this.formGroup.get('id') as FormControl; }                              // 電影ID
@@ -42,6 +47,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   constructor(
     private _Route: ActivatedRoute,
     private _MoviePageService: MoviePageService,
+    private _CommonAPIService: CommonAPIService,
     private _StorageService: StorageService,
     private _ChangeDetectorRef: ChangeDetectorRef,
   ) { }
@@ -68,7 +74,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     this._ChangeDetectorRef.detectChanges();
   }
 
-  initForm() {
+  initForm(): void {
     this.formGroup = new FormGroup({
       id: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
@@ -91,10 +97,10 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 帶回表單資料
-  setForm(data: any) {
+  setForm(data: MovieDetailRes): void {
     if (this.isEdit) {
       this.formGroup.patchValue(data);
-      data.cast.forEach((item: string) => {
+      (data.cast as string[]).forEach((item: string) => {
         this.cast.push(new FormControl(item));
       });
     };
@@ -105,20 +111,20 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 主演- 新增
-  addCast() {
+  addCast(): void {
     this.cast.push(new FormControl(""));
   }
 
 
   // 主演- 刪除
-  removeCast(idx: number) {
+  removeCast(idx: number): void {
     this.cast.removeAt(idx);
   }
 
 
 
   // 上傳檔案- 選擇檔案
-  onFileSelect(event: any) {
+  onFileSelect(event: any): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       console.log('上傳檔案原始檔', file);
@@ -130,7 +136,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 共用- 錯誤訊息
-  getErrorMsg(control: AbstractControl) {
+  getErrorMsg(control: AbstractControl): string {
     let errorMsg = "";
     let error = control.errors;
 
@@ -148,8 +154,8 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 送單- 整理參數
-  getCreateMovieDetailPara() {
-    let para = {
+  getCreateMovieDetailPara(): MovieDetailCreateParameter {
+    let para: MovieDetailCreateParameter = {
       id: this.id.value,
       title: this.title.value,
       enTitle: this.enTitle.value,
@@ -174,7 +180,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // 送單
-  submit() {
+  submit(): void {
     console.log(this.formGroup);
     if (this.formGroup.valid) {
       let para = this.getCreateMovieDetailPara();                // 整理參數
@@ -197,11 +203,11 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
   // ————————————————————————————————  API  ————————————————————————————————
   // API- 取得電影資訊
-  getMovieInfoAPI(id: string) {
+  getMovieInfoAPI(id: string): void {
     setTimeout(() => {
       this._MoviePageService.getMovieDetail(id).subscribe(res => {
         console.log(res)
-        this.movieInfoAPI = res.data;
+        this.movieInfoAPI = res.data as MovieDetailRes;
         this._ChangeDetectorRef.detectChanges();
 
         this.setForm(this.movieInfoAPI);
@@ -211,20 +217,21 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
 
-  // API- 上傳檔案(暫時借用上傳大頭貼) ====待處理====
-  postPosterAPI(file: Blob) {
+  // API- 上傳海報
+  postPosterAPI(file: Blob): void {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('upload', file);
 
-    this._MoviePageService.uploadImage(file, "B0001").subscribe(res => {
+    this._CommonAPIService.upload(file, "file").subscribe(res => {
       console.log('上傳檔案成功response', res);
-      this.posterUrl.setValue(res.data?.stickerUrl);
+      this.posterUrl.setValue(res.data?.fileUrl);
     });
   }
 
 
+
   // API- 新增電影資訊
-  postCreateMovieDetailAPI(para: any) {
+  postCreateMovieDetailAPI(para: MovieDetailCreateParameter): void {
     this._MoviePageService.createMovieDetail(para).subscribe(res => {
       console.log('新增電影資訊-成功res', res);
       alert(res.message);
@@ -233,7 +240,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // API- 更新電影資訊
-  patchUpdateMovieDetailAPI(para: any) {
+  patchUpdateMovieDetailAPI(para: MovieDetailCreateParameter): void {
     this._MoviePageService.updateMovieDetail(para).subscribe(res => {
       console.log('更新電影資訊-成功res', res);
       alert(res.message);
@@ -243,47 +250,26 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
   // API- 取得選項資料
-  getOptionAPI() {
-    this.genreOptions = [
-      { name: '動作', value: 1 },
-      { name: '冒險', value: 2 },
-      { name: '喜劇', value: 3 },
-      { name: '劇情', value: 4 },
-      { name: '恐怖', value: 5 },
-      { name: '科幻', value: 6 },
-      { name: '浪漫愛情', value: 7 },
-      { name: '動畫', value: 8 },
-      { name: '紀錄片', value: 9 },
-      { name: '音樂', value: 10 },
-      { name: '懸疑', value: 11 },
-      { name: '驚悚', value: 12 },
-      { name: '犯罪', value: 13 },
-    ];
-    this._ChangeDetectorRef.detectChanges();
-
-    this.provideVersionOptions = [
-      { name: '2D', value: 1 },
-      { name: '3D', value: 2 },
-      { name: 'IMAX', value: 3 },
-      { name: '4DX', value: 4 },
-    ];
-    this._ChangeDetectorRef.detectChanges();
-
-    this.rateOptions = [
-      { name: '普通級', value: 0 },
-      { name: '保護級', value: 6 },
-      { name: '輔12', value: 12 },
-      { name: '輔15', value: 15 },
-      { name: '限制級', value: 18 },
-    ];
-
-    this._ChangeDetectorRef.detectChanges();
+  getOptionAPI(): void {
+    range(1, 4).subscribe(typeId => {
+      this._CommonAPIService.getOption(typeId).subscribe(res => {
+        console.log(typeId, '取得選項資料-成功res', res);
+        switch (typeId) {
+          case 1: this.genreOptions = res.data as CommonOptionSuccessDataItem[]; break;
+          case 2: this.provideVersionOptions = res.data as CommonOptionSuccessDataItem[]; break;
+          case 3: this.rateOptions = res.data as CommonOptionSuccessDataItem[]; break;
+          case 4: this.statusOptions = res.data as CommonOptionSuccessDataItem[]; break;
+          default: break;
+        };
+        this._ChangeDetectorRef.detectChanges();
+      });
+    });
   }
 
 
 
   // 登入
-  login() {
+  login(): void {
     let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY0NzMwMywiZXhwIjoxNjg0OTA2NTAzfQ.6Iv6V2vSUKHS9NJHCInQFDQ9kxTmlN3b9w0zse44Z9U";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
     const profileData: ProfileData = {
