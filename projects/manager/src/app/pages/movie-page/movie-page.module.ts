@@ -9,23 +9,43 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShareLibsModule } from 'projects/share-libs/src/public-api';
+import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
+import { MovieListPageComponent } from './movie-list-page/movie-list-page.component';
 import { CardModule } from '../../features/card/card.module';
+import { TableModule } from '../../features/table/table.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
+const materialModules = [
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonModule,
+  MatPaginatorModule
+];
 
 @NgModule({
   declarations: [
     MoviePageComponent,
-    MovieDetailPageComponent
+    MovieDetailPageComponent,
+    MovieViewPageComponent,
+    MovieListPageComponent,
+
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     MoviePageRoutingModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
-    CardModule
+    ShareLibsModule,
+    CardModule,
+    TableModule,
+    ...materialModules,
+
   ]
 })
 

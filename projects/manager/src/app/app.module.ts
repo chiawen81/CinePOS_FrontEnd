@@ -22,10 +22,23 @@ import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter }
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { ExternalApiModule } from 'projects/staff/src/app/api/external-api.module';
+import { environment } from '../environments/environment';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ApiHeaderInterceptor } from './core/interceptor/api-header';
+import { ErrorInterceptor } from './core/interceptor/error-interceptor';
+import { ApiModule as CinePosApiModule, BASE_PATH, Configuration } from "./api/cinePOS-api";
+import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 const materialModules = [
   MatInputModule,
   MatSliderModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonModule,
   MatPaginatorModule
 ];
 
@@ -75,25 +88,38 @@ export class MyDateAdapter extends NativeDateAdapter {
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
     ...featureModules,
     ...materialModules,
     ShareLibsModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
     ReactiveFormsModule,
     CoreDirectivesModule,
+    CinePosApiModule.forRoot(() => new Configuration()),
   ],
   exports: [
     ...materialModules
   ],
   providers: [
     { provide: DateAdapter, useClass: MyDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    ExternalApiModule.apiUrlProvider(BASE_PATH, environment.cinePosApi),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiHeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    { provide: APP_BASE_HREF, useFactory: getBaseHref, deps: [PlatformLocation] },
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function getBaseHref(platformLocation: PlatformLocation): string {
+  return platformLocation.getBaseHrefFromDOM();
+}
