@@ -29,6 +29,7 @@ import { ApiHeaderInterceptor } from './core/interceptor/api-header';
 import { ErrorInterceptor } from './core/interceptor/error-interceptor';
 import { ApiModule as CinePosApiModule, BASE_PATH, Configuration } from "./api/cinePOS-api";
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const materialModules = [
   MatInputModule,
@@ -37,8 +38,8 @@ const materialModules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatInputModule,
   MatButtonModule,
+  MatPaginatorModule
 ];
 
 const featureModules = [

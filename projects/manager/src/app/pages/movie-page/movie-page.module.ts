@@ -14,6 +14,9 @@ import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { ManagerService } from '../../api/cinePOS-api';
 import { MovieViewPageComponent } from './movie-view-page/movie-view-page.component';
 import { MovieListPageComponent } from './movie-list-page/movie-list-page.component';
+import { CardModule } from '../../features/card/card.module';
+import { SamplePageComponent } from '../sample-page/sample-page.component';
+
 
 const materialModules = [
   MatInputModule,
@@ -21,7 +24,6 @@ const materialModules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatInputModule,
   MatButtonModule,
 ];
 
@@ -30,18 +32,19 @@ const materialModules = [
     MoviePageComponent,
     MovieDetailPageComponent,
     MovieViewPageComponent,
-    MovieListPageComponent
+    MovieListPageComponent,
+
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MoviePageRoutingModule,
-    ...materialModules,
-    ShareLibsModule,
     FormsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [ManagerService],
+    MoviePageRoutingModule,
+    ShareLibsModule,
+    CardModule,
+    ...materialModules,
+
+  ]
 })
 
 export class MoviePageModule { }

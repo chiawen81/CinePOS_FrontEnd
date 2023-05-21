@@ -47,7 +47,7 @@ export class MovieViewPageComponent implements OnInit {
 
   // 登入
   login() {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDA1MTEyNiwiZXhwIjoxNjg0MzEwMzI2fQ.LTT8tH9va3GaO8o7K1u9ekAOYoKYWWWTEEigN32ziOg";
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY0NzMwMywiZXhwIjoxNjg0OTA2NTAzfQ.6Iv6V2vSUKHS9NJHCInQFDQ9kxTmlN3b9w0zse44Z9U";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
     const profileData: ProfileData = {
       name: "文文檢視頁測試",
