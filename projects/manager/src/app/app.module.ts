@@ -34,6 +34,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 const materialModules = [
   MatInputModule,
   MatSliderModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonModule,
+  MatPaginatorModule
 ];
 
 const featureModules = [
