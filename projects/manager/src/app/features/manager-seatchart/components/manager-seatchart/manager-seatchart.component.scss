@@ -1,0 +1,14 @@
+.screen-border{
+  @apply border;
+  border-color: #8988FF;
+}
+.screen {
+  @apply w-full;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(137, 136, 255, 0.2) 0%, rgba(103, 101, 238, 0) 100%);
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
