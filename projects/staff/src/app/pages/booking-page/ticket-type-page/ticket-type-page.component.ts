@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
+import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 @Component({
-  selector: 'app-ticket-type',
-  templateUrl: './ticket-type.component.html',
-  styleUrls: ['./ticket-type.component.scss']
+  selector: 'app-ticket-type-page',
+  templateUrl: './ticket-type-page.component.html',
+  styleUrls: ['./ticket-type-page.component.scss']
 })
-export class TicketTypeComponent implements OnInit {
+export class TicketTypePageComponent implements OnInit {
 
   constructor(
     private router: Router,

@@ -1,4 +1,21 @@
-<p>訂票頁(場次查詢)</p>
+<!-- 上方區塊 -->
+<div class="bg-dark-200 px-4 py-5">
+  <div class="flex bg-dark-400 rounded-2xl p-2">
+    <div *ngFor="let date of dates index as i">
+      <app-date-select [date]="date" [dateIndex]="i" (dateEmit)="getScheduleList($event)"></app-date-select>
+    </div>
+  </div>
+  <div>
+
+  </div>
+
+</div>
+<!-- 主要區塊 -->
+<div>
+
+</div>
+
+
 <div class="absolute bottom-10 right-10">
   <button mat-raised-button
     color="primary"

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingPageComponent } from './booking-page.component';
-import { TicketTypeComponent } from './components/ticket-type/ticket-type.component';
-import { SelectSeatComponent } from './components/select-seat/select-seat.component';
 import { RouterModule, Routes } from '@angular/router';
 import { STATIC_ROUTES } from '../../core/constant/routes.constant';
 import { MatButtonModule } from '@angular/material/button';
+import { SelectSeatPageComponent } from './select-seat-page/select-seat-page.component';
+import { TicketTypePageComponent } from './ticket-type-page/ticket-type-page.component';
+import { DateSelectComponent } from './components/date-select/date-select.component';
 
 const routes: Routes = [
   /**訂票頁(場次查詢) */
@@ -16,12 +17,12 @@ const routes: Routes = [
   /**選擇票種頁 */
   {
     path: STATIC_ROUTES.BOOKING.TICKET_TYPE,
-    component: TicketTypeComponent,
+    component: TicketTypePageComponent,
   },
   /**劃位頁 */
   {
     path: STATIC_ROUTES.BOOKING.SELECT_SEAT,
-    component: SelectSeatComponent,
+    component: SelectSeatPageComponent,
   },
 ]
 
@@ -36,8 +37,9 @@ const featureModules = [
 @NgModule({
   declarations: [
     BookingPageComponent,
-    TicketTypeComponent,
-    SelectSeatComponent
+    SelectSeatPageComponent,
+    TicketTypePageComponent,
+    DateSelectComponent
   ],
   imports: [
     CommonModule,
