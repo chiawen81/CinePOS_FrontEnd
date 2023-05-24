@@ -1,3 +1,4 @@
+import { ManagerService } from './../../../api/cinePOS-api/api/manager.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
@@ -41,7 +42,7 @@ export class TimetableService {
   isPopupInvalidMsg = false;
   constructor(
     private http: HttpClient,
-
+    // private managerService: ManagerService
   ) { }
 
   getTimetableList() {
@@ -52,6 +53,7 @@ export class TimetableService {
     console.log('startDate',moment().startOf('week'),', endDate',moment(startDate).add('day', 7));
     
     return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
+    // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
   }
 
   deleteTimetable(id: string) {

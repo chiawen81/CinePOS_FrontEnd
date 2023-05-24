@@ -6,6 +6,7 @@ export const environment = {
   appVersion: require('package.json').version + '-dev',
   production: false,
   DEFAULT_IP: '',
+  cinePosApi: "http://127.0.0.1:3005"
 };
 
 /*
