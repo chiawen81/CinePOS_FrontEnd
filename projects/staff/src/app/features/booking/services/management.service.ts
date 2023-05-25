@@ -4,8 +4,10 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BookingService {
+export class ManagementService {
+
   dateSelect$ = new Subject<string>();
-  onDestroy$ =new Subject<void>();
+  onDestroy$ = new Subject<void>();
+
   constructor() { }
 }

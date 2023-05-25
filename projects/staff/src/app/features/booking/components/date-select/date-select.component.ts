@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BookingService } from '../../services/booking/booking.service';
 import { takeUntil } from 'rxjs';
+import { ManagementService } from '../../services/management.service';
 
 @Component({
   selector: 'app-date-select',
@@ -18,13 +18,13 @@ export class DateSelectComponent implements OnInit {
   isActive = false;
 
   constructor(
-    private bookingService:BookingService
+    private managementService:ManagementService
   ) { }
 
   ngOnInit(): void {
-    this.bookingService.dateSelect$
+    this.managementService.dateSelect$
       .pipe(
-        takeUntil(this.bookingService.onDestroy$)
+        takeUntil(this.managementService.onDestroy$)
       )
       .subscribe((v)=>{
         if(v === String(this.date.getTime())){
@@ -40,6 +40,6 @@ export class DateSelectComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.bookingService.onDestroy$.next();
+    this.managementService.onDestroy$.next();
   }
 }

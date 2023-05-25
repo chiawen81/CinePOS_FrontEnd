@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from '../../core/constant/routes.constant';
-import { BookingService } from './services/booking/booking.service';
+import { ManagementService } from '../../features/booking/services/management.service';
 
 @Component({
   selector: 'app-booking-page',
@@ -12,7 +12,7 @@ export class BookingPageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private bookingService:BookingService
+    private bookingComponentsService:ManagementService
   ) { }
 
   dateCount = 7;
@@ -39,7 +39,7 @@ export class BookingPageComponent implements OnInit {
   }
 
   getScheduleList($event: string): void {
-    this.bookingService.dateSelect$.next($event);
+    this.bookingComponentsService.dateSelect$.next($event);
   }
 
   // 生成日期
