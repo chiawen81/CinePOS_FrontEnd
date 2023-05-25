@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwind/tailwindcss";
 @import "material/material.scss";
-// @import "dx/dx-scheduler.scss";
+@import "dx/dx-scheduler.scss";
 
 @import "base";
-// @import "../app/pages/guideline-back/guideline-back.component.scss";
+@import "../app/pages/guideline-back/guideline-back.component.scss";
 // @import "_utility";
