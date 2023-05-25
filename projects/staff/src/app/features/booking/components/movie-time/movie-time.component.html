@@ -1,0 +1,25 @@
+<!-- 影廳類型 -->
+<div [ngSwitch]="movieTimeData.theaterType">
+  <ng-container *ngSwitchCase="1">
+    2D
+  </ng-container>
+
+  <ng-container *ngSwitchCase="2">
+    3D
+  </ng-container>
+
+  <ng-container *ngSwitchCase="3">
+    iMAX
+  </ng-container>
+
+  <ng-container *ngSwitchCase="4">
+    4DX
+  </ng-container>
+</div>
+<!-- 時間 -->
+<div>
+  XX:XX
+</div>
+<!-- 廳院 -->
+<div>{{ movieTimeData.theater }}</div>
+

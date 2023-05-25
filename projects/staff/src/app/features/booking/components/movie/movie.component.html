@@ -1,0 +1,38 @@
+<div class="mr-4">
+  <img class="h-52 rounded-xl" [src]="movieData.posterUrl" alt="poster">
+</div>
+
+<div class="flex-1">
+  <div class="flex justify-between items-center">
+    <h2 class="text-lg">{{ movieData.title }}</h2>
+    <div class="flex items-center text-xs text-light-400">
+      <img class="mr-2" src="assets/images/icon/time.svg" alt="time">
+      <span class="mr-2">{{ movieData.runtime }} mins</span>
+      <div [ngSwitch]="movieData.rate">
+        |
+        <span *ngSwitchCase="0" class="text-theaterType-universal">
+          普通級
+        </span>
+        <span *ngSwitchCase="6" class="text-theaterType-protection">
+          保護級
+        </span>
+        <span *ngSwitchCase="12" class="text-theaterType-counseling12">
+          輔導十二級
+        </span>
+        <span *ngSwitchCase="15" class="text-theaterType-counseling15">
+          輔導十五級
+        </span>
+        <span *ngSwitchCase="18" class="text-theaterType-restricted">
+          限制級
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <ul>
+    <li *ngFor="let item of movieData.scheduleList">
+      <app-movie-time [movieTimeData]="item"></app-movie-time>
+    </li>
+  </ul>
+</div>

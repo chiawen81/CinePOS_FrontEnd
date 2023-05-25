@@ -18,17 +18,51 @@ export class BookingPageComponent implements OnInit {
   dateCount = 7;
   dateArr: Date[] = [];
 
+  data = [
+    {
+        "movieId": "645869f668d71390eba143d3",
+        "title": "小美人魚",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/test0421-f01d7.appspot.com/o/%E5%B0%8F%E7%BE%8E%E4%BA%BA%E9%AD%9A.jpg?alt=media&token=a6f26e05-6636-4af8-8955-548ed705de84",
+        "runtime": 100,
+        "rate": 0,
+        "scheduleList": [
+            {
+                "scheduleId": "646a0b4591a4e35d3806be52",
+                "theater": "第5廳",
+                "theaterType": "1",
+                "totalCapacity": 200,
+                "remainSeats": 200
+            },
+            {
+                "scheduleId": "646a0b9391a4e35d3806be58",
+                "theater": "第7廳",
+                "theaterType": "1",
+                "totalCapacity": 200,
+                "remainSeats": 200
+            }
+        ]
+    },
+    {
+        "movieId": "645869ce68d71390eba12734",
+        "title": "上流謀殺案",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/test0421-f01d7.appspot.com/o/%E4%B8%8A%E6%B5%81%E8%AC%80%E6%AE%BA%E6%A1%88.jpg?alt=media&token=53ad7996-ff0d-4eee-b120-0c641f00e3b8",
+        "runtime": 92,
+        "rate": 6,
+        "scheduleList": [
+            {
+                "scheduleId": "646a0b6e91a4e35d3806be55",
+                "theater": "第7廳",
+                "theaterType": "1",
+                "totalCapacity": 200,
+                "remainSeats": 200
+            }
+        ]
+    }
+]
+
   ngOnInit(): void {
 
     this.dateArr = this.createDates(this.dateCount);
-    var currentDate = new Date(); // 當前日期和時間
-
-    // 取得日期部分（YYYY-MM-DD）
-    var formattedDate = currentDate.toISOString().split('T')[0];
-
-    // 轉換為時間戳記
-    var timestamp = Date.parse(formattedDate);
-    console.log(new Date(timestamp).getHours() - 8);
 
   }
   goTicketType(): void {

@@ -51,6 +51,13 @@ module.exports = {
         warn: {
           100: '#DD6A76',
           200: '#39282B'
+        },
+        theaterType: {
+          universal: '#74B147',
+          counseling12: '#E9D375',
+          counseling15: '#E26C00',
+          restricted: '#F44545',
+          protection: '#009EE2'
         }
       }
     },
