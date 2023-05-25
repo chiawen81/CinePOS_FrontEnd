@@ -24,8 +24,13 @@ import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directive
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { DxSchedulerModule,DxDraggableModule } from 'devextreme-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
+import { ExternalApiModule } from './api/external-api.module';
+import { environment } from '../environments/environment';
+import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
+import { ApiHeaderInterceptor } from './core/interceptor/api-header';
+
 const materialModules = [
   MatInputModule,
   MatSliderModule,
@@ -92,12 +97,20 @@ export class MyDateAdapter extends NativeDateAdapter {
     CoreDirectivesModule,
     DxSchedulerModule,
     HttpClientModule,
-    DxDraggableModule
+    DxDraggableModule,
+    CinePosApiModule.forRoot(() => new Configuration()),
+    ShareLibsModule
   ],
   exports: [
     ...materialModules
   ],
   providers: [
+    ExternalApiModule.apiUrlProvider(BASE_PATH, environment.cinePosApi),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiHeaderInterceptor,
+      multi: true
+    },
     { provide: DateAdapter, useClass: MyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],

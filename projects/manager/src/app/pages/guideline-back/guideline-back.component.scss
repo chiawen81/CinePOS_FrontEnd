@@ -1,212 +1,212 @@
-// ——————————————————  表單樣式(外框)  ——————————————————
-// ※ 最外層加上「form-common-back」後，可直接套用樣式 ※
-.form-common-back {
-  // padding: 25px 30px;
-  // background: #222222;
-  // border: 1px solid rgba(255, 255, 255, 0.1);
-  // box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.4);
-  // border-radius: 12px;
+// // ——————————————————  表單樣式(外框)  ——————————————————
+// // ※ 最外層加上「form-common-back」後，可直接套用樣式 ※
+// .form-common-back {
+//   // padding: 25px 30px;
+//   // background: #222222;
+//   // border: 1px solid rgba(255, 255, 255, 0.1);
+//   // box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.4);
+//   // border-radius: 12px;
 
-  // .form-area-title {
-  //   padding-bottom: 12px;
-  //   font-size: 16px;
-  //   color: rgba(221, 221, 221, 0.5);
-  //   font-weight: 400;
-  // }
+//   // .form-area-title {
+//   //   padding-bottom: 12px;
+//   //   font-size: 16px;
+//   //   color: rgba(221, 221, 221, 0.5);
+//   //   font-weight: 400;
+//   // }
 
-  .row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-bottom: 20px;
+//   .row {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     padding-bottom: 20px;
 
-    .form-title {
-      width: 20%;
-      font-weight: 400;
-      font-size: 13px;
-      color: #DDDDDD;
-    }
+//     .form-title {
+//       width: 20%;
+//       font-weight: 400;
+//       font-size: 13px;
+//       color: #DDDDDD;
+//     }
 
-    .form-content {
-      width: 80%;
-      min-height: 48px;
-    }
-  }
-}
-
-
+//     .form-content {
+//       width: 80%;
+//       min-height: 48px;
+//     }
+//   }
+// }
 
 
 
-// ——————————————————  共用元件  ——————————————————
-// ※ 最外層加上「utility-common-back」後，可直接套用樣式 ※
-.utility-common-back {
-
-  // input
-  .form-input {
-    height: 48px;
-    padding: 16px;
-    background: #1A1A1A;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: #DDDDDD;
-
-    &.input-textarea {
-      height: 100px !important;
-      width: 100% !important;
-    }
-  }
 
 
-  // 選單
-  .form-select {
-    ::ng-deep {
-      mat-form-field {
-        font-size: 12px;
+// // ——————————————————  共用元件  ——————————————————
+// // ※ 最外層加上「utility-common-back」後，可直接套用樣式 ※
+// .utility-common-back {
 
-        .mat-form-field-wrapper {
-          padding-bottom: 0 !important;
+//   // input
+//   .form-input {
+//     height: 48px;
+//     padding: 16px;
+//     background: #1A1A1A;
+//     border: 1px solid rgba(255, 255, 255, 0.1);
+//     border-radius: 8px;
+//     color: #DDDDDD;
 
-          .mat-form-field-flex {
-            padding: 16px 12px !important;
-            padding-bottom: 12px;
-            border-radius: 8px !important;
-
-            .mat-form-field-infix {
-              padding: 0;
-              border-top: 0;
-
-              .mat-select-arrow-wrapper {
-                margin-top: 10px;
-              }
-
-              .mat-form-field-label-wrappe {
-                display: none;
-              }
-            }
-          }
-        }
-
-        .mat-form-field-label.ng-tns-c38-2.ng-star-inserted {
-          display: none;
-
-          &.mat-form-field-empty.mat-empty {
-            display: inline-block !important;
-          }
-        }
-      }
-    }
-  }
+//     &.input-textarea {
+//       height: 100px !important;
+//       width: 100% !important;
+//     }
+//   }
 
 
-  // radio
-  .form-radio {
-    ::ng-deep .mat-radio-button {
-      .mat-radio-container {
-        height: 15px;
-        width: 15px;
+//   // 選單
+//   .form-select {
+//     ::ng-deep {
+//       mat-form-field {
+//         font-size: 12px;
 
-        .mat-radio-outer-circle,
-        .mat-radio-inner-circle {
-          border-color: white !important;
-        }
+//         .mat-form-field-wrapper {
+//           padding-bottom: 0 !important;
 
-        .mat-radio-outer-circle {
-          height: 15px;
-          width: 15px;
-          border-width: 1px;
-        }
+//           .mat-form-field-flex {
+//             padding: 16px 12px !important;
+//             padding-bottom: 12px;
+//             border-radius: 8px !important;
 
-        .mat-radio-inner-circle {
-          height: 15px;
-          width: 15px;
-          background-color: white !important;
-        }
-      }
-    }
+//             .mat-form-field-infix {
+//               padding: 0;
+//               border-top: 0;
 
-    &.list-row {
-      height: 48px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
+//               .mat-select-arrow-wrapper {
+//                 margin-top: 10px;
+//               }
 
-    .list-column {
-      display: flex;
-      flex-direction: column;
-    }
-  }
+//               .mat-form-field-label-wrappe {
+//                 display: none;
+//               }
+//             }
+//           }
+//         }
 
+//         .mat-form-field-label.ng-tns-c38-2.ng-star-inserted {
+//           display: none;
 
-  // 一般文字
-  .form-text {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    height: 48px;
-  }
+//           &.mat-form-field-empty.mat-empty {
+//             display: inline-block !important;
+//           }
+//         }
+//       }
+//     }
+//   }
 
 
-  // 日期
-  .form-date {
-    ::ng-deep {
-      .mat-form-field-appearance-legacy .mat-form-field-infix {
-        border-top: 0 !important;
-      }
+//   // radio
+//   .form-radio {
+//     ::ng-deep .mat-radio-button {
+//       .mat-radio-container {
+//         height: 15px;
+//         width: 15px;
 
-      .mat-form-field-wrapper {
-        padding-bottom: 0 !important;
+//         .mat-radio-outer-circle,
+//         .mat-radio-inner-circle {
+//           border-color: white !important;
+//         }
 
-        .mat-form-field-flex {
-          border-top: 0 !important;
-          display: flex;
-          align-items: center;
-          height: 48px;
-          background: #1A1A1A;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          color: #DDDDDD;
+//         .mat-radio-outer-circle {
+//           height: 15px;
+//           width: 15px;
+//           border-width: 1px;
+//         }
 
-          .mat-form-field-infix {
-            padding: 0 12px;
-          }
+//         .mat-radio-inner-circle {
+//           height: 15px;
+//           width: 15px;
+//           background-color: white !important;
+//         }
+//       }
+//     }
 
-          .mat-form-field-suffix {
+//     &.list-row {
+//       height: 48px;
+//       display: flex;
+//       flex-direction: row;
+//       align-items: center;
+//     }
 
-            margin-right: 5px;
-          }
-        }
+//     .list-column {
+//       display: flex;
+//       flex-direction: column;
+//     }
+//   }
 
-        .mat-form-field-underline,
-        .mat-form-field-subscript-wrapper {
-          display: none;
-        }
-      }
-    }
-  }
 
-  // 按鈕
-  .btn {
-    padding: 6px 12px;
-    letter-spacing: 0.1em;
-    text-align: center;
-    font-weight: 500;
-    font-size: 12px;
+//   // 一般文字
+//   .form-text {
+//     display: flex;
+//     align-items: center;
+//     font-size: 12px;
+//     height: 48px;
+//   }
 
-    &.gray {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.5);
-    }
 
-    &.small {
-      border-radius: 4px;
-      height: 30px;
-    }
+//   // 日期
+//   .form-date {
+//     ::ng-deep {
+//       .mat-form-field-appearance-legacy .mat-form-field-infix {
+//         border-top: 0 !important;
+//       }
 
-    &.medium {
-      border-radius: 6px;
-      height: 42px;
-    }
-  }
-}
+//       .mat-form-field-wrapper {
+//         padding-bottom: 0 !important;
+
+//         .mat-form-field-flex {
+//           border-top: 0 !important;
+//           display: flex;
+//           align-items: center;
+//           height: 48px;
+//           background: #1A1A1A;
+//           border: 1px solid rgba(255, 255, 255, 0.1);
+//           border-radius: 8px;
+//           color: #DDDDDD;
+
+//           .mat-form-field-infix {
+//             padding: 0 12px;
+//           }
+
+//           .mat-form-field-suffix {
+
+//             margin-right: 5px;
+//           }
+//         }
+
+//         .mat-form-field-underline,
+//         .mat-form-field-subscript-wrapper {
+//           display: none;
+//         }
+//       }
+//     }
+//   }
+
+//   // 按鈕
+//   .btn {
+//     padding: 6px 12px;
+//     letter-spacing: 0.1em;
+//     text-align: center;
+//     font-weight: 500;
+//     font-size: 12px;
+
+//     &.gray {
+//       border: 1px solid rgba(255, 255, 255, 0.1);
+//       color: rgba(255, 255, 255, 0.5);
+//     }
+
+//     &.small {
+//       border-radius: 4px;
+//       height: 30px;
+//     }
+
+//     &.medium {
+//       border-radius: 6px;
+//       height: 42px;
+//     }
+//   }
+// }

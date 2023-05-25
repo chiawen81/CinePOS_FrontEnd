@@ -5,33 +5,39 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
 import { SamplePageComponent } from './pages/sample-page/sample-page.component';
 import { GuidelineBackComponent } from './pages/guideline-back/guideline-back.component';
+import { AuthGuard } from './core/guards/auth/auth.guard';
 
 
 const routes: Routes = [
   {
     path: STATIC_ROUTES.DASHBOARD,
-    component: DashboardPageComponent
+    component: DashboardPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: STATIC_ROUTES.SEATING_PLAN,
-    loadChildren: () => import('./pages/seating-plan-page/seating-plan-page.module').then(m => m.SeatingPlanPageModule)
+    loadChildren: () => import('./pages/seating-plan-page/seating-plan-page.module').then(m => m.SeatingPlanPageModule),
+    canLoad:[AuthGuard]
   },
   {
     path: STATIC_ROUTES.MOVIE,
-    loadChildren: () => import('./pages/movie-page/movie-page.module').then(m => m.MoviePageModule)
+    loadChildren: () => import('./pages/movie-page/movie-page.module').then(m => m.MoviePageModule),
+    canLoad:[AuthGuard]
   },
   {
     path: STATIC_ROUTES.TIMETABLE,
-    component: TimetablePageComponent
+    component: TimetablePageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: STATIC_ROUTES.SAMPLE,
-    component: SamplePageComponent
+    component: SamplePageComponent,
   },
   {
     path: STATIC_ROUTES.LOGIN,
-    loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
-  }, {
+    loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule),
+  }, 
+  {
     path: STATIC_ROUTES.GUIDELINE,
     component: GuidelineBackComponent
   },

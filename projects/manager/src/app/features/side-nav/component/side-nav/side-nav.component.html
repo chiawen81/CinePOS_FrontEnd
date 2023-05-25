@@ -22,13 +22,16 @@
     <div class="fotter text-12">
       <div class="logout flex flex-row justify-between">
         <div class="flex flex-col">
-          <span>A0001 方佳文</span>
+          <span>{{(this.storageService.getProfileData() |async)?.staffId}} {{(this.storageService.getProfileData() |async)?.name}}</span>
           <span class="jobtitle">總部 營運部 專員</span>
         </div>
         <button class="btn gray">登出</button>
       </div>
       <div class="copyright">
         Copyright © 2023 CineTech. All rights reserved.
+        <div class="py-3">
+          {{currentVersion}}
+        </div>
       </div>
     </div>
   </div>

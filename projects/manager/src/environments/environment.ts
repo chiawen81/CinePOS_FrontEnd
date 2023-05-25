@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   DEFAULT_IP: '',
   cinePosApi: "http://127.0.0.1:3005"
+  // cinePosApi: "https://api-t.cine-pos.com/"
 };
 
 /*
