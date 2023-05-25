@@ -1,13 +1,16 @@
 <!-- 上方區塊 -->
-<div class="bg-dark-200 px-4 py-5">
-  <div class="flex bg-dark-400 rounded-2xl p-2">
-    <div *ngFor="let date of dates index as i">
+<div class="bg-dark-200 px-4 py-3 flex items-stretch">
+  <!-- 日期選擇 -->
+  <div class="grid  flex-1 bg-dark-400 rounded-2xl p-2 border border-light-600" [ngClass]="'grid-cols-'+ dateCount ">
+    <div *ngFor="let date of dateArr index as i">
       <app-date-select [date]="date" [dateIndex]="i" (dateEmit)="getScheduleList($event)"></app-date-select>
     </div>
   </div>
-  <div>
-
-  </div>
+  <!-- 重載時刻表 -->
+  <button class="text-center text-xs text-light-400 px-3 ml-2 bg-dark-400 rounded-2xl border border-light-600 tracking-widest">
+      <img class="mx-auto mb-1" src="assets/images/icon/repeat.svg" alt="repeat">
+    重載時刻表
+  </button>
 
 </div>
 <!-- 主要區塊 -->
