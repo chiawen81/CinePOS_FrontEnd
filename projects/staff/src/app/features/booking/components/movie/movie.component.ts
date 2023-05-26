@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-movie',
@@ -7,10 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MovieComponent implements OnInit {
   @Input() movieData:any = {};
-
+  @Output() scheduleIdEmit = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
   }
+  scheduleIdOutput($event: string): void{
 
+    this.scheduleIdEmit.emit($event)
+  }
 }

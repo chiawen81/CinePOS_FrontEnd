@@ -31,14 +31,14 @@ export class BookingPageComponent implements OnInit {
                 "theater": "第5廳",
                 "theaterType": "1",
                 "totalCapacity": 200,
-                "remainSeats": 200
+                "remainSeats": 9
             },
             {
                 "scheduleId": "646a0b9391a4e35d3806be58",
                 "theater": "第7廳",
                 "theaterType": "1",
                 "totalCapacity": 200,
-                "remainSeats": 200
+                "remainSeats": 0
             }
         ]
     },
@@ -86,5 +86,9 @@ export class BookingPageComponent implements OnInit {
       dateArr.push(date);
     }
     return dateArr;
+  }
+
+  opneSeatPOP($event:string): void{
+    console.log('opneSeatPOP',$event);
   }
 }

@@ -1,38 +1,39 @@
+<!-- 電影主視覺海報 -->
 <div class="mr-4">
   <img class="h-52 rounded-xl" [src]="movieData.posterUrl" alt="poster">
 </div>
 
 <div class="flex-1">
   <div class="flex justify-between items-center">
+    <!-- 電影資訊 -->
     <h2 class="text-lg">{{ movieData.title }}</h2>
-    <div class="flex items-center text-xs text-light-400">
+    <div class="flex items-center text-xs text-light-400 font-normal">
       <img class="mr-2" src="assets/images/icon/time.svg" alt="time">
       <span class="mr-2">{{ movieData.runtime }} mins</span>
       <div [ngSwitch]="movieData.rate">
         |
-        <span *ngSwitchCase="0" class="text-theaterType-universal">
+        <span *ngSwitchCase="0" class="text-success-100">
           普通級
         </span>
-        <span *ngSwitchCase="6" class="text-theaterType-protection">
+        <span *ngSwitchCase="6" class="text-info-200">
           保護級
         </span>
-        <span *ngSwitchCase="12" class="text-theaterType-counseling12">
-          輔導十二級
+        <span *ngSwitchCase="12" class="text-warning-200">
+          輔導十二級2
         </span>
-        <span *ngSwitchCase="15" class="text-theaterType-counseling15">
+        <span *ngSwitchCase="15" class="text-warning-300">
           輔導十五級
         </span>
-        <span *ngSwitchCase="18" class="text-theaterType-restricted">
+        <span *ngSwitchCase="18" class="text-warn-200">
           限制級
         </span>
       </div>
     </div>
-
   </div>
-
-  <ul>
+  <!-- 場次時刻表 -->
+  <ul class="grid grid-cols-5 gap-3 mt-3">
     <li *ngFor="let item of movieData.scheduleList">
-      <app-movie-time [movieTimeData]="item"></app-movie-time>
+      <app-movie-time [movieTimeData]="item" (scheduleIdEmit)="scheduleIdOutput($event)"></app-movie-time>
     </li>
   </ul>
 </div>

@@ -1,7 +1,7 @@
 <!-- 上方區塊 -->
 <div class="bg-dark-200 px-4 py-3 flex items-stretch">
   <!-- 日期選擇 -->
-  <div class="grid grid-cols-7 flex-1 bg-dark-400 rounded-2xl p-2 border border-light-600">
+  <div class="date-div grid grid-cols-7 flex-1 bg-dark-400 rounded-2xl p-2 border border-light-600">
     <div *ngFor="let date of dateArr index as i">
       <app-date-select [date]="date" [dateIndex]="i" (dateEmit)="getScheduleList($event)"></app-date-select>
     </div>
@@ -14,17 +14,16 @@
 </div>
 
 <!-- 主要區塊 -->
-<div>
-  <ul class="px-4 py-3 ">
+<div class="movie-main mr-2 mt-2">
+  <ul class="px-4 py-1 ">
     <li *ngFor="let item of data" class="bg-dark-400 rounded-2xl border border-light-600 tracking-widest my-3 p-4">
-      <app-movie [movieData]="item" class="flex"></app-movie>
+      <app-movie [movieData]="item" class="flex" (scheduleIdEmit)="opneSeatPOP($event)"></app-movie>
     </li>
   </ul>
-
 </div>
 
 
-<div class="absolute bottom-10 right-10">
+<!-- <div class="absolute bottom-10 right-10">
   <button mat-raised-button
     color="primary"
     class="w-40"
@@ -32,4 +31,4 @@
     (click)="goTicketType()">
       下一步
   </button>
-</div>
+</div> -->

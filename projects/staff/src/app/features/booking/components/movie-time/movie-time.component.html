@@ -1,25 +1,44 @@
-<!-- 影廳類型 -->
-<div [ngSwitch]="movieTimeData.theaterType">
-  <ng-container *ngSwitchCase="1">
-    2D
-  </ng-container>
+<div class="cursor-pointer bg-dark-200 rounded-2xl text-center py-2 relative" (click)="scheduleIdOutput()">
+  <!-- 影廳類型 -->
+  <div [ngSwitch]="movieTimeData.theaterType">
+    <ng-container *ngSwitchCase="1">
+      2D
+    </ng-container>
 
-  <ng-container *ngSwitchCase="2">
-    3D
-  </ng-container>
+    <ng-container *ngSwitchCase="2">
+      3D
+    </ng-container>
 
-  <ng-container *ngSwitchCase="3">
-    iMAX
-  </ng-container>
+    <ng-container *ngSwitchCase="3">
+      iMAX
+    </ng-container>
 
-  <ng-container *ngSwitchCase="4">
-    4DX
-  </ng-container>
+    <ng-container *ngSwitchCase="4">
+      4DX
+    </ng-container>
+  </div>
+  <!-- 時間 -->
+  <div>
+    <span *ngIf="movieTimeData.remainSeats>10" class="text-info-100">
+      XX:XX
+    </span>
+    <span *ngIf="movieTimeData.remainSeats<10 && movieTimeData.remainSeats!==0" class="text-warning-100">
+      XX:XX
+    </span>
+    <span *ngIf="movieTimeData.remainSeats===0" class="text-warn-100">
+      XX:XX
+    </span>
+  </div>
+  <!-- 廳院 -->
+  <div>{{ movieTimeData.theater }}</div>
+
+  <!-- 底線 -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <span *ngIf="movieTimeData.remainSeats>10" class="line bg-info-100">
+    </span>
+    <span *ngIf="movieTimeData.remainSeats<10 && movieTimeData.remainSeats!==0" class="line bg-warning-100">
+    </span>
+    <span *ngIf="movieTimeData.remainSeats===0" class="line bg-warn-100">
+    </span>
+  </div>
 </div>
-<!-- 時間 -->
-<div>
-  XX:XX
-</div>
-<!-- 廳院 -->
-<div>{{ movieTimeData.theater }}</div>
-

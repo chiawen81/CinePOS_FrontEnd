@@ -40,7 +40,7 @@ button{
     background: rgba(255, 255, 255, 0.12) !important;
   }
   &.mat-warn{
-    background: theme('colors.warn.200');
+    background: theme('colors.warn.400');
     color: theme('colors.warn.100') !important;
     @apply rounded-xl tracking-widest;
   }
@@ -62,6 +62,6 @@ button{
 .mat-dialog-container{
   background: theme('colors.dark.200') !important;
   @apply rounded-xl tracking-widest #{!important};
-  
+
 }
 

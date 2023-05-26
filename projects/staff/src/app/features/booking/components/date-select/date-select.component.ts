@@ -22,11 +22,15 @@ export class DateSelectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dateIndex === 0 ? this.isActive = true: this.isActive = false;
+
+
     this.managementService.dateSelect$
       .pipe(
         takeUntil(this.managementService.onDestroy$)
       )
       .subscribe((v)=>{
+        console.log(v);
         if(v === String(this.date.getTime())){
           this.isActive = true;
         }else{
@@ -42,4 +46,7 @@ export class DateSelectComponent implements OnInit {
   ngOnDestroy(): void {
     this.managementService.onDestroy$.next();
   }
+
+
+
 }
