@@ -10,17 +10,17 @@
  * Do not edit the class manually.
  */
 
-export interface LoginResData { 
+export interface CommonUploadSuccessData { 
     /**
-     * 員工編號
+     * 檔案名稱(firebase比對用)
      */
-    staffId?: string;
+    fileName?: string;
     /**
-     * 姓名
+     * 檔案網址
      */
-    name?: string;
+    fileUrl?: string;
     /**
-     * 令牌
+     * 檔案大小
      */
-    token?: string;
+    fileSize?: number;
 }

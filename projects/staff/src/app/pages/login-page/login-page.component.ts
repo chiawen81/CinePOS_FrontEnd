@@ -22,10 +22,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   login($event: LoginReq): void {
-    this.loginService.v1StaffLoginPost$($event)
-      .subscribe(() => {
-        this.router.navigate([STATIC_ROUTES.HOME]);
-      })
+    // this.loginService.v1StaffLoginPost$($event)
+    //   .subscribe(() => {
+    //     this.router.navigate([STATIC_ROUTES.HOME]);
+    //   })
   }
 
 }

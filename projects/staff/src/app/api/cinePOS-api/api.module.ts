@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { CommonService } from './api/common.service';
 import { ManagerService } from './api/manager.service';
 import { StaffService } from './api/staff.service';
 
@@ -11,6 +12,7 @@ import { StaffService } from './api/staff.service';
   declarations: [],
   exports:      [],
   providers: [
+    CommonService,
     ManagerService,
     StaffService ]
 })

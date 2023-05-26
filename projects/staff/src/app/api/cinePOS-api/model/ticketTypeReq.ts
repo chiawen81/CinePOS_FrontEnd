@@ -10,17 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface LoginResData { 
+export interface TicketTypeReq { 
     /**
-     * 員工編號
+     * 票種名稱
      */
-    staffId?: string;
+    type: string;
     /**
-     * 姓名
+     * 票價
      */
-    name?: string;
-    /**
-     * 令牌
-     */
-    token?: string;
+    price: number;
 }

@@ -9,18 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TicketTypeResData } from './ticketTypeResData';
 
-export interface LoginResData { 
-    /**
-     * 員工編號
-     */
-    staffId?: string;
-    /**
-     * 姓名
-     */
-    name?: string;
-    /**
-     * 令牌
-     */
-    token?: string;
+export interface TicketTypeRes { 
+    code: number;
+    message: string;
+    data: TicketTypeResData;
 }

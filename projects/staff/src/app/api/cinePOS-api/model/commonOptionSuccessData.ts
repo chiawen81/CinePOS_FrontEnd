@@ -9,18 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { CommonOptionSuccessDataItem } from './commonOptionSuccessDataItem';
 
-export interface LoginResData { 
-    /**
-     * 員工編號
-     */
-    staffId?: string;
-    /**
-     * 姓名
-     */
-    name?: string;
-    /**
-     * 令牌
-     */
-    token?: string;
+export interface CommonOptionSuccessData extends Array<CommonOptionSuccessDataItem> { 
 }

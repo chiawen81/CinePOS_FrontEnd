@@ -20,13 +20,13 @@
   <!-- 時間 -->
   <div>
     <span *ngIf="movieTimeData.remainSeats>10" class="text-info-100">
-      XX:XX
+      {{  time  | date:'HH:mm' }}
     </span>
     <span *ngIf="movieTimeData.remainSeats<10 && movieTimeData.remainSeats!==0" class="text-warning-100">
-      XX:XX
+      {{ time  | date:'HH:mm' }}
     </span>
     <span *ngIf="movieTimeData.remainSeats===0" class="text-warn-100">
-      XX:XX
+      {{ time  | date:'HH:mm' }}
     </span>
   </div>
   <!-- 廳院 -->

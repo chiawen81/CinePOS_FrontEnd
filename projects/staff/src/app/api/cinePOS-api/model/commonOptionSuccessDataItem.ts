@@ -10,17 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface LoginResData { 
+export interface CommonOptionSuccessDataItem { 
     /**
-     * 員工編號
-     */
-    staffId?: string;
-    /**
-     * 姓名
+     * 選項文字
      */
     name?: string;
     /**
-     * 令牌
+     * 選項值
      */
-    token?: string;
+    value?: number;
 }

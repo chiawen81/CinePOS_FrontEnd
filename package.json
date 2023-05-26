@@ -15,7 +15,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "swagger:get-staff": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/staff/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
+    "swagger:get-staff": "java -jar swagger-codegen-cli-3.0.31.jar generate -i http://localhost:3005/v1/swagger.json -l typescript-angular -o ./projects/staff/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
     "swagger:get-manager": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/manager/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
     "swagger:get-share-libs": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/share-libs/src/lib/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true"
   },
