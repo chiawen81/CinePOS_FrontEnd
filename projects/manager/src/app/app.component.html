@@ -19,7 +19,7 @@
 
   <main class="flex items-stretch h-screen justify-between">
     <app-side-nav *ngIf="isLogin && !isLoginPage"></app-side-nav>
-    <section class="w-full" [class.section-router]="isLogin && !isLoginPage">
+    <section class="w-full" [class.section-router]="!isLoginPage">
       <app-header *ngIf="isLogin && !isLoginPage"></app-header>
       <section class="relative">
         <router-outlet></router-outlet>
