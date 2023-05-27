@@ -35,7 +35,7 @@
                         </div>
 
 
-                        <dxo-appointment-dragging [group]="'appointmentsGroup'" 
+                        <dxo-appointment-dragging [group]="'appointmentsGroup'"
                             [onAdd]="onAppointmentAdd">
                         </dxo-appointment-dragging>
             </dx-scheduler>
@@ -52,12 +52,12 @@
         <dx-draggable id="list" data="dropArea" [group]="'appointmentsGroup'" (onDragStart)="onListDragStart($event)"class="content grid grid-cols-3 gap-10 mt-20">
             <dx-draggable class="item dx-card dx-theme-text-color dx-theme-background-color" [clone]="true"
                 [group]="'appointmentsGroup'" [data]="moviesData" (onDragStart)="onItemDragStart($event)"
-                (onDragEnd)="onItemDragEnd($event)" *ngFor="let item of moviesData"[id]="item.id">
+                (onDragEnd)="onItemDragEnd($event)" *ngFor="let item of moviesData"[id]="item._id">
                 <div  class="rounded-large p-16" style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
                     <div class="font-bold">{{ item.text }}</div>
                     <div class="flex">
                         <div class="dropdown-appointment-dates">
-                            {{item.duration}}
+                            {{item.runtime}}
                         </div>
                         <div class="px-12">|</div>
                         <div>{{item.rate | rate}}</div>

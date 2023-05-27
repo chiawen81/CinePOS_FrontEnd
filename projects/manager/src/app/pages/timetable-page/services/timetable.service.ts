@@ -51,7 +51,7 @@ export class TimetableService {
     const startDate = moment().startOf('week').valueOf();
     const endDate = moment(startDate).add('day', 7).valueOf();
     console.log('startDate',moment().startOf('week'),', endDate',moment(startDate).add('day', 7));
-    
+
     return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
     // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
   }
@@ -193,7 +193,7 @@ export interface Assignee {
 
 
 export class MovieData {
-  id: string;
+  _id: string;
 
   text: string;
 
@@ -203,19 +203,19 @@ export class MovieData {
 
   image?: string;
 
-  duration: number;
+  runtime: number;
 
   color: string;
 
   rate: RateCode
 
   constructor(data: MovieData) {
-    this.id = data.id;
+    this._id = data._id;
     this.text = data.text;
     this.director = data.director;
     this.year = data.year;
     this.image = data.image;
-    this.duration = data.duration;
+    this.runtime = data.runtime;
     this.color = data.color;
     this.rate = data.rate;
   }

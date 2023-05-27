@@ -5,6 +5,8 @@ import { DxSchedulerComponent } from 'devextreme-angular';
 import Query from 'devextreme/data/query';
 import { MovieData, RateCode, TheatreData, TimetableService } from './services/timetable.service';
 import * as moment from 'moment';
+import { MoviePageService } from '../movie-page/services/movie-page.service';
+import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
 
 @Component({
   selector: 'app-timetable-page',
@@ -27,15 +29,18 @@ export class TimetablePageComponent implements OnInit {
 
 
   constructor(
-    private timetableService: TimetableService) {
-      this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
-     }
+    private timetableService: TimetableService,
+    private movieService: MoviePageService
+  ) {
+    this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+  }
   ngOnInit(): void {
-    this.getTimetableList()
+    this.getTimetableList();
+    this.getMovieList();
   }
 
   getTimetableList() {
-    this.timetableService.getTimetableList().subscribe((res:any) => {
+    this.timetableService.getTimetableList().subscribe((res: any) => {
       console.log(res);
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
@@ -44,7 +49,7 @@ export class TimetablePageComponent implements OnInit {
         console.log(filterData);
         this.theatreData = this.getTheaters(filterData);
         console.log(this.theatreData);
-        this.moviesData = this.getMovies(filterData);
+        // this.moviesData = this.getMovies(filterData);
         console.log('moviesData', this.moviesData);
       }
     })
@@ -80,28 +85,28 @@ export class TimetablePageComponent implements OnInit {
     }
   }
 
-  getMovies(data: any[]): MovieData[] {
-    const movieMap: { [key: string]: boolean } = {};
-    const movies: MovieData[] = [];
+  // getMovies(data: any[]): MovieData[] {
+  //   const movieMap: { [key: string]: boolean } = {};
+  //   const movies: MovieData[] = [];
 
-    if (data) {
-      for (const entry of data) {
-        const movieId = entry.movie._id;
-        const movieTitle = entry.movie.title;
-        const color = entry.color;
-        const duration = entry.movie.runtime;
-        const rate = entry.movie.rate;
+  //   if (data) {
+  //     for (const entry of data) {
+  //       const movieId = entry.movie._id;
+  //       const movieTitle = entry.movie.title;
+  //       const color = entry.color;
+  //       const duration = entry.movie.runtime;
+  //       const rate = entry.movie.rate;
 
 
-        if (!movieMap[movieId]) {
-          movieMap[movieId] = true;
-          movies.push({ text: movieTitle, id: movieId, color, duration, rate });
-          // theaters.push({ text: theaterName, id: id });
-        }
-      }
-    }
-    return movies;
-  }
+  //       if (!movieMap[movieId]) {
+  //         movieMap[movieId] = true;
+  //         movies.push({ text: movieTitle, id: movieId, color, duration, rate });
+  //         // theaters.push({ text: theaterName, id: id });
+  //       }
+  //     }
+  //   }
+  //   return movies;
+  // }
 
   /** TODO: 應該要get所有的廳院 */
   getTheaters(data: any[]): TheatreData[] {
@@ -151,21 +156,21 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onAppointmentAdd(e: any) {
-    const moviesData = this.moviesData.filter((item)=>{
-      return item.id = e.itemElement.id;
+    const moviesData = this.moviesData.filter((item) => {
+      return item._id = e.itemElement.id;
     });
     console.log(e);
     console.log(e.itemElement);
     console.log(e.itemElement.id);
     const param = {
-      movieId: e.itemElement.id,
+      movieId: e.itemElement._id,
       theaterId: e.itemData.theatreId,
       startDate: new Date(e.itemData.startDate),
-      endDate: moment(e.itemData.startDate).add('minute',moviesData[0].duration).toDate()
+      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
     console.log(param);
-    this.timetableService.createTimetable(param).subscribe((res)=>{
-      if(res){
+    this.timetableService.createTimetable(param).subscribe((res) => {
+      if (res) {
         alert(res.message);
         this.getTimetableList();
       }
@@ -173,7 +178,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onListDragStart(e: any) {
-    
+
     e.cancel = true;
   }
 
@@ -265,4 +270,16 @@ export class TimetablePageComponent implements OnInit {
     return Query(this.moviesData).filter(['id', '=', id]).toArray()[0];
   }
 
+  /**
+   * // TODO 這個狀態沒有寫enum
+   */
+  getMovieList(){
+    const startDate = moment(this.currentDate).format('yyyy/MM/DD');
+    const endDate = moment(startDate).add(7,'d').format('yyyy/MM/DD');
+    this.movieService.getMovieList(1, startDate, endDate, '').subscribe(res => {
+      console.log('取得列表資料-成功res', res);
+      this.moviesData = res.data as MovieData[];
+
+    });
+  }
 }
