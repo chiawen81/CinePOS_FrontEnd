@@ -1,0 +1,110 @@
+<div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
+  <cine-card class="mb-50">
+    <cine-card-header>查詢條件</cine-card-header>
+    <cine-card-content>
+      <div class="row">
+        <span class="form-title">上映狀態</span>
+        <div class="form-content">
+          <div class="form-select select-small">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>請選擇</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let item of statusOptions" [value]="item.value">{{item?.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <span class="form-title">查詢期間</span>
+        <div class="form-content">
+          <div class="form-date">
+            <mat-form-field class="w-300">
+              <input matInput [matDatepicker]="picker1" [formControl]="searchDateS">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <span class="ml-10 mr-10">～</span>
+            <mat-form-field class="w-300">
+              <input matInput [matDatepicker]="picker2"
+                     [formControl]="searchDateE">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <p *ngIf="formGroup.hasError('dateRangeRequire')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeRequire')}}</p>
+          <p *ngIf="formGroup.hasError('dateRangeOrder')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeOrder')}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <span class="form-title">電影名稱</span>
+        <div class="form-content flex flex-row justify-between">
+          <input class="form-input w-300" type="text" formControlName="title">
+          <button mat-raised-button color="primary" type="submit" class="w-60 float-right" (click)="search()">查詢</button>
+        </div>
+      </div>
+
+    </cine-card-content>
+  </cine-card>
+
+
+
+  <cine-card>
+    <cine-card-header>查詢結果</cine-card-header>
+    <cine-card-content>
+      <p *ngIf="!movieListView?.length" class="p-50 text-center">沒有符合條件的資料！</p>
+      <cine-table *ngIf="movieListView?.length">
+        <thead>
+          <tr>
+            <th>系統編號</th>
+            <th>上線狀態</th>
+            <th>電影名稱</th>
+            <th>電影類型</th>
+            <th>分級</th>
+            <th>上映日期</th>
+            <th>支援設備</th>
+            <th>功能</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of movieListView">
+            <td data-title="系統編號">{{ item._id }}</td>
+            <td data-title="上線狀態">{{ item.statusName}}</td>
+            <td data-title="電影名稱">{{ item.title }}</td>
+            <td data-title="電影類型">
+              <span *ngIf="!item.genreName">-</span>
+              <span *ngFor="let subItem of item.genreName;let subIdx=index">{{subItem}}</span>
+            </td>
+            <td data-title="分級">{{ item.rateName }}</td>
+            <td data-title="上映日期">{{ item.releaseDate | date:'YYYY/MM/dd'}}</td>
+            <td data-title="支援設備">
+              <span *ngIf="!item.provideVersionName">-</span>
+              <span *ngFor="let subItem of item.provideVersionName">{{subItem}}</span>
+            </td>
+            <td>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60">發佈</button>
+              </span>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15">下架</button>
+              </span>
+              <span>
+                <button mat-raised-button color="primary" type="submit" class="w-60">刪除</button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </cine-table>
+
+      <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="pageSet1.totalCounts"
+                     [pageSize]="pageSet1.currentPageSize" [showFirstLastButtons]="true"
+                     [pageIndex]="pageSet1.currentPage-1" aria-label="Select page">
+      </mat-paginator>
+    </cine-card-content>
+  </cine-card>
+
+</div>
