@@ -31,51 +31,68 @@ $custom-warn: mat-palette($mat-red);
 $my-theme: mat-dark-theme($custom-primary, $custom-secondary, $custom-warn);
 @include angular-material-theme($my-theme);
 
-.utility-common-back {
-  button {
-    height: 42px;
+// .utility-common-back {
+button {
+  height: 42px;
 
-    &.mat-primary {
-      background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
-      border-radius: 6px !important;
-      @apply rounded-xl tracking-widest;
-    }
-
-    &.mat-button-disabled {
-      background: rgba(255, 255, 255, 0.12) !important;
-    }
-
-    &.mat-warn {
-      background: theme('colors.warn.200');
-      color: theme('colors.warn.100') !important;
-      @apply rounded-xl tracking-widest;
-    }
-
-    &.btn-icon.mat-raised-button {
-      min-width: 0 !important;
-
-    }
+  &.mat-primary {
+    background: linear-gradient(to right, theme('colors.primary.500'), theme('colors.secondary.500'));
+    @apply rounded-xl tracking-widest;
   }
 
-  .mat-form-field-appearance-fill {
-    .mat-form-field-flex {
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 8px !important;
-      background-color: theme('colors.dark.200');
-      padding: 0.8rem !important;
-      padding-bottom: 0px !important;
-    }
-
-    .mat-form-field-underline {
-      display: none;
-    }
+  &.mat-button-disabled {
+    background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  .mat-dialog-container {
-    background: theme('colors.dark.200') !important;
-    @apply rounded-xl tracking-widest #{!important};
-
+  &.valid-form {
+    animation: enableButton 0.5s forwards;
+    transition: background-color 0.5s ease-in-out;
   }
 
+  &.mat-warn {
+    background: theme('colors.warn.200');
+    color: theme('colors.warn.100') !important;
+    @apply rounded-xl tracking-widest;
+  }
 
+  &.btn-icon.mat-raised-button {
+    min-width: 0 !important;
+
+  }
+}
+
+.mat-form-field-appearance-fill {
+  .mat-form-field-flex {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    background-color: theme('colors.dark.200');
+    padding: 0.8rem !important;
+    padding-bottom: 0px !important;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.mat-dialog-container {
+  background: theme('colors.dark.200') !important;
+  @apply rounded-xl tracking-widest #{!important};
+
+}
+
+// }
+@keyframes enableButton {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    // filter: brightness(150%);
+    filter: contrast(200%);
+  }
+  100% {
+    // filter: brightness(100%);
+    filter: contrast(100%);
+    opacity: 1;
+  }
 }

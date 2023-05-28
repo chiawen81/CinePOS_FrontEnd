@@ -7,17 +7,17 @@ import { StorageEnum } from '../enums/storage/storage-enum';
 
 
 @Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
+export class ErrorHeaderInterceptor implements HttpInterceptor {
 
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(
-        catchError((err: HttpErrorResponse) => {
-          alert(err.error.message);
-          return throwError(err);
-        })
-      )
+          catchError((err: HttpErrorResponse) => {
+            alert(err.error?.message);
+            return throwError(err);
+          })
+        )
   }
 }

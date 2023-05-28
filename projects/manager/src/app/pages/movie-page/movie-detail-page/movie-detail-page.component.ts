@@ -55,7 +55,6 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     this.isEdit = (this._Route.snapshot?.url[1]?.path) === 'edit';
     console.log('isEdit', this.isEdit, this._Route.snapshot);
 
-    this._MoviePageService.login();                            // 登入 (====之後串了真正登入要刪掉)
     this.getOptionAPI();                                       // API- 取得選項資料
 
     if (this.isEdit) {
