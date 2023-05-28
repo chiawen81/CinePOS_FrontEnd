@@ -64,7 +64,7 @@ export class MoviePageService {
 
   // 登入 ====待處理，暫時寫死====
   login(): void {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NDY5NTMxOSwiZXhwIjoxNjg0OTU0NTE5fQ.4S6yzY0aQgMWFwQc6Y3fnMvzdvU5gxUroqgMD-08yzo";
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDRmMGE5OTc3ZmRlZThmYTBiYzc1YSIsInN0YWZmSWQiOiJCMDAwMSIsImlhdCI6MTY4NTI4MzIxOSwiZXhwIjoxNzExMjAzMjE5fQ.BFVaxy2YGra9rJQBnawZe7EcRiNohSs_R6FZL6Lir9Y";
     this._StorageService.setLocalStorage(StorageEnum.token, token);
     const profileData: ProfileData = {
       name: "文文編輯頁測試",
