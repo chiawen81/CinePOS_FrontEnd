@@ -9,8 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+<<<<<<< HEAD
 import { TimetableListResDataEndDate } from './timetableListResDataEndDate';
 import { TimetableListResDataStartDate } from './timetableListResDataStartDate';
+=======
+>>>>>>> develop
 
 export interface TimetableUpdateReq { 
     /**
@@ -25,6 +28,17 @@ export interface TimetableUpdateReq {
      * 廳院ID
      */
     theaterId: string;
+<<<<<<< HEAD
     startDate: TimetableListResDataStartDate;
     endDate: TimetableListResDataEndDate;
+=======
+    /**
+     * 開始時間
+     */
+    startDate: number;
+    /**
+     * 結束時間
+     */
+    endDate: number;
+>>>>>>> develop
 }

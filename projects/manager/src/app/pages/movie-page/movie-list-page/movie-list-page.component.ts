@@ -38,7 +38,6 @@ export class MovieListPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this._MoviePageService.login();                                                         // 登入 (====之後串了真正登入要刪掉)
     this.getOptionAPI(4);                                                                   // API- 取得選項資料
   }
 

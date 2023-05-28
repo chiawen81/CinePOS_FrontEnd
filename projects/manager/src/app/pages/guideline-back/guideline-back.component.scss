@@ -35,7 +35,7 @@
     padding: 16px;
     background: #1A1A1A;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: 16px;
     color: #DDDDDD;
 
     &.input-textarea {
@@ -57,7 +57,7 @@
           .mat-form-field-flex {
             padding: 16px 12px !important;
             padding-bottom: 12px;
-            border-radius: 8px !important;
+            border-radius: 16px !important;
 
             .mat-form-field-infix {
               padding: 0;
@@ -152,7 +152,7 @@
           height: 48px;
           background: #1A1A1A;
           border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
+          border-radius: 16px;
           color: #DDDDDD;
 
           .mat-form-field-infix {
