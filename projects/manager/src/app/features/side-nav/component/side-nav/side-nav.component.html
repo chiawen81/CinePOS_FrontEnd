@@ -25,7 +25,7 @@
           <span>{{(this.storageService.getProfileData() |async)?.staffId}} {{(this.storageService.getProfileData() |async)?.name}}</span>
           <span class="jobtitle">總部 營運部 專員</span>
         </div>
-        <button class="btn gray">登出</button>
+        <button class="btn gray" (click)="logout()">登出</button>
       </div>
       <div class="copyright">
         Copyright © 2023 CineTech. All rights reserved.
