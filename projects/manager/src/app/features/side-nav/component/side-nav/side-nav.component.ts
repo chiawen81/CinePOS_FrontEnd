@@ -2,6 +2,7 @@ import { StorageService } from './../../../../core/services/storage/storage.serv
 import { Component, OnInit } from '@angular/core';
 import { STATIC_ROUTES } from 'projects/manager/src/app/core/constant/routes.constant';
 import { ProfileData } from 'projects/manager/src/app/core/models/profile-data.model';
+import { LoginService } from 'projects/manager/src/app/pages/login-page/service/login.service';
 import { environment } from 'projects/manager/src/environments/environment';
 
 @Component({
@@ -54,12 +55,17 @@ export class SideNavComponent implements OnInit {
   profileData!:ProfileData;
   currentVersion = environment.appVersion;
   constructor(
-    public storageService: StorageService
+    public storageService: StorageService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
-   
+
     // this.profileData = this.storageService.getProfileData();
+  }
+
+  logout(){
+    this.loginService.logout();
   }
 
 }

@@ -5,6 +5,8 @@ import { Observable, filter, map, tap } from 'rxjs';
 import { StorageEnum } from '../../../core/enums/storage/storage-enum';
 import { StorageService } from '../../../core/services/storage/storage.service';
 import { ProfileData } from '../../../core/models/profile-data.model';
+import { Router } from '@angular/router';
+import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class LoginService {
 
   constructor(
     private managerService: ManagerService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
   ) { }
 
   login$(LoginReq: { staffId: string, password: string }): Observable<LoginRes> {
@@ -39,8 +42,6 @@ export class LoginService {
   getProfile(staffId: string) {
     return this.managerService.v1ManagerUserProfileStaffIdGet(staffId)
       .pipe(
-        tap(res => res.code !== 1 && alert(res.message)),
-        filter(res => res.code === 1),
         map((res) => {
           if (res.data) {
             const profileData: ProfileData = {
@@ -56,6 +57,11 @@ export class LoginService {
           return null;
         })
       )
+  }
 
+  logout(){
+    this.storageService.clearSessionStorage();
+    this.storageService.clearLocalStorage();
+    this.router.navigate([STATIC_ROUTES.LOGIN]);
   }
 }
