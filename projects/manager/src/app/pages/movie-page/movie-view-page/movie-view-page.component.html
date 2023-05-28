@@ -22,7 +22,7 @@
       <div class="row">
         <span class="form-title">預定上映日期</span>
         <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.releaseDate}}</p>
+          <p class="form-text" *ngIf="movieInfoAPI?.releaseDate">{{movieInfoAPI.releaseDate | date:'yyyy/MM/dd' }}</p>
         </div>
       </div>
     </cine-card-content>
