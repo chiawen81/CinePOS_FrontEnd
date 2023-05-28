@@ -22,16 +22,16 @@ import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter }
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { DxSchedulerModule,DxDraggableModule } from 'devextreme-angular';
-import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
-import { ExternalApiModule } from 'projects/staff/src/app/api/external-api.module';
-import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
+import { ExternalApiModule } from './api/external-api.module';
+import { environment } from '../environments/environment';
+import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
 import { ApiHeaderInterceptor } from './core/interceptor/api-header';
-import { ErrorInterceptor } from './core/interceptor/error-interceptor';
-import { ApiModule as CinePosApiModule, BASE_PATH, Configuration } from "./api/cinePOS-api";
+import { ErrorHeaderInterceptor } from './core/interceptor/error-interceptor';
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
-import { MatPaginatorModule } from '@angular/material/paginator';
 
 const materialModules = [
   MatInputModule,
@@ -91,7 +91,6 @@ export class MyDateAdapter extends NativeDateAdapter {
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     ...featureModules,
     ...materialModules,
     ShareLibsModule,
@@ -106,20 +105,19 @@ export class MyDateAdapter extends NativeDateAdapter {
     ...materialModules
   ],
   providers: [
-    { provide: DateAdapter, useClass: MyDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     ExternalApiModule.apiUrlProvider(BASE_PATH, environment.cinePosApi),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiHeaderInterceptor,
       multi: true
     },
+    { provide: DateAdapter, useClass: MyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
+      useClass: ErrorHeaderInterceptor,
       multi: true
     },
-    { provide: APP_BASE_HREF, useFactory: getBaseHref, deps: [PlatformLocation] },
   ],
   bootstrap: [AppComponent]
 })

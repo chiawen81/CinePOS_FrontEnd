@@ -20,8 +20,7 @@ export class TimetablePageComponent implements OnInit {
   // data: Data[];
   data: any[] = [];
 
-  currentDate: Date = new Date('2023-05-21');
-  // currentDate: Date = new Date();
+  currentDate!: Date;
 
   moviesData: MovieData[] = [];
 
@@ -40,7 +39,10 @@ export class TimetablePageComponent implements OnInit {
   }
 
   getTimetableList() {
-    this.timetableService.getTimetableList().subscribe((res: any) => {
+    const startDate = moment().startOf('week').valueOf();
+    const endDate = moment(startDate).add('day', 7).valueOf();
+    this.currentDate = new Date(startDate);
+    this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
       console.log(res);
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);

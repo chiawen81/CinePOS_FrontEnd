@@ -8,7 +8,7 @@ module.exports = {
       "projects/share-libs/src/**/*.{html,ts,scss}",
     ],
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: true, // or 'media' or 'class'
   theme: {
     extend: {
       borderRadius: {
@@ -76,7 +76,7 @@ module.exports = {
         }
         return result;
       })(),
-      spacing: Object.fromEntries(Array.from({ length: 1000 }, (_, i) => [(i + 1).toString(), `${i + 1}px`])),
+      // spacing: Object.fromEntries(Array.from({ length: 1000 }, (_, i) => [(i + 1).toString(), `${i + 1}px`])),
     },
   },
   plugins: [],

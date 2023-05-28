@@ -45,12 +45,9 @@ export class TimetableService {
     // private managerService: ManagerService
   ) { }
 
-  getTimetableList() {
+  getTimetableList(startDate:number, endDate:number) {
     // return data;
     const url = 'timetable/list'
-    const startDate = moment().startOf('week').valueOf();
-    const endDate = moment(startDate).add('day', 7).valueOf();
-    console.log('startDate',moment().startOf('week'),', endDate',moment(startDate).add('day', 7));
 
     return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
     // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
