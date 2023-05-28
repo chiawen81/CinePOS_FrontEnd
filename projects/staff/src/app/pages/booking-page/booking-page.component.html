@@ -7,7 +7,8 @@
     </div>
   </div>
   <!-- 重載時刻表 -->
-  <button class="text-center text-xs text-light-400 px-3 ml-2 bg-dark-400 rounded-2xl border border-light-600 tracking-widest">
+  <button (click)="getScheduleList(tempTime)"
+    class="text-center text-xs text-light-400 px-3 ml-2 bg-dark-400 rounded-2xl border border-light-600 tracking-widest">
       <img class="mx-auto mb-1" src="assets/images/icon/repeat.svg" alt="repeat">
     重載時刻表
   </button>
@@ -18,7 +19,7 @@
   <ng-template [ngIf]="data.length>0" [ngIfElse]="noData">
     <ul class="px-4 py-1 ">
       <li *ngFor="let item of data" class="bg-dark-400 rounded-2xl border border-light-600 tracking-widest my-3 p-4">
-        <app-movie [movieData]="item" class="flex" (scheduleIdEmit)="opneSeatPOP($event)"></app-movie>
+        <app-movie [movieData]="item" class="flex" (clickMovieEmit)="opneSeatPOP($event)"></app-movie>
       </li>
     </ul>
   </ng-template>

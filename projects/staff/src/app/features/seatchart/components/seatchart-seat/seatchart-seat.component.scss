@@ -1,0 +1,18 @@
+.seat{
+  @apply w-full h-6 rounded-t-lg rounded-b-md p-1;
+}
+.seat-free{
+  @apply bg-white cursor-pointer;
+}
+.seat-lock{
+  @apply bg-gray-600;
+}
+.seat-sold{
+  @apply bg-gray-600;
+}
+.seat-none{
+  @apply bg-transparent;
+}
+.active-seat{
+  @apply bg-green-600;
+}

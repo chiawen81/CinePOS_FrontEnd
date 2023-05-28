@@ -14,5 +14,5 @@ import { ScheduleListResData } from './scheduleListResData';
 export interface ScheduleListRes {
     code: number;
     message: string;
-    data: ScheduleListResData;
+    data: ScheduleListResData[];
 }

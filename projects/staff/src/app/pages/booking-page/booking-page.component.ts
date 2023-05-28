@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from '../../core/constant/routes.constant';
-import { ManagementService } from '../../features/booking/services/management.service';
 import { BookingService } from './services/booking/booking.service';
 import { ScheduleListResData } from '../../api/cinePOS-api';
+import { MatDialog } from '@angular/material/dialog';
+import { SeatDialogComponent } from '../../features/dialog/components/seat-dialog/seat-dialog.component';
 @Component({
   selector: 'app-booking-page',
   templateUrl: './booking-page.component.html',
@@ -13,19 +14,22 @@ export class BookingPageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private bookingComponentsService:ManagementService,
-    private bookingService:BookingService
+    private bookingService:BookingService,
+    private matDialog: MatDialog,
   ) { }
 
   dateCount = 7;
   dateArr: Date[] = [];
 
   data:ScheduleListResData[] = [];
-
+  tempTime = '';
 
   ngOnInit(): void {
     this.dateArr = this.createDates(this.dateCount);
     this.getScheduleList(String(this.dateArr[0].getTime()));
+
+
+    // this.matDialog.open(SeatDialogComponent,{width: '80%'})
   }
   goTicketType(): void {
     // 將選取的票種&票數存進services
@@ -35,19 +39,16 @@ export class BookingPageComponent implements OnInit {
   }
 
   getScheduleList($event: string): void {
-    this.bookingComponentsService.dateSelect$.next($event);
+    this.tempTime = $event;
+    this.bookingService.dateSelect$.next($event);
     const startTime = $event;
     const endDate = new Date(Number(startTime));
-    console.log(endDate.toISOString());
     endDate.setHours(23, 59, 59, 999);
-    console.log(endDate.toISOString());
     const endTime = String(endDate.getTime());
     this.data = [];
     this.bookingService.v1StaffScheduleListGet$({startDate: startTime,endDate:endTime})
     .subscribe((res)=>{
-      res.data.forEach(currentItem => {
-        this.data.push(currentItem);
-      });
+      this.data = res.data;
     })
   }
 
@@ -65,6 +66,11 @@ export class BookingPageComponent implements OnInit {
   }
 
   opneSeatPOP($event:string): void{
-    console.log('opneSeatPOP',$event);
+    console.log('點選場次:',this.bookingService.getShopCart());
+    this.matDialog.open(SeatDialogComponent, {
+      width: '80%',
+      data: $event
+    }
+  );
   }
 }

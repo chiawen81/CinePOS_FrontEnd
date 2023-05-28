@@ -12,7 +12,6 @@
 import { ScheduleItem } from './scheduleItem';
 
 export interface ScheduleListResData {
-    forEach(arg0: (currentItem: any) => void): unknown;
     /**
      * 電影ID
      */
@@ -33,5 +32,5 @@ export interface ScheduleListResData {
      * 電影時長（以分鐘為單位）
      */
     runtime: number;
-    scheduleList: ScheduleItem;
+    scheduleList: ScheduleItem[];
 }
