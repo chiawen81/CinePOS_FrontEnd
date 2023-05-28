@@ -9,13 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { MovieDetailCreateParameterReleaseDate } from './movieDetailCreateParameterReleaseDate';
 
-export interface MovieDetailUpdateParameter {
+import { MovieDetailCreateParameterReleaseDate } from "../../../api/cinePOS-api";
+
+export interface MovieDetailCreateParameterCustomer {
   /**
-   * 系統編號
-   */
-  _id: string;
+ * 電影編號
+ */
+  _id?: string;
   /**
    * 電影中文名
    */

@@ -13,7 +13,7 @@ export class StorageService {
   constructor() { }
 
   /**
-   * 取得身分可進入的頁面
+   * 取得身分資料
    */
   getProfileData(): Observable<ProfileData> {
     return this.profileData$.asObservable();

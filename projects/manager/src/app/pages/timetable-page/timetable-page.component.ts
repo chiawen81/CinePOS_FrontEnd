@@ -18,8 +18,7 @@ export class TimetablePageComponent implements OnInit {
   // data: Data[];
   data: any[] = [];
 
-  currentDate: Date = new Date('2023-05-21');
-  // currentDate: Date = new Date();
+  currentDate!: Date;
 
   moviesData: MovieData[] = [];
 
@@ -28,14 +27,19 @@ export class TimetablePageComponent implements OnInit {
 
   constructor(
     private timetableService: TimetableService) {
-      this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
-     }
+    this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+  }
   ngOnInit(): void {
+
+
     this.getTimetableList()
   }
 
   getTimetableList() {
-    this.timetableService.getTimetableList().subscribe((res:any) => {
+    const startDate = moment().startOf('week').valueOf();
+    const endDate = moment(startDate).add('day', 7).valueOf();
+    this.currentDate = new Date(startDate);
+    this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
       console.log(res);
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
@@ -151,7 +155,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onAppointmentAdd(e: any) {
-    const moviesData = this.moviesData.filter((item)=>{
+    const moviesData = this.moviesData.filter((item) => {
       return item.id = e.itemElement.id;
     });
     console.log(e);
@@ -161,11 +165,11 @@ export class TimetablePageComponent implements OnInit {
       movieId: e.itemElement.id,
       theaterId: e.itemData.theatreId,
       startDate: new Date(e.itemData.startDate),
-      endDate: moment(e.itemData.startDate).add('minute',moviesData[0].duration).toDate()
+      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].duration).toDate()
     }
     console.log(param);
-    this.timetableService.createTimetable(param).subscribe((res)=>{
-      if(res){
+    this.timetableService.createTimetable(param).subscribe((res) => {
+      if (res) {
         alert(res.message);
         this.getTimetableList();
       }
@@ -173,7 +177,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onListDragStart(e: any) {
-    
+
     e.cancel = true;
   }
 

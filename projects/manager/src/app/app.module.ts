@@ -30,10 +30,17 @@ import { ExternalApiModule } from './api/external-api.module';
 import { environment } from '../environments/environment';
 import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
 import { ApiHeaderInterceptor } from './core/interceptor/api-header';
+import { ErrorHeaderInterceptor } from './core/interceptor/error-interceptor';
+import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 
 const materialModules = [
   MatInputModule,
   MatSliderModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonModule,
   MatPaginatorModule
 ];
 
@@ -87,12 +94,6 @@ export class MyDateAdapter extends NativeDateAdapter {
     ...featureModules,
     ...materialModules,
     ShareLibsModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
     ReactiveFormsModule,
     CoreDirectivesModule,
     DxSchedulerModule,
@@ -112,8 +113,23 @@ export class MyDateAdapter extends NativeDateAdapter {
       multi: true
     },
     { provide: DateAdapter, useClass: MyDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiHeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHeaderInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function getBaseHref(platformLocation: PlatformLocation): string {
+  return platformLocation.getBaseHrefFromDOM();
+}

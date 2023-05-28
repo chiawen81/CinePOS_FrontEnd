@@ -18,7 +18,7 @@ export class SideNavComponent implements OnInit {
       subMenu: [
         {
           title: "電影資訊列表頁",
-          url: `/${STATIC_ROUTES.MOVIE}`,
+          url: `/${STATIC_ROUTES.MOVIE}/${STATIC_ROUTES.LIST}`,
         }, {
           title: "新增電影",
           url: `/${STATIC_ROUTES.MOVIE}/${STATIC_ROUTES.DETAIL}/${STATIC_ROUTES.CREATE}`,

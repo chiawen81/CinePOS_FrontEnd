@@ -15,7 +15,7 @@ export class ErrorHeaderInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
           catchError((err: HttpErrorResponse) => {
-            alert(err.error.message);
+            alert(err.error?.message);
             return throwError(err);
           })
         )
