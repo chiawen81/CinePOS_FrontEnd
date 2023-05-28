@@ -26,6 +26,10 @@ import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
+import { ScheduleListRes } from '../model/scheduleListRes';
+import { StaffOrderCreateReq } from '../model/staffOrderCreateReq';
+import { StaffOrderCreateSuccess } from '../model/staffOrderCreateSuccess';
+import { StaffOrderSearchSuccess } from '../model/staffOrderSearchSuccess';
 import { TicketTypeReq } from '../model/ticketTypeReq';
 import { TicketTypeRes } from '../model/ticketTypeRes';
 import { UserProfileRes } from '../model/userProfileRes';
@@ -105,6 +109,149 @@ export class StaffService {
         return this.httpClient.request<LoginRes>('post',`${this.basePath}/v1/staff/login`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 查詢訂單
+     * 
+     * @param orderId 訂單編號
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffOrderOrderIdGet(orderId: string, observe?: 'body', reportProgress?: boolean): Observable<StaffOrderSearchSuccess>;
+    public v1StaffOrderOrderIdGet(orderId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StaffOrderSearchSuccess>>;
+    public v1StaffOrderOrderIdGet(orderId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StaffOrderSearchSuccess>>;
+    public v1StaffOrderOrderIdGet(orderId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling v1StaffOrderOrderIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<StaffOrderSearchSuccess>('get',`${this.basePath}/v1/staff/order/${encodeURIComponent(String(orderId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 結帳
+     * 
+     * @param body 結帳資料
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffOrderPost(body: StaffOrderCreateReq, observe?: 'body', reportProgress?: boolean): Observable<StaffOrderCreateSuccess>;
+    public v1StaffOrderPost(body: StaffOrderCreateReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StaffOrderCreateSuccess>>;
+    public v1StaffOrderPost(body: StaffOrderCreateReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StaffOrderCreateSuccess>>;
+    public v1StaffOrderPost(body: StaffOrderCreateReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffOrderPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<StaffOrderCreateSuccess>('post',`${this.basePath}/v1/staff/order`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 場次查詢
+     * 
+     * @param startDate 開始時間
+     * @param endDate 結束時間
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffScheduleListGet(startDate: string, endDate: string, observe?: 'body', reportProgress?: boolean): Observable<ScheduleListRes>;
+    public v1StaffScheduleListGet(startDate: string, endDate: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ScheduleListRes>>;
+    public v1StaffScheduleListGet(startDate: string, endDate: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ScheduleListRes>>;
+    public v1StaffScheduleListGet(startDate: string, endDate: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (startDate === null || startDate === undefined) {
+            throw new Error('Required parameter startDate was null or undefined when calling v1StaffScheduleListGet.');
+        }
+
+        if (endDate === null || endDate === undefined) {
+            throw new Error('Required parameter endDate was null or undefined when calling v1StaffScheduleListGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (startDate !== undefined && startDate !== null) {
+            queryParameters = queryParameters.set('startDate', <any>startDate);
+        }
+        if (endDate !== undefined && endDate !== null) {
+            queryParameters = queryParameters.set('endDate', <any>endDate);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ScheduleListRes>('get',`${this.basePath}/v1/staff/schedule/list`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

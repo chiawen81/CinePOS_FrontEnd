@@ -9,10 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { MovieDetailCreateSuccessData } from './movieDetailCreateSuccessData';
+import { TimetableListResData } from './timetableListResData';
 
-export interface MovieDetailCreateSuccess { 
-    code?: number;
-    message?: string;
-    data?: MovieDetailCreateSuccessData;
+export interface TimetableListRes { 
+    code: number;
+    message: string;
+    data: TimetableListResData;
 }

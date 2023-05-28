@@ -1,13 +1,14 @@
 import { MoviePageService } from './../services/movie-page.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieDetailRes } from '../../../api/cinePOS-api';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api/model/commonOptionSuccessDataItem';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { range } from 'rxjs';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
-import { MovieDetailCreateParameterCustomer } from '../../../core/interface/movie';
+import { MovieDetailCreateParameterCustomer, MovieDetailUpdateParameterCustomer } from '../../../core/interface/movie';
+import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -45,6 +46,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _Route: ActivatedRoute,
+    private _Router: Router,
     private _MoviePageService: MoviePageService,
     private _CommonAPIService: CommonAPIService,
     private _ChangeDetectorRef: ChangeDetectorRef,
@@ -225,7 +227,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     const formData = new FormData();
     formData.append('upload', file);
 
-    this._CommonAPIService.upload(file, "file").subscribe(res => {
+    this._CommonAPIService.upload(file, "image").subscribe(res => {
       console.log('上傳檔案成功response', res);
       this.posterUrl.setValue(res.data?.fileUrl);
     });
@@ -237,6 +239,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   postCreateMovieDetailAPI(para: MovieDetailCreateParameterCustomer): void {
     this._MoviePageService.createMovieDetail(para).subscribe(res => {
       console.log('新增電影資訊-成功res', res);
+      this._Router.navigate([STATIC_ROUTES.MOVIE, STATIC_ROUTES.DETAIL, (res.data as MovieDetailCreateParameterCustomer)._id]);
       alert(res.message);
     });
   }
@@ -246,6 +249,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   patchUpdateMovieDetailAPI(para: MovieDetailUpdateParameter): void {
     this._MoviePageService.updateMovieDetail(para).subscribe(res => {
       console.log('更新電影資訊-成功res', res);
+      this._Router.navigate([STATIC_ROUTES.MOVIE, STATIC_ROUTES.DETAIL, (res.data as MovieDetailUpdateParameterCustomer)._id]);
       alert(res.message);
     });
   }

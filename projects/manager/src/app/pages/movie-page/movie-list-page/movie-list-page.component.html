@@ -72,9 +72,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of movieListView">
-            <td data-title="系統編號">{{ item._id }}</td>
+            <td data-title="系統編號">
+              <span class="cursor-pointer" (click)="openDetailPage(item._id)">
+                {{ item._id }}
+              </span>
+
+            </td>
             <td data-title="上線狀態">{{ item.statusName}}</td>
-            <td data-title="電影名稱">{{ item.title }}</td>
+            <td data-title="電影名稱">
+              <span class="cursor-pointer" (click)="openDetailPage(item._id)">
+                {{ item.title }}
+              </span>
+            </td>
             <td data-title="電影類型">
               <span *ngIf="!item.genreName">-</span>
               <span *ngFor="let subItem of item.genreName;let subIdx=index">{{subItem}}</span>
