@@ -46,7 +46,6 @@ export * from './ticketTypeReq';
 export * from './ticketTypeRes';
 export * from './ticketTypeResData';
 export * from './timetableCreateReq';
-<<<<<<< HEAD
 export * from './timetableCreateReqTheaterId';
 export * from './timetableListRes';
 export * from './timetableListResData';
@@ -54,11 +53,6 @@ export * from './timetableListResDataCreatedAt';
 export * from './timetableListResDataEndDate';
 export * from './timetableListResDataStartDate';
 export * from './timetableListResDataUpdatedAt';
-=======
-export * from './timetableListRes';
-export * from './timetableListResData';
-export * from './timetableListResDataInner';
->>>>>>> develop
 export * from './timetableRes';
 export * from './timetableResData';
 export * from './timetableUpdateReq';

@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-<<<<<<< HEAD
 import { TimetableListResDataCreatedAt } from './timetableListResDataCreatedAt';
 import { TimetableListResDataEndDate } from './timetableListResDataEndDate';
 import { TimetableListResDataStartDate } from './timetableListResDataStartDate';
@@ -32,9 +31,4 @@ export interface TimetableListResData {
     endDate: TimetableListResDataEndDate;
     createdAt: TimetableListResDataCreatedAt;
     updatedAt: TimetableListResDataUpdatedAt;
-=======
-import { TimetableListResDataInner } from './timetableListResDataInner';
-
-export interface TimetableListResData extends Array<TimetableListResDataInner> { 
->>>>>>> develop
 }
