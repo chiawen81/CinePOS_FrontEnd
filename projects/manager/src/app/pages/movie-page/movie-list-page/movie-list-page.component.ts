@@ -5,6 +5,8 @@ import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CinePageSet } from '../../../share/pagination/page-set';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { ManagerMovieListPara, ManagerMovieListSuccessDataInnerCustomer } from '../../../core/interface/movie';
+import { Router } from '@angular/router';
+import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class MovieListPageComponent implements OnInit {
   get title() { return this.formGroup.get('title') as FormControl; }                        // 電影名稱
 
   constructor(
+    private _Router: Router,
     private _MoviePageService: MoviePageService,
     private _CommonAPIService: CommonAPIService,
     private _ChangeDetectorRef: ChangeDetectorRef,
@@ -110,6 +113,12 @@ export class MovieListPageComponent implements OnInit {
     this._ChangeDetectorRef.detectChanges();
   }
 
+
+
+  // 前往明細頁
+  openDetailPage(_id: string | undefined) {
+    this._Router.navigate([STATIC_ROUTES.MOVIE, STATIC_ROUTES.DETAIL, _id]);
+  }
 
 
 

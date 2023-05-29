@@ -10,33 +10,29 @@
  * Do not edit the class manually.
  */
 
-export interface TimetableListResDataInner { 
+export interface ScheduleItem { 
     /**
-     * id
+     * 場次ID
      */
-    id?: string;
+    scheduleId: string;
     /**
-     * 電影資料
+     * 電影開始時間
      */
-    movieId?: any;
+    time: string;
     /**
-     * 廳院資訊
+     * 幾廳
      */
-    theaterId?: any;
+    theater: string;
     /**
-     * 開始時間
+     * 電影種類(1:2D、2:3D、3:iMAX、4:4DX)
      */
-    startDate?: string;
+    theaterType: number;
     /**
-     * 結束時間
+     * 總座位
      */
-    endDate?: string;
+    totalCapacity: number;
     /**
-     * 新增時間
+     * 剩餘座位
      */
-    createdAt?: Date;
-    /**
-     * 更新時間
-     */
-    updatedAt?: Date;
+    remainSeats: number;
 }

@@ -9,7 +9,26 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TimetableListResDataInner } from './timetableListResDataInner';
+import { TimetableListResDataCreatedAt } from './timetableListResDataCreatedAt';
+import { TimetableListResDataEndDate } from './timetableListResDataEndDate';
+import { TimetableListResDataStartDate } from './timetableListResDataStartDate';
+import { TimetableListResDataUpdatedAt } from './timetableListResDataUpdatedAt';
 
-export interface TimetableListResData extends Array<TimetableListResDataInner> { 
+export interface TimetableListResData { 
+    /**
+     * id
+     */
+    id: string;
+    /**
+     * 電影資料
+     */
+    movieId: any;
+    /**
+     * 廳院資訊
+     */
+    theaterId: any;
+    startDate: TimetableListResDataStartDate;
+    endDate: TimetableListResDataEndDate;
+    createdAt: TimetableListResDataCreatedAt;
+    updatedAt: TimetableListResDataUpdatedAt;
 }

@@ -9,10 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { MovieDetailCreateSuccessData } from './movieDetailCreateSuccessData';
 
-export interface MovieDetailCreateSuccess { 
-    code?: number;
-    message?: string;
-    data?: MovieDetailCreateSuccessData;
+export interface StaffOrderCreateSuccessDataTicketList { 
+    /**
+     * 票券ID
+     */
+    ticketId?: string;
+    /**
+     * 票種名稱
+     */
+    type?: string;
+    /**
+     * 座位號
+     */
+    seatName?: string;
 }

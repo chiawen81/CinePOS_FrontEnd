@@ -6,7 +6,7 @@ import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDe
 import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
 import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
-import { MovieDetailCreateParameterCustomer } from '../../../core/interface/movie';
+import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
 import { StorageService } from '../../../core/services/storage/storage.service';
 import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
 import { StorageEnum } from '../../../core/enums/storage/storage-enum';
@@ -53,8 +53,8 @@ export class MoviePageService {
 
 
   // 更新電影資訊
-  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccess> {
-    return this._ManagerService.v1ManagerMoviePatch(para)
+  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
+    return (this._ManagerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)
