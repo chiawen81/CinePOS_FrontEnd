@@ -1,0 +1,136 @@
+.bg-dark{
+  background-color: #1A1A1A;
+}
+.bg-dark-parmary{
+  background-color: #222222;
+}
+
+.small-title{
+  font-size: 0.875rem;
+  color: #FFFFFF80;
+}
+
+.main{
+  width: 740px;
+  margin: 1rem auto;
+}
+
+.box{
+
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.computer-calculate-contain{
+  display: block;
+}
+
+.box-dark{
+  background-color: #1A1A1A;
+
+  border-radius: 10px;
+
+}
+
+.computer-calculate{
+  display: flex;
+  align-items: center;
+
+  &-contain{
+    min-width: 201px;
+    padding: 20px 10px;
+
+    & .cont{
+      font-size: 1.875rem;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      margin-top:10px;
+
+      &-symbol{
+        color: #FFFFFF80;
+      }
+    }
+
+  }
+
+  &-symbol{
+    width: 1.5rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+.box-contain{
+  display: flex;
+  justify-content: space-between;
+
+  .payment{
+    width: 230px;
+    display: block;
+    label{
+
+    }
+
+
+  }
+
+  .computer-keyboard{
+    width: 494px;
+    display: block;
+    padding: 0.875rem;
+
+    .keyboard-1{
+      display: flex;
+      justify-content: space-between;
+    }
+
+  }
+}
+
+.btn{
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 25px;
+  margin-top: 1rem;
+
+  &-dark{
+    background-color: #222222;
+    color: #DDDDDD;
+  }
+
+  &-gray{
+    background: #FFFFFF80;
+  }
+
+  &-circle{
+    margin-top: 0.875rem;
+    border-radius: 40px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    width: 84px;
+    height: 86px;
+
+    &-1{
+      margin-top: 0.875rem;
+      border-radius: 40px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      text-align: center;
+      width: 114px;
+      height: 86px;
+    }
+  }
+
+  &-remove{
+    background-image: url(../../../assets/images/icon/icon-remove.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 12%;
+  }
+}
