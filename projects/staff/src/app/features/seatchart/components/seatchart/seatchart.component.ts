@@ -22,7 +22,7 @@ export class SeatchartComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.isPreview){
-
+      
     }
   }
 

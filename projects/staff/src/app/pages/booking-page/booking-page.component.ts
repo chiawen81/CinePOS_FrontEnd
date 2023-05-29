@@ -29,14 +29,9 @@ export class BookingPageComponent implements OnInit {
     this.getScheduleList(String(this.dateArr[0].getTime()));
 
 
-    // this.matDialog.open(SeatDialogComponent,{width: '80%'})
+    this.matDialog.open(SeatDialogComponent,{width: '80%'})
   }
-  goTicketType(): void {
-    // 將選取的票種&票數存進services
-    this.router.navigate(
-      [`/${STATIC_ROUTES.BOOKING.ROOT}/${STATIC_ROUTES.BOOKING.TICKET_TYPE}`]
-    );
-  }
+
 
   getScheduleList($event: string): void {
     this.tempTime = $event;

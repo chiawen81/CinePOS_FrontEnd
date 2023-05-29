@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 
 @Component({
   selector: 'app-seat-dialog',
@@ -10,6 +12,7 @@ export class SeatDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string, // data 就就是場次ID(scheduleId)
+    private router: Router,
   ) { }
   seatData: any = {
     "sold": 16,
@@ -1279,6 +1282,13 @@ export class SeatDialogComponent implements OnInit {
 }
   ngOnInit(): void {
     console.log('我在這裡',this.data);
+  }
+
+  goTicketType(): void {
+    // 將選取的票種&票數存進services
+    this.router.navigate(
+      [`/${STATIC_ROUTES.BOOKING.ROOT}/${STATIC_ROUTES.BOOKING.TICKET_TYPE}`]
+    );
   }
 
 }

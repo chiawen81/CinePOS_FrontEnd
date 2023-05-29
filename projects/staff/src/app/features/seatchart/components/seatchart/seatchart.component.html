@@ -28,7 +28,7 @@
 
           <ng-template #seat>
             <li *ngFor="let item2 of item.seat index as j" class="m-0.5 flex-1">
-              <app-seatchart-seat [rows]="item.rows" [cols]="seatData.colLabel[j]" [seatData]="item2"
+              <app-seatchart-seat [rows]="item.rows" [cols]="seatData.colLabel[j]" [seatData]="item2" [isPreview]="isPreview"
                 (activeOut)="tt($event)"></app-seatchart-seat>
             </li>
           </ng-template>

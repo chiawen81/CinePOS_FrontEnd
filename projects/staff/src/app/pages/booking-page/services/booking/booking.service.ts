@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ScheduleListRes, StaffService } from 'projects/staff/src/app/api/cinePOS-api';
-import { ShopCartInterface, seatInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
+import { ShopCartInterface, seatInterface, ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
 import { Observable, Subject, filter, tap } from 'rxjs';
 
 @Injectable({
@@ -13,10 +13,7 @@ export class BookingService {
 
   /**單筆購物車資訊*/
   shopCart: ShopCartInterface = {
-    ticketId: '',
-    ticketTypeId: '',
-    ticketType: '',
-    price: 0,
+    ticket: [],
     seat: [],
     movieId: '',
     title: '',
@@ -36,16 +33,18 @@ export class BookingService {
         filter(res => res.code === 1)
       )
   }
-
+  deleteArr(key: 'ticket'| 'seat'): void{
+    this.shopCart[key] = [];
+  }
   /**設定單筆購物車資訊*/
   setShopCart(
     key: keyof ShopCartInterface,
-    value: string | number | seatInterface
+    value: string | number | seatInterface | ticketInterface
   ): void {
     if (key === 'seat') {
       (this.shopCart.seat).push(value as seatInterface);
-    } else if (key === 'price') {
-      this.shopCart.price = value as number;
+    } else if (key === 'ticket') {
+      (this.shopCart.ticket).push(value as ticketInterface);
     } else {
       this.shopCart[key] = value as string;
     }
