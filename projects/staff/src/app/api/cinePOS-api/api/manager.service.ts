@@ -34,6 +34,10 @@ import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
 import { MovieDetailUpdateParameter } from '../model/movieDetailUpdateParameter';
 import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
+import { TimetableCreateReq } from '../model/timetableCreateReq';
+import { TimetableListRes } from '../model/timetableListRes';
+import { TimetableRes } from '../model/timetableRes';
+import { TimetableUpdateReq } from '../model/timetableUpdateReq';
 import { UserProfileRes } from '../model/userProfileRes';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -71,6 +75,141 @@ export class ManagerService {
         return false;
     }
 
+
+    /**
+     * 
+     * 新增時刻表
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createTimetable(body: TimetableCreateReq, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public createTimetable(body: TimetableCreateReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public createTimetable(body: TimetableCreateReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public createTimetable(body: TimetableCreateReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createTimetable.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<TimetableRes>('post',`${this.basePath}/v1/manager/timetable/create`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 刪除時刻表
+     * @param timetableId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteItem(timetableId: string, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public deleteItem(timetableId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public deleteItem(timetableId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public deleteItem(timetableId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (timetableId === null || timetableId === undefined) {
+            throw new Error('Required parameter timetableId was null or undefined when calling deleteItem.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<TimetableRes>('delete',`${this.basePath}/v1/manager/timetable/${encodeURIComponent(String(timetableId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 更新時刻表
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public updateTimetable(body: TimetableUpdateReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateTimetable.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<TimetableRes>('patch',`${this.basePath}/v1/manager/timetable/update`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 登入請求
@@ -305,6 +444,61 @@ export class ManagerService {
         return this.httpClient.request<MovieDetailCreateSuccess>('post',`${this.basePath}/v1/manager/movie`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得時刻列表
+     * 取得時刻表
+     * @param startDate 
+     * @param endDate 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'body', reportProgress?: boolean): Observable<TimetableListRes>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (startDate === null || startDate === undefined) {
+            throw new Error('Required parameter startDate was null or undefined when calling v1ManagerTimetableListGet.');
+        }
+
+        if (endDate === null || endDate === undefined) {
+            throw new Error('Required parameter endDate was null or undefined when calling v1ManagerTimetableListGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (startDate !== undefined && startDate !== null) {
+            queryParameters = queryParameters.set('startDate', <any>startDate);
+        }
+        if (endDate !== undefined && endDate !== null) {
+            queryParameters = queryParameters.set('endDate', <any>endDate);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<TimetableListRes>('get',`${this.basePath}/v1/manager/timetable/list`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

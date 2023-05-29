@@ -9,10 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ScheduleListResData } from './scheduleListResData';
+import { TimetableResData } from './timetableResData';
 
-export interface ScheduleListRes { 
+export interface TimetableRes { 
     code: number;
     message: string;
-    data: Array<any>;
+    data: TimetableResData;
 }
