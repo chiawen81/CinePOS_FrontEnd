@@ -6,11 +6,14 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SeatDialogComponent } from './components/seat-dialog/seat-dialog.component';
+import { SeatchartModule } from '../seatchart/seatchart.module';
 
 
 @NgModule({
   declarations: [
-    ProfileGialogComponent
+    ProfileGialogComponent,
+    SeatDialogComponent
   ],
   imports: [
     CommonModule,
@@ -18,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
+    SeatchartModule
   ],
   exports: [
     ProfileGialogComponent

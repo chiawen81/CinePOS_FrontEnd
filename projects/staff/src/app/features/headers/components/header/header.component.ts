@@ -37,11 +37,10 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.profileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
+    // this.profileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
   }
 
   openProfile(): void {
-    this.componentInjector.injectComponent(ProfileGialogComponent);
     this.dialog.open(ProfileGialogComponent, {
         width: '450px',
         data: this.profileData

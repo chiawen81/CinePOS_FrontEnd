@@ -21,9 +21,9 @@ export class DialogService {
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1),
         tap((res) => {
-          const newProfileData: ProfileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
-          newProfileData.name = res.data?.newName!;
-          this.storageService.setLocalStorage(StorageEnum.profileData, newProfileData);
+          // const newProfileData: ProfileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
+          // newProfileData.name = res.data?.newName!;
+          // this.storageService.setLocalStorage(StorageEnum.profileData, newProfileData);
         })
       )
   }

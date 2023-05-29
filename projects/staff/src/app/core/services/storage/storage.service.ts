@@ -32,7 +32,7 @@ export class StorageService {
     localStorage.setItem(key, jsonString);
   }
   /**get LocalStorage */
-  getLocalStorage<T>(key: string): T | null {
+  getLocalStorage(key: string): any {
     const value = localStorage.getItem(key);
     const json = JSON.parse(value!) ?? null;
     return json;
