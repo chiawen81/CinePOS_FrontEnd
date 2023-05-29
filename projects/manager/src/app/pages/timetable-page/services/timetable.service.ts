@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable, catchError, filter, throwError } from 'rxjs';
+import { TimetableUpdateReq } from '../../../api/cinePOS-api';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -42,41 +43,38 @@ export class TimetableService {
   isPopupInvalidMsg = false;
   constructor(
     private http: HttpClient,
-    // private managerService: ManagerService
+    private managerService: ManagerService
   ) { }
 
   getTimetableList(startDate:number, endDate:number) {
-    // return data;
-    const url = 'timetable/list'
+    // const url = 'timetable/list'
 
-    return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
-    // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
+    // return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
+    return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
   }
 
   deleteTimetable(id: string) {
-    const url = `timetable/${id}`
-    return this.request(HTTP_METHOD.DELETE, {}, url);
+    // const url = `timetable/${id}`
+    // return this.request(HTTP_METHOD.DELETE, {}, url);
+    return this.managerService.deleteItem(id);
   }
 
-  updateTimetable(param: {
-    _id: string,
-    movieId: string,
-    theaterId: string,
-    startDate: number,
-    endDate: number
-  }) {
-    const url = `timetable/update`
-    return this.request(HTTP_METHOD.PATCH, param, url);
+  updateTimetable(param: TimetableUpdateReq) {
+    // const url = `timetable/update`
+    // return this.request(HTTP_METHOD.PATCH, param, url);
+    return this.managerService.updateTimetable(param);
   }
 
   createTimetable(param: {
     movieId: string,
     theaterId: string,
-    startDate: Date,
-    endDate: Date
+    startDate: string,
+    endDate: string
   }) {
-    const url = `timetable/create`
-    return this.request(HTTP_METHOD.POST, param, url);
+    // const url = `timetable/create`
+    // return this.request(HTTP_METHOD.POST, param, url);
+    // const url = `timetable/create`
+    return this.managerService.createTimetable(param);
   }
 
   /**
@@ -190,7 +188,7 @@ export interface Assignee {
 
 
 export class MovieData {
-  _id: string;
+  id: string;
 
   text: string;
 
@@ -204,10 +202,13 @@ export class MovieData {
 
   color: string;
 
-  rate: RateCode
+  rate: RateCode;
+
+  rateName?: string;
+  
 
   constructor(data: MovieData) {
-    this._id = data._id;
+    this.id = data.id;
     this.text = data.text;
     this.director = data.director;
     this.year = data.year;
@@ -215,6 +216,7 @@ export class MovieData {
     this.runtime = data.runtime;
     this.color = data.color;
     this.rate = data.rate;
+    this.rateName = data.rateName;
   }
 }
 

@@ -7,6 +7,7 @@ import { MovieData, RateCode, TheatreData, TimetableService } from './services/t
 import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
 import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
+import { ManagerMovieListSuccessData, ManagerMovieListSuccessDataInner } from '../../api/cinePOS-api';
 
 @Component({
   selector: 'app-timetable-page',
@@ -26,6 +27,7 @@ export class TimetablePageComponent implements OnInit {
 
   theatreData: TheatreData[] = [];
 
+  movieList: MovieData[] = [];
 
   constructor(
     private timetableService: TimetableService,
@@ -38,103 +40,11 @@ export class TimetablePageComponent implements OnInit {
     this.getMovieList();
   }
 
-  getTimetableList() {
-    const startDate = moment().startOf('week').valueOf();
-    const endDate = moment(startDate).add('day', 7).valueOf();
-    this.currentDate = new Date(startDate);
-    this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
-      console.log(res);
-      if (res.data) {
-        const filterData = this.mapTimetable(res.data.timetable);
-        this.data = filterData;
-        console.log(this.data);
-        console.log(filterData);
-        this.theatreData = this.getTheaters(filterData);
-        console.log(this.theatreData);
-        // this.moviesData = this.getMovies(filterData);
-        console.log('moviesData', this.moviesData);
-      }
-    })
-  }
-
-  mapTimetable(data: any[]) {
-    const result = data.map((item) => {
-      item.startDate = new Date(item.startDate);
-      item.endDate = new Date(item.endDate);
-      item.movie = item.movieId;
-      item.color = this.transformRateColor(item.movie.rate);
-      item.movieId = item.movieId._id;
-      item.theatreId = item.theaterId._id;
-      return item;
-    });
-    return result;
-  }
-
-  transformRateColor(type: RateCode): string {
-    switch (type) {
-      case RateCode.g:
-        return '#363E31';
-      case RateCode.pg:
-        return '#273B44';
-      case RateCode.pg12:
-        return '#3E3928';
-      case RateCode.pg15:
-        return '#473729';
-      case RateCode.r:
-        return '#442727';
-      default:
-        return '';
-    }
-  }
-
-  // getMovies(data: any[]): MovieData[] {
-  //   const movieMap: { [key: string]: boolean } = {};
-  //   const movies: MovieData[] = [];
-
-  //   if (data) {
-  //     for (const entry of data) {
-  //       const movieId = entry.movie._id;
-  //       const movieTitle = entry.movie.title;
-  //       const color = entry.color;
-  //       const duration = entry.movie.runtime;
-  //       const rate = entry.movie.rate;
-
-
-  //       if (!movieMap[movieId]) {
-  //         movieMap[movieId] = true;
-  //         movies.push({ text: movieTitle, id: movieId, color, duration, rate });
-  //         // theaters.push({ text: theaterName, id: id });
-  //       }
-  //     }
-  //   }
-  //   return movies;
-  // }
-
-  /** TODO: 應該要get所有的廳院 */
-  getTheaters(data: any[]): TheatreData[] {
-    const theaterMap: { [key: string]: boolean } = {};
-    const theaters: TheatreData[] = [];
-
-    if (this.data) {
-      for (const entry of data) {
-        const theaterId = entry.theaterId._id;
-        const theaterName = entry.theaterId.name;
-
-
-        if (!theaterMap[theaterId]) {
-          theaterMap[theaterId] = true;
-          theaters.push({ text: theaterName, id: theaterId });
-          // theaters.push({ text: theaterName, id: id });
-        }
-      }
-    }
-    return theaters;
-  }
 
   updateAppointment(event: any) {
     console.log('upate', event);
     const param = {
-      _id: event.newData._id,
+      id: event.newData._id,
       movieId: event.newData.movieId,
       theaterId: event.newData.theatreId,
       startDate: event.newData.startDate,
@@ -159,7 +69,7 @@ export class TimetablePageComponent implements OnInit {
 
   onAppointmentAdd(e: any) {
     const moviesData = this.moviesData.filter((item) => {
-      return item._id = e.itemElement.id;
+      return item.id = e.itemElement.id;
     });
     console.log(e);
     console.log(e.itemElement);
@@ -167,8 +77,8 @@ export class TimetablePageComponent implements OnInit {
     const param = {
       movieId: e.itemElement._id,
       theaterId: e.itemData.theatreId,
-      startDate: new Date(e.itemData.startDate),
-      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
+      startDate: new Date(e.itemData.startDate).toDateString(),
+      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toString()
     }
     console.log(param);
     this.timetableService.createTimetable(param).subscribe((res) => {
@@ -203,85 +113,169 @@ export class TimetablePageComponent implements OnInit {
   pad(number: number): string {
     return (number < 10 ? '0' : '') + number;
   }
-  // onAppointmentFormOpening(data: any) {
-  //   const that = this;
-  //   const form = data.form;
-  //   let movieInfo = that.getMovieById(data.appointmentData.movieId) || {};
-  //   let startDate = data.appointmentData.startDate;
-
-  //   form.option('items', [{
-  //     label: {
-  //       text: 'Movie',
-  //     },
-  //     editorType: 'dxSelectBox',
-  //     dataField: 'movieId',
-  //     editorOptions: {
-  //       items: that.moviesData,
-  //       displayExpr: 'text',
-  //       valueExpr: 'id',
-  //       onValueChanged(args: any) {
-  //         movieInfo = that.getMovieById(args.value);
-
-  //         form.updateData('director', movieInfo.director);
-  //         form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
-  //       },
-  //     },
-  //   }, {
-  //     label: {
-  //       text: 'Director',
-  //     },
-  //     name: 'director',
-  //     editorType: 'dxTextBox',
-  //     editorOptions: {
-  //       value: movieInfo.director,
-  //       readOnly: true,
-  //     },
-  //   }, {
-  //     dataField: 'startDate',
-  //     editorType: 'dxDateBox',
-  //     editorOptions: {
-  //       width: '100%',
-  //       type: 'datetime',
-  //       onValueChanged(args: any) {
-  //         startDate = args.value;
-  //         form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * movieInfo.duration));
-  //       },
-  //     },
-  //   }, {
-  //     name: 'endDate',
-  //     dataField: 'endDate',
-  //     editorType: 'dxDateBox',
-  //     editorOptions: {
-  //       width: '100%',
-  //       type: 'datetime',
-  //       readOnly: true,
-  //     },
-  //   }, {
-  //     dataField: 'price',
-  //     editorType: 'dxRadioGroup',
-  //     editorOptions: {
-  //       dataSource: [5, 10, 15, 20],
-  //       itemTemplate(itemData: any) {
-  //         return `$${itemData}`;
-  //       },
-  //     },
-  //   }]);
-  // }
-
-  getMovieById(id: string) {
-    return Query(this.moviesData).filter(['id', '=', id]).toArray()[0];
-  }
 
   /**
-   * // TODO 這個狀態沒有寫enum
+   * 取得電影列表
    */
-  getMovieList(){
-    const startDate = moment(this.currentDate).format('yyyy/MM/DD');
-    const endDate = moment(startDate).add(7,'d').format('yyyy/MM/DD');
+  private getMovieList() {
+    // const startDate = moment(this.currentDate).format('yyyy/MM/DD');
+    // const endDate = moment(startDate).add(7,'d').format('yyyy/MM/DD');
+    const startDate = '';
+    const endDate = '';
     this.movieService.getMovieList(1, startDate, endDate, '').subscribe(res => {
       console.log('取得列表資料-成功res', res);
-      this.moviesData = res.data as MovieData[];
+      // this.moviesData = this.mapTimetable(res.data as any) as MovieData[];
+      this.movieList = this.getShowMovieList(res.data as any);
 
     });
   }
+
+
+  private getTimetableList() {
+    // const startDate = moment().startOf('week').valueOf();
+    // const endDate = moment(startDate).add('day', 7).valueOf();
+    // this.currentDate = new Date(startDate);
+    const startDate = moment('20230521').valueOf();
+    const endDate = moment(startDate).add('day', 7).valueOf();
+    this.currentDate = new Date(startDate);
+
+    this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
+      if (res.data) {
+        const filterData = this.mapTimetable(res.data.timetable);
+        this.data = filterData;
+        console.log(this.data);
+        this.theatreData = this.getTheaters(filterData);
+        console.log(this.theatreData);
+        this.moviesData = this.getShowMovies(filterData);
+      }
+    })
+  }
+
+  private mapTimetable(data: any[]) {
+    const result = data.map((item) => {
+      console.log('item', item);
+
+      item.startDate = new Date(item.startDate);
+      item.endDate = new Date(item.endDate);
+      item.movie = item.movieId;
+      item.color = this.transformRateColor(item.movie.rate);
+      item.movieId = item.movieId._id;
+      item.theatreId = item.theaterId._id;
+      return item;
+    });
+    return result;
+  }
+
+  private transformRateNameColor(type: string|undefined): string {
+    switch (type) {
+      case '普通級':
+        return '#363E31';
+      case '保護級':
+        return '#273B44';
+      case '輔12':
+        return '#3E3928';
+      case '輔15':
+        return '#473729';
+      case '限制級':
+        return '#442727';
+      default:
+        return '';
+    }
+  }
+
+  private transformRateNameToRate(type: string|undefined): RateCode|null {
+    switch (type) {
+      case '普通級':
+        return RateCode.g;
+      case '保護級':
+        return  RateCode.pg;
+      case '輔12':
+        return RateCode.pg12;
+      case '輔15':
+        return RateCode.pg15;
+      case '限制級':
+        return RateCode.r;
+      default:
+        return null;
+    }
+  }
+
+  private transformRateColor(type: RateCode): string {
+    switch (type) {
+      case RateCode.g:
+        return '#363E31';
+      case RateCode.pg:
+        return '#273B44';
+      case RateCode.pg12:
+        return '#3E3928';
+      case RateCode.pg15:
+        return '#473729';
+      case RateCode.r:
+        return '#442727';
+      default:
+        return '';
+    }
+  }
+
+  /** 已建立場次的電影 */
+  private getShowMovies(data: any[]): MovieData[] {
+    const movieMap: { [key: string]: boolean } = {};
+    const movies: MovieData[] = [];
+
+    if (data) {
+      for (const entry of data) {
+        const movieId = entry.movie._id;
+        const movieTitle = entry.movie.title;
+        const color = entry.color;
+        const runtime = entry.movie.runtime;
+        const rate = entry.movie.rate;
+
+
+        if (!movieMap[movieId]) {
+          movieMap[movieId] = true;
+          movies.push({ text: movieTitle, id: movieId, color, runtime, rate });
+        }
+      }
+    }
+    return movies;
+  }
+
+  /**  */
+  private getShowMovieList(data: ManagerMovieListSuccessDataInner[]): MovieData[] {
+    const result: MovieData[] = data.map((item) => {
+      let movieData: MovieData = {
+        id: item._id ?? '',
+        text: item.title ?? '',
+        // runtime: item.runtime?? '',
+        runtime: 90,
+        color: this.transformRateNameColor(item.rateName),
+        rateName:item.rateName,
+        rate: this.transformRateNameToRate(item.rateName) as RateCode
+      }
+      return movieData;
+    });
+    return result;
+  }
+
+  /** TODO: 應該要get所有的廳院 */
+  private getTheaters(data: any[]): TheatreData[] {
+    const theaterMap: { [key: string]: boolean } = {};
+    const theaters: TheatreData[] = [];
+
+    if (this.data) {
+      for (const entry of data) {
+        const theaterId = entry.theaterId._id;
+        const theaterName = entry.theaterId.name;
+
+
+        if (!theaterMap[theaterId]) {
+          theaterMap[theaterId] = true;
+          theaters.push({ text: theaterName, id: theaterId });
+          // theaters.push({ text: theaterName, id: id });
+        }
+      }
+    }
+    return theaters;
+  }
+
 }
