@@ -22,7 +22,6 @@ export class MovieViewPageComponent implements OnInit {
   ngOnInit(): void {
     this.movieId = this._Route.snapshot?.params['id'];
     console.log('movieId', this.movieId);
-    this._MoviePageService.login();                            // 登入 (====之後串了真正登入要刪掉)
     this.getMovieInfoAPI(this.movieId);                        // API- 取得電影資訊
   }
 

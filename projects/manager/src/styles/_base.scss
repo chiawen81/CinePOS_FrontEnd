@@ -2,6 +2,6 @@
 @import "../app/features/card/card.component.scss";
 
 body {
-  @apply bg-dark-400 text-white tracking-widest font-normal font-semibold;
+  @apply bg-dark-400 text-white tracking-widest font-normal opacity-90 font-semibold;
   font-weight: 400;
 }

@@ -1,5 +1,9 @@
+import { StorageService } from './../../../../core/services/storage/storage.service';
 import { Component, OnInit } from '@angular/core';
 import { STATIC_ROUTES } from 'projects/manager/src/app/core/constant/routes.constant';
+import { ProfileData } from 'projects/manager/src/app/core/models/profile-data.model';
+import { LoginService } from 'projects/manager/src/app/pages/login-page/service/login.service';
+import { environment } from 'projects/manager/src/environments/environment';
 
 @Component({
   selector: 'app-side-nav',
@@ -11,7 +15,7 @@ export class SideNavComponent implements OnInit {
     {
       title: "電影資訊",
       iconFilePath: "assets/images/icon/menu-movie-info.svg",
-      url: "/",
+      url: "",
       subMenu: [
         {
           title: "電影資訊列表頁",
@@ -29,7 +33,7 @@ export class SideNavComponent implements OnInit {
     }, {
       title: "影廳管理",
       iconFilePath: "assets/images/icon/menu-seat.svg",
-      url: "/",
+      url: "",
       subMenu: [
         {
           title: "影廳列表",
@@ -48,9 +52,20 @@ export class SideNavComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  profileData!:ProfileData;
+  currentVersion = environment.appVersion;
+  constructor(
+    public storageService: StorageService,
+    private loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
+
+    // this.profileData = this.storageService.getProfileData();
+  }
+
+  logout(){
+    this.loginService.logout();
   }
 
 }

@@ -1,9 +1,29 @@
-<!-- <app-header *ngIf="!isLoginPage"></app-header>
-<main>
-  <router-outlet></router-outlet>
-  <span>{{currentVersion}}</span>
-</main> -->
-<lib-loading></lib-loading>
-<app-layout></app-layout>
+<!-- <lib-loading></lib-loading>
+<app-layout></app-layout> -->
+<div class="relative h-screen">
+  <lib-loading></lib-loading>
+  <ul class="absolute w-full h-full top-0 left-0 -z-10">
+    <li class="absolute top-0 left-0">
+      <img class="w-96" src="assets/images/bg/bg1.png" alt="bg1">
+    </li>
+    <li class="absolute bottom-28 -left-3">
+      <img class="w-72" src="assets/images/bg/bg2.png" alt="bg2">
+    </li>
+    <li class="absolute top-10 right-56">
+      <img class="w-72" src="assets/images/bg/bg3.png" alt="bg3">
+    </li>
+    <li class="absolute bottom-0 right-96">
+      <img class="w-72" src="assets/images/bg/bg4.png" alt="bg4">
+    </li>
+  </ul>
 
-
+  <main class="flex items-stretch h-screen justify-between">
+    <app-side-nav *ngIf="isLogin && !isLoginPage"></app-side-nav>
+    <section class="w-full" [class.section-router]="!isLoginPage">
+      <app-header *ngIf="isLogin && !isLoginPage"></app-header>
+      <section class="relative">
+        <router-outlet></router-outlet>
+      </section>
+    </section>
+  </main>
+</div>

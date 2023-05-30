@@ -7,7 +7,9 @@ export const environment = {
   appVersion: require('package.json').version + '-dev',
   production: false,
   DEFAULT_IP: '',
-  cinePosApi: "http://localhost:3005"
+  cinePosApi: "https://api-t.cine-pos.com"
+  // cinePosApi: "http://127.0.0.1:3005"
+
 };
 
 /*

@@ -1,10 +1,24 @@
 import { Injectable } from '@angular/core';
+import { ProfileData } from '../../models/profile-data.model';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
+
+  /** 登入者資料 */
+  profileData$ = new ReplaySubject<ProfileData>();
+
   constructor() { }
+
+  /**
+   * 取得身分資料
+   */
+  getProfileData(): Observable<ProfileData> {
+    return this.profileData$.asObservable();
+  }
+
   /**set SessionStorage */
   setSessionStorage(key: string, value: any) {
     const jsonString = JSON.stringify(value);
