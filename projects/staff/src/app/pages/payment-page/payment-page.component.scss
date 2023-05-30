@@ -10,13 +10,20 @@
   color: #FFFFFF80;
 }
 
+.flex{
+  display: flex;
+}
+
+.just-cont-between{
+  justify-content: space-between;
+}
+
 .main{
   width: 740px;
   margin: 1rem auto;
 }
 
 .box{
-
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -29,9 +36,7 @@
 
 .box-dark{
   background-color: #1A1A1A;
-
   border-radius: 10px;
-
 }
 
 .computer-calculate{
@@ -85,6 +90,7 @@
     .keyboard-1{
       display: flex;
       justify-content: space-between;
+      margin-bottom: 15px;
     }
 
   }
@@ -97,6 +103,10 @@
   text-align: center;
   border-radius: 25px;
   margin-top: 1rem;
+
+  &-1{
+    width: 213px;
+  }
 
   &-dark{
     background-color: #222222;
@@ -122,7 +132,16 @@
       padding: 1rem 1.5rem;
       font-size: 1rem;
       text-align: center;
-      width: 114px;
+      width: 144px;
+      height: 86px;
+    }
+
+    &-2{
+      margin-top: 0.875rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      text-align: center;
+      width: 188px;
       height: 86px;
     }
   }

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaymentPageComponent } from './payment-page.component';
+import { CustomCurrencyPipe, PaymentPageComponent } from './payment-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -12,10 +13,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PaymentPageComponent
+    PaymentPageComponent,
+    CustomCurrencyPipe
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
   ]
 })

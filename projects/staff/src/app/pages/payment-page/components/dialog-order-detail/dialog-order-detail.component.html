@@ -1,0 +1,45 @@
+<div class="dialog-order">
+  <p class="title border-b-white">結帳成功</p>
+  <div class="order-title font-14 text-center">
+    <p class="color-white-1">訂單編號: </p>
+    <p class="color-white">{{ data.orderNumber }}</p>
+  </div>
+  <div class="order-detail bg-dark-1 text-center font-13">
+    <p class="color-white font-15">訂單明細</p>
+    <div class="color-white">
+      <div class="row text-center color-white-2">
+        <div class="row-title">票種</div>
+        <div class="row-title">座位</div>
+        <div class="row-title">票號</div>
+      </div>
+
+      <div class="row">
+        <div>全票</div>
+        <div>J17</div>
+        <div>QS01637818</div>
+      </div>
+
+      <div class="row">
+        <div>全票</div>
+        <div>J17</div>
+        <div>QS01637818</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="box-pay font-13 color-white ">
+    <div><p class="color-white">支付方式 : <span class="color-white-1">現金</span></p></div>
+    <div><p class="color-white">應付金額 : <span class="color-white-1">NTP 680</span></p></div>
+    <div><p class="color-white">實付金額 : <span class="color-white-1">NTP 1,000</span></p></div>
+    <div><p class="color-white">找零 : <span class="color-white-1">NTD 320</span></p></div>
+
+  </div>
+
+  <div class="btn-box">
+    <button mat-button (click)="onClose()" class=" border-15 w-240 mat-focus-indicator mat-raised-button mat-button-base">關閉</button>
+    <button mat-button (click)="onPrint()" class="w-240 mat-focus-indicator mat-raised-button mat-button-base mat-primary">列印</button>
+  </div>
+
+</div>
+
