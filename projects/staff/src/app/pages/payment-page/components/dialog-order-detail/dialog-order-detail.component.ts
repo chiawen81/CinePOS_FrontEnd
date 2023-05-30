@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-order-detail',
@@ -7,23 +7,30 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-order-detail.component.scss']
 })
 export class DialogOrderDetailComponent implements OnInit {
-  data = {
-    orderNumber: 'ORD123',
-    products: [
-      {
-        id: 'P001',
-        name: 'Product 1',
-        price: 10
-      },
-      {
-        id: 'P002',
-        name: 'Product 2',
-        price: 15
-      }
-    ]
-  };
+  // data = {
+  //   orderNumber: 'ORD123',
+  //   products: [
+  //     {
+  //       id: 'P001',
+  //       name: 'Product 1',
+  //       price: 10
+  //     },
+  //     {
+  //       id: 'P002',
+  //       name: 'Product 2',
+  //       price: 15
+  //     }
+  //   ]
+  // };
 
-  constructor(private dialogRef: MatDialogRef<DialogOrderDetailComponent>) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<DialogOrderDetailComponent>,
+
+  ) {
+
+    console.log('data', data);
+  }
 
 
 
