@@ -72,9 +72,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of movieListView">
-            <td data-title="系統編號">{{ item._id }}</td>
+            <td data-title="系統編號">
+              <span class="cursor-pointer" (click)="openDetailPage(item._id)">
+                {{ item._id }}
+              </span>
+
+            </td>
             <td data-title="上線狀態">{{ item.statusName}}</td>
-            <td data-title="電影名稱">{{ item.title }}</td>
+            <td data-title="電影名稱">
+              <span class="cursor-pointer" (click)="openDetailPage(item._id)">
+                {{ item.title }}
+              </span>
+            </td>
             <td data-title="電影類型">
               <span *ngIf="!item.genreName">-</span>
               <span *ngFor="let subItem of item.genreName;let subIdx=index">{{subItem}}</span>
@@ -87,13 +96,13 @@
             </td>
             <td>
               <span class="mr-15">
-                <button mat-raised-button color="primary" type="submit" class="w-60">發佈</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60" (click)="updateReleaseStatus(true,item._id)">發佈</button>
               </span>
               <span class="mr-15">
-                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15">下架</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15" (click)="updateReleaseStatus(false,item._id)">下架</button>
               </span>
               <span>
-                <button mat-raised-button color="primary" type="submit" class="w-60">刪除</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60" (click)="deleteMovie(item._id)">刪除</button>
               </span>
             </td>
           </tr>
