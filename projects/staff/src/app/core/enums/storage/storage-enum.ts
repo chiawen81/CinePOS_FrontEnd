@@ -6,5 +6,9 @@ export enum StorageEnum {
   /**
    * 會員資料
    * */
-  profileData = 'profileData'
+  profileData = 'profileData',
+  /**
+   * 購物車資料(陣列)
+   * */
+  shopCartData = 'shopCartData'
 }

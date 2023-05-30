@@ -1,4 +1,4 @@
-<section class="w-60 bg-dark-200 h-full py-7 px-4 flex flex-col justify-between">
+<section class="w-60 bg-dark-200 h-full  py-7 px-4 flex flex-col justify-between border-r border-light-600">
   <div>
     <!-- 項目清單 -->
     <div class="flex justify-between items-center">
@@ -6,12 +6,21 @@
         <img class="w-4 mr-3" src="assets/images/icon/Vector.svg" alt="Vector">
         <p>項目清單</p>
       </div>
-      <span class="bg-dark-100 py-2 px-3 leading-4 rounded-full">0</span>
+      <span class="bg-dark-100 py-2 px-3 leading-4 rounded-full">
+        {{ !!shopCartData? shopCartData.length: 0}}</span>
     </div>
     <!-- 項目內容 -->
-    <div class="mt-5">
-      <!-- 元件 -->
-      <p class="ml-5 text-light-500">目前沒有任何項目。</p>
+    <div class="mt-2 main-item">
+      <ng-template [ngIf]="!!shopCartData" [ngIfElse]="noData">
+        <ul>
+          <li *ngFor="let item of shopCartData index as i">
+            <app-shop-cart-item [shopCart]="item" [shopCartIndex]="i" (dateEmit)="deleteShopCart($event)"></app-shop-cart-item>
+          </li>
+        </ul>
+      </ng-template>
+      <ng-template #noData>
+        <p #noData class="ml-5 text-light-500">目前沒有任何項目。</p>
+      </ng-template>
     </div>
   </div>
 
@@ -21,7 +30,7 @@
       <p class="text-xs text-light-400">總計</p>
       <p class="flex justify-between items-center mt-2">
         <span>NTD</span>
-        <span>0</span>
+        <span>{{ getTotal() }}</span>
       </p>
     </li>
     <li class="mt-6">

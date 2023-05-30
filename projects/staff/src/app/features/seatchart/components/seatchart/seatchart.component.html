@@ -1,0 +1,72 @@
+<section class="w-full">
+  <div>
+    <div class="screen-border"></div>
+    <div class="screen"></div>
+  </div>
+
+  <div class="flex w-full p-5 pb-0">
+    <ul>
+      <li *ngFor="let item of seatData.list" class="">
+        <ng-template [ngIf]="item.rows==='none'" [ngIfElse]="rows">
+          <div class="w-6 h-7 rounded-t-lg rounded-b-md p-1"></div>
+        </ng-template>
+        <ng-template #rows>
+          <div class="w-6 h-7 rounded-t-lg rounded-b-md p-1 text-gray-400 flex justify-center items-center">{{ item.rows
+            }}</div>
+        </ng-template>
+      </li>
+    </ul>
+
+    <ul class="flex-1">
+      <li *ngFor="let item of seatData.list">
+        <ul class="flex">
+          <ng-template [ngIf]="item.rows==='none'" [ngIfElse]="seat">
+            <li *ngFor="let item2 of seatData.colLabel" class="m-0.5 flex-1">
+              <app-seatchart-seat [seatData]="noneSeat"></app-seatchart-seat>
+            </li>
+          </ng-template>
+
+          <ng-template #seat>
+            <li *ngFor="let item2 of item.seat index as j" class="m-0.5 flex-1">
+              <app-seatchart-seat [rows]="item.rows" [cols]="seatData.colLabel[j]" [seatData]="item2" [isPreview]="isPreview"
+                (activeOut)="changeSeatArray($event)"></app-seatchart-seat>
+            </li>
+          </ng-template>
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="flex w-full px-5 mt-0.5">
+    <div class="w-6">
+      <span style="display: none;"></span>
+    </div>
+    <div class="flex-1">
+      <ul class="flex justify-between">
+        <li *ngFor="let item of seatData.colLabel index as i" class="w-full text-center text-gray-400"
+          style="font-size: 20%;">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 預覽顯示 -->
+  <div *ngIf="isPreview" class="flex justify-center mt-10 mb-5" >
+    <ul class="flex rounded-2xl p-6 border border-light-600">
+      <li class="flex mx-3">
+        <div class="seat seat-free mr-3"></div>
+        未出售 : {{ seatData.free }}
+      </li>
+      <li class="flex mx-3">
+        <div class="seat seat-lock mr-3"></div>
+        已出售 : {{ seatData.sold }}
+      </li>
+    </ul>
+  </div>
+  <!-- 編輯顯示 -->
+  <div *ngIf="!isPreview" class="mt-5 text-center">
+    還有 <span class="text-light-500" [class.text-primary-500]="remainSeat>0">{{ remainSeat }}</span> 張未確認座位
+  </div>
+
+</section>

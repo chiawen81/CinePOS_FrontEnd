@@ -21,10 +21,10 @@ export class LoginService {
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1),
         tap((res) => {
-          this.storageService.setLocalStorage(StorageEnum.token,res.data.token);
+          this.storageService.setLocalStorage(StorageEnum.token,res.data!.token);
           const profileData:ProfileData = {
-            name: res.data.name!,
-            staffId: res.data.staffId!,
+            name: res.data!.name!,
+            staffId: res.data!.staffId!,
             imgUrl: 'assets/images/angular-icon.webp'
           }
           this.storageService.setLocalStorage(StorageEnum.profileData,profileData);

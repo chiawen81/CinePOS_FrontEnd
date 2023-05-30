@@ -1,0 +1,16 @@
+<ul class="flex">
+  <li *ngFor="let item of stepperData index as i" class="flex text-xl items-center">
+    <span
+      class="bg-dark-100 text-light-300 rounded-full py-2 px-4 mr-3"
+      [class.stap-active]="item.isActive"
+    >
+      {{ item.step }}
+    </span>
+    <p class="text-light-300" [class.text-secondary-500]="item.isActive">{{ item.title }}</p>
+    <div
+      *ngIf="item.step === 1"
+      class="w-36 h-0.5 bg-light-400 mx-3"
+      [class.bg-primary-500]="stepperData[1].isActive"
+      ></div>
+  </li>
+</ul>

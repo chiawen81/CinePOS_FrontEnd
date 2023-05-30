@@ -1,10 +1,15 @@
-<p>選擇票種頁</p>
+<div class="m-6">
+  <app-stepper></app-stepper>
+
+  <ul class=" pt-5">
+    <li *ngFor="let item of ticketTypeData">
+      <app-ticket-select [ticketItem]="item" (ticketControl)="ticketControl($event)"></app-ticket-select>
+    </li>
+  </ul>
+</div>
+
 <div class="absolute bottom-10 right-10">
-  <button mat-raised-button
-    color="primary"
-    class="w-40"
-    type="submit"
-    (click)="goSelectSeat()">
-      下一步
+  <button mat-raised-button color="primary" class="w-60" type="button" (click)="goSelectSeat()">
+    下一步
   </button>
 </div>
