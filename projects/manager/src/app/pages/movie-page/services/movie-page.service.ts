@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
-import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, } from '../../../api/cinePOS-api';
+import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
 import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
@@ -55,6 +55,28 @@ export class MoviePageService {
   // 更新電影資訊
   updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
     return (this._ManagerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1)
+      )
+  }
+
+
+
+  // 更新電影上映狀態
+  updateReleaseStatus(para: MovieStatusPara): Observable<MovieDetailDeleteSuccess> {
+    return this._ManagerService.v1ManagerMovieStatusPut(para)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1)
+      )
+  }
+
+
+
+  // 刪除電影
+  deleteMovie(movieId: string): Observable<MovieDetailDeleteSuccess> {
+    return this._ManagerService.v1ManagerMovieIdDelete(movieId)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)
