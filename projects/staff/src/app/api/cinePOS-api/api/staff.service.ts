@@ -17,11 +17,15 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { CheckLockReq } from '../model/checkLockReq';
+import { CheckLockRes } from '../model/checkLockRes';
 import { CommonResFailed } from '../model/commonResFailed';
 import { CommonResFailedFieldInvalid } from '../model/commonResFailedFieldInvalid';
 import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
 import { CommonResFailedWrongPassword } from '../model/commonResFailedWrongPassword';
 import { CommonUploadSuccess } from '../model/commonUploadSuccess';
+import { CreateTicketReq } from '../model/createTicketReq';
+import { CreateTicketRes } from '../model/createTicketRes';
 import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
@@ -262,6 +266,53 @@ export class StaffService {
     }
 
     /**
+     * 檢查座位是否有被鎖住
+     * 
+     * @param body 資料格式
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffSeatCheckLockPost(body: CheckLockReq, observe?: 'body', reportProgress?: boolean): Observable<CheckLockRes>;
+    public v1StaffSeatCheckLockPost(body: CheckLockReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CheckLockRes>>;
+    public v1StaffSeatCheckLockPost(body: CheckLockReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CheckLockRes>>;
+    public v1StaffSeatCheckLockPost(body: CheckLockReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffSeatCheckLockPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CheckLockRes>('post',`${this.basePath}/v1/staff/seat/checkLock`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 取得場次座位表
      * 
      * @param scheduleId 場次ID
@@ -294,6 +345,53 @@ export class StaffService {
 
         return this.httpClient.request<SeatRes>('get',`${this.basePath}/v1/staff/seat/${encodeURIComponent(String(scheduleId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 新增電影票
+     * 
+     * @param body 資料格式
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffTicketPost(body: CreateTicketReq, observe?: 'body', reportProgress?: boolean): Observable<CreateTicketRes>;
+    public v1StaffTicketPost(body: CreateTicketReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CreateTicketRes>>;
+    public v1StaffTicketPost(body: CreateTicketReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CreateTicketRes>>;
+    public v1StaffTicketPost(body: CreateTicketReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffTicketPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CreateTicketRes>('post',`${this.basePath}/v1/staff/ticket`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

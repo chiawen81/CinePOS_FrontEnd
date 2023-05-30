@@ -14,22 +14,19 @@ export class BookingPageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private bookingService:BookingService,
+    private bookingService: BookingService,
     private matDialog: MatDialog,
   ) { }
 
   dateCount = 7;
   dateArr: Date[] = [];
 
-  data:ScheduleListResData[] = [];
+  data: ScheduleListResData[] = [];
   tempTime = '';
 
   ngOnInit(): void {
     this.dateArr = this.createDates(this.dateCount);
     this.getScheduleList(String(this.dateArr[0].getTime()));
-
-
-    this.matDialog.open(SeatDialogComponent,{width: '80%'})
   }
 
 
@@ -41,31 +38,35 @@ export class BookingPageComponent implements OnInit {
     endDate.setHours(23, 59, 59, 999);
     const endTime = String(endDate.getTime());
     this.data = [];
-    this.bookingService.v1StaffScheduleListGet$({startDate: startTime,endDate:endTime})
-    .subscribe((res)=>{
-      this.data = res.data;
-    })
+    this.bookingService.v1StaffScheduleListGet$({ startDate: startTime, endDate: endTime })
+      .subscribe((res) => {
+        this.data = res.data;
+      })
   }
 
   // 生成日期
   createDates(num: number): Date[] {
-    const dateArr:Date[] = [];
+    const dateArr: Date[] = [];
     const today = new Date(); // 當前日期和時間
     for (var i = 0; i < num; i++) {
       var date = new Date(today); // 複製當前日期
       date.setDate(today.getDate() + i); // 設定日期為當前日期加上索引值
-      date.setHours(0,0,0,0);
+      date.setHours(0, 0, 0, 0);
       dateArr.push(date);
     }
     return dateArr;
   }
 
-  opneSeatPOP($event:string): void{
-    console.log('點選場次:',this.bookingService.getShopCart());
-    this.matDialog.open(SeatDialogComponent, {
-      width: '80%',
-      data: $event
-    }
-  );
+  opneSeatPOP($event: string): void {
+    console.log('點選場次:', this.bookingService.getShopCart());
+    this.bookingService.v1StaffSeatScheduleIdGet$($event)
+      .subscribe((res) => {
+        this.matDialog.open(SeatDialogComponent, {
+          width: '80%',
+          data: res.data
+        }
+        );
+      })
+
   }
 }

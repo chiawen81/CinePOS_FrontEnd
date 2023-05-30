@@ -9,10 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TicketTypeResData } from './ticketTypeResData';
+import { CreateTicketData } from './createTicketData';
 
-export interface TicketTypeRes { 
-    code: number;
-    message: string;
-    data: Array<any>;
+export interface CreateTicketReq { 
+    ticketData: Array<any>;
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
 import { BookingService } from '../../services/booking/booking.service';
+import { TicketTypeResData } from 'projects/manager/src/app/api/cinePOS-api';
 interface TicketSelect {
   isAdd: boolean;
   ticketTypeId: string;
@@ -18,33 +19,25 @@ export class TicketTypeComponent implements OnInit {
     private bookingService: BookingService
   ) { }
   /**票種資料 */
-  ticketTypeData: any[] = [];
+  ticketTypeData: TicketTypeResData[] = [];
   /**已選取票 */
   ticketData: ticketInterface[] = [];
 
   ngOnInit(): void {
     // call API 取的票種
-    this.ticketTypeData = [
-      {
-        _id: '6460a7626b1ed843a113b9b6',
-        type: '全票',
-        price: 280
-      },
-      {
-        _id: '6460a7866b1ed843a113b9b9',
-        type: '優待票',
-        price: 230
-      },
-    ]
+    this.bookingService.v1StaffTicketTypeGet$()
+      .subscribe((res)=>{
+        this.ticketTypeData = res.data
+      })
   }
 
   ticketControl($event: TicketSelect): void {
     // 新增票
     if ($event.isAdd) {
-      const addData = this.ticketTypeData.find(item => item['_id'] === $event.ticketTypeId);
+      const addData = this.ticketTypeData.find(item => item['_id'] === $event.ticketTypeId)!;
       this.ticketData.push({
-        ticketId: '',
-        ticketTypeId: addData['_id'],
+        ticketId: addData._id, //TODO 這裡要改
+        ticketTypeId: addData._id,
         ticketType: addData.type,
         price: addData.price
       })

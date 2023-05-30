@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   currentVersion = environment.appVersion;
   constructor(
     private router: Router,
-    private loadingService :LoadingService
+    private loadingService: LoadingService
   ) { }
 
   isLoginPage = true;
@@ -29,10 +29,9 @@ export class AppComponent implements OnInit {
         this.isLoginPage = event.url === `/${STATIC_ROUTES.LOGIN}` ? true : false;
       }
     })
-
   }
 
-  toLogin(){
+  toLogin() {
     this.router.navigate([STATIC_ROUTES.LOGIN])
   }
 
