@@ -28,7 +28,6 @@
               "projects/staff/src/assets"
             ],
             "styles": [
-
               "projects/staff/src/styles/styles.scss"
             ],
             "scripts": []
@@ -39,7 +38,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -141,7 +140,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

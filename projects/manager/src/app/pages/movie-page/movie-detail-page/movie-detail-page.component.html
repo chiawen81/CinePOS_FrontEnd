@@ -34,7 +34,7 @@
         </div>
 
         <div class="row">
-          <span class="form-title">預定上映日期</span>
+          <span class="form-title"><i class="text-warn-100">*</i>預定上映日期</span>
           <div class="form-content">
             <div class="form-date">
               <mat-form-field class="w-300">
@@ -50,8 +50,7 @@
     </cine-card>
 
 
-
-    <cine-card>
+    <cine-card class="mb-20">
       <cine-card-header>電影資訊</cine-card-header>
       <cine-card-content>
         <div class="row">
@@ -113,7 +112,7 @@
         </div>
 
         <div class="row">
-          <span class="form-title">支援硬體設備</span>
+          <span class="form-title"><i class="text-warn-100">*</i>支援硬體設備</span>
           <div class="form-content">
             <div class="form-select">
               <mat-form-field class="w-300" appearance="fill">
@@ -165,6 +164,5 @@
       </cine-card-content>
     </cine-card>
 
-    <button mat-raised-button color="primary" type="submit" class="w-60 float-right">送出</button>
+    <button mat-raised-button color="primary" type="submit" class="w-60 float-right" (click)="submit()">送出</button>
   </div>
-</section>

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MoviePageService } from '../services/movie-page.service';
-import { MovieDetailRes } from '../../../api/cinePOS-api';
+import { MovieDetailResCustomer } from '../../../core/interface/movie';
 
 @Component({
   selector: 'app-movie-view-page',
@@ -10,7 +10,7 @@ import { MovieDetailRes } from '../../../api/cinePOS-api';
 })
 
 export class MovieViewPageComponent implements OnInit {
-  movieInfoAPI!: MovieDetailRes;                                                              // API- 電影資訊
+  movieInfoAPI!: MovieDetailResCustomer;                                                       // API- 電影資訊
   movieId!: string;                                                                            // 電影ID
 
   constructor(
@@ -33,7 +33,7 @@ export class MovieViewPageComponent implements OnInit {
     setTimeout(() => {
       this._MoviePageService.getMovieDetail(id).subscribe(res => {
         console.log(res)
-        this.movieInfoAPI = res.data as MovieDetailRes;
+        this.movieInfoAPI = res.data as MovieDetailResCustomer;
         this._ChangeDetectorRef.detectChanges();
       });
     });
