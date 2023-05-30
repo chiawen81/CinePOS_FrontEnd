@@ -19,13 +19,13 @@ export class ApiHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const checkNetwork = this.apiUrlToCheck.some(x => x.test(req.url))
-    if (!checkNetwork) {
-      req = req.clone({
-        setHeaders: {
-          'Authorization': 'Bearer ' + this.storageService.getLocalStorage(StorageEnum.token)
-        },
-      });
-    }
+    // if (!checkNetwork) {
+    //   req = req.clone({
+    //     setHeaders: {
+    //       'Authorization': 'Bearer ' + this.storageService.getLocalStorage(StorageEnum.token)
+    //     },
+    //   });
+    // }
 
     return next.handle(req);
   }

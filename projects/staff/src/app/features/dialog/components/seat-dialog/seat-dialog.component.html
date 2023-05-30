@@ -1,0 +1,29 @@
+<div class="text-center">
+  <div mat-dialog-title>
+    座位預覽
+  </div>
+  <div mat-dialog-content>
+    <app-seatchart [seatData]="seatData" [isPreview]="true"></app-seatchart>
+  </div>
+  <div mat-dialog-actions class="justify-center">
+    <div class="w-full my-5 flex justify-center item-center">
+      <button
+        mat-raised-button
+        mat-dialog-close
+        color="accent"
+        type="submit"
+        class="w-1/3">
+        關閉預覽
+      </button>
+      <button
+        (click)="goTicketType()"
+        mat-raised-button
+        mat-dialog-close
+        color="primary"
+        type="submit"
+        class="w-1/3">
+        前往訂票
+      </button>
+    </div>
+  </div>
+</div>

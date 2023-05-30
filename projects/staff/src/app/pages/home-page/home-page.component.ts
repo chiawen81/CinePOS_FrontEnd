@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { STATIC_ROUTES } from '../../core/constant/routes.constant';
 
 @Component({
   selector: 'app-home-page',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomePageComponent implements OnInit {
 
   constructor() { }
-
+  STATIC_ROUTES = STATIC_ROUTES;
   ngOnInit(): void {
   }
 

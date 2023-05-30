@@ -1,0 +1,34 @@
+<div class="my-2">
+  <div class="flex justify-between items-center rounded-2xl bg-dark-100 p-4 border-b border-dashed border-light-600 ">
+    <p>
+      {{ shopCart.title }}
+    </p>
+    <button type="button" (click)="date()">
+      <img src="assets/images/icon/trash.svg" alt="trash">
+    </button>
+  </div>
+  <div class="rounded-2xl bg-dark-100 p-4 text-xs">
+    <ul class="flex flex-row text-light-400">
+      <li class="basis-1/3">票種</li>
+      <li class="basis-1/4">座位</li>
+      <li class="basis-1/2 text-center">票號</li>
+    </ul>
+    <hr class="border-0 h-px bg-light-500 my-2">
+    <ul>
+      <li *ngFor="let item of shopCart.ticket index as i" class="my-1">
+        <ul class="flex flex-row">
+          <li class="basis-1/3">{{ item.ticketType }}</li>
+          <li class="basis-1/4">{{ shopCart.seat[i].seatName }}</li>
+          <li class="basis-1/2 truncate">{{ item.ticketId }}</li>
+        </ul>
+      </li>
+    </ul>
+    <hr class="border-0 h-px bg-light-500 my-2">
+    <div class="flex justify-between items-center">
+      <span class="text-xs text-light-300">小計</span>
+      <div>
+        NTD {{ getSubtotal() }}
+      </div>
+    </div>
+  </div>
+</div>
