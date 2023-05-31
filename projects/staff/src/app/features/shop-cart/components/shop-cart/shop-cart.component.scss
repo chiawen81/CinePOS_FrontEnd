@@ -1,0 +1,21 @@
+.main-item{
+  height: calc(100vh - 362px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    // 整體
+    width: 5px; //粗度
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    // 底層
+    background-color: transparent;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    // 有在動的
+    background-color: theme('colors.dark.200');
+    border-radius: 20px;
+  }
+}

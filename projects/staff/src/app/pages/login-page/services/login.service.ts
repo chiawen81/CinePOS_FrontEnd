@@ -15,20 +15,20 @@ export class LoginService {
     private storageService: StorageService
   ) { }
 
-  // v1StaffLoginPost$(LoginReq: { staffId: string, password: string }): Observable<LoginRes> {
-  //   return this.staffService.v1StaffLoginPost(LoginReq)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1),
-  //       tap((res) => {
-  //         this.storageService.setLocalStorage(StorageEnum.token,res.data.token);
-  //         const profileData:ProfileData = {
-  //           name: res.data.name!,
-  //           staffId: res.data.staffId!,
-  //           imgUrl: 'assets/images/angular-icon.webp'
-  //         }
-  //         this.storageService.setLocalStorage(StorageEnum.profileData,profileData);
-  //       })
-  //     )
-  // }
+  v1StaffLoginPost$(LoginReq: { staffId: string, password: string }): Observable<LoginRes> {
+    return this.staffService.v1StaffLoginPost(LoginReq)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1),
+        tap((res) => {
+          this.storageService.setLocalStorage(StorageEnum.token,res.data!.token);
+          const profileData:ProfileData = {
+            name: res.data!.name!,
+            staffId: res.data!.staffId!,
+            imgUrl: 'assets/images/angular-icon.webp'
+          }
+          this.storageService.setLocalStorage(StorageEnum.profileData,profileData);
+        })
+      )
+  }
 }

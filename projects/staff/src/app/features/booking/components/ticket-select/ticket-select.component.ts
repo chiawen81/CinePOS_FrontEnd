@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TicketTypeResData } from 'projects/manager/src/app/api/cinePOS-api';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
 interface TicketSelect {
   isAdd: boolean;
@@ -12,7 +13,11 @@ interface TicketSelect {
 })
 export class TicketSelectComponent implements OnInit {
 
-  @Input() ticketItem: any = {}
+  @Input() ticketItem: TicketTypeResData = {
+    _id: '',
+    type: '',
+    price: 0
+  }
   @Output() ticketControl = new EventEmitter<TicketSelect>();
 
   ticketCounts = 0;
@@ -30,7 +35,7 @@ export class TicketSelectComponent implements OnInit {
     }
     this.ticketControl.emit({
       isAdd: count > 0 ? true : false,
-      ticketTypeId: this.ticketItem['_id']
+      ticketTypeId: this.ticketItem._id
     })
     this.ticketCounts += count;
   }

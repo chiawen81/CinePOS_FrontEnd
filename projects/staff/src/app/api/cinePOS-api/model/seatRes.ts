@@ -9,32 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Row } from './row';
+import { SeatResData } from './seatResData';
 
 export interface SeatRes { 
-    /**
-     * 已售數量
-     */
-    sold: number;
-    /**
-     * 未售數量
-     */
-    free: number;
-    /**
-     * 總Rows
-     */
-    maxRows: number;
-    /**
-     * 總Columns
-     */
-    maxColumns: number;
-    /**
-     * row項目
-     */
-    rowLabel: Array<string>;
-    /**
-     * col項目
-     */
-    colLabel: Array<string>;
-    list: Array<Row>;
+    code: number;
+    message: string;
+    data: Array<any>;
 }

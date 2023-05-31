@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.profileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
+    this.profileData = this.storageService.getLocalStorage(StorageEnum.profileData)!;
   }
 
   openProfile(): void {

@@ -14,11 +14,10 @@
   <ng-container *ngSwitchCase="'0'">
     <ng-template [ngIf]="seatData.status === 0" [ngIfElse]="noFree">
       <div class="seat seat-free text-gray-400" [class.active-seat]="isActive" (click)="active()">
-      
       </div>
     </ng-template>
     <ng-template #noFree>
-      <div class="seat seat-lock">
+      <div class="seat seat-lock" [class.seat-sold]="seatData.status === 1">
       </div>
     </ng-template>
   </ng-container>
@@ -30,7 +29,7 @@
       </div>
     </ng-template>
     <ng-template #noFree>
-      <div class="seat seat-lock">
+      <div class="seat seat-lock" [class.seat-sold]="seatData.status === 1">
         <img class="h-full mx-auto" src="assets/images/icon/handicapped.png" alt="handicapped">
       </div>
     </ng-template>

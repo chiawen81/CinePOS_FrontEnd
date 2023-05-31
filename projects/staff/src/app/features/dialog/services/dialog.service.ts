@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { InfoUpdateRes, StaffService } from '../../../api/cinePOS-api';
-import { StorageService } from '../../../core/services/storage/storage.service';
+import { InfoUpdateRes,StaffService } from '../../../api/cinePOS-api';
 import { Observable, Subject, filter, tap } from 'rxjs';
-import { ProfileData } from '../../../core/interface/profile-data';
-import { StorageEnum } from '../../../core/enums/storage/storage-enum';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +9,6 @@ export class DialogService {
 
   constructor(
     private staffService: StaffService,
-    private storageService:StorageService
   ) { }
 
   changeProfile$(InfoUpdateReq: { newName: string, staffId: string }): Observable<InfoUpdateRes> {
@@ -27,4 +23,5 @@ export class DialogService {
         })
       )
   }
+
 }

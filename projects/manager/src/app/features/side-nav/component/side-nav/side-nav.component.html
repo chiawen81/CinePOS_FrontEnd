@@ -3,7 +3,11 @@
     <img class="logo" src="assets/images/logo/logo-w-gradient.svg" alt="">
     <ul class="menu">
       <ng-container *ngFor="let mainItem of sideNavData">
-        <li class="text-15">
+        <li class="text-15" *ngIf="!mainItem.url">
+          <img src="{{mainItem.iconFilePath}}" alt="">
+          <span>{{mainItem.title}}</span>
+        </li>
+        <li class="text-15" *ngIf="mainItem.url" [routerLink]="mainItem.url">
           <img src="{{mainItem.iconFilePath}}" alt="">
           <span>{{mainItem.title}}</span>
         </li>
@@ -18,13 +22,16 @@
     <div class="fotter text-12">
       <div class="logout flex flex-row justify-between">
         <div class="flex flex-col">
-          <span>A0001 方佳文</span>
+          <span>{{(this.storageService.getProfileData() |async)?.staffId}} {{(this.storageService.getProfileData() |async)?.name}}</span>
           <span class="jobtitle">總部 營運部 專員</span>
         </div>
-        <button class="btn gray">登出</button>
+        <button class="btn gray" (click)="logout()">登出</button>
       </div>
       <div class="copyright">
         Copyright © 2023 CineTech. All rights reserved.
+        <div class="py-3">
+          ver. {{currentVersion}}
+        </div>
       </div>
     </div>
   </div>

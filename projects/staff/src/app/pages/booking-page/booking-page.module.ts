@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BookingModule } from '../../features/booking/booking.module';
 import { SelectSeatComponent } from './components/select-seat/select-seat.component';
 import { TicketTypeComponent } from './components/ticket-type/ticket-type.component';
+import { SeatchartModule } from '../../features/seatchart/seatchart.module';
 
 const routes: Routes = [
   /**訂票頁(場次查詢) */
@@ -44,6 +45,7 @@ const featureModules = [
     CommonModule,
     RouterModule.forChild(routes),
     BookingModule,
+    SeatchartModule,
     ...materialModules,
   ]
 })

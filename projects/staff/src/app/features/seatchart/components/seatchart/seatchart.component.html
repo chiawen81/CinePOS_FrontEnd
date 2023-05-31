@@ -29,7 +29,7 @@
           <ng-template #seat>
             <li *ngFor="let item2 of item.seat index as j" class="m-0.5 flex-1">
               <app-seatchart-seat [rows]="item.rows" [cols]="seatData.colLabel[j]" [seatData]="item2" [isPreview]="isPreview"
-                (activeOut)="tt($event)"></app-seatchart-seat>
+                (activeOut)="changeSeatArray($event)"></app-seatchart-seat>
             </li>
           </ng-template>
 
@@ -51,7 +51,8 @@
     </div>
   </div>
 
-  <div *ngIf="isPreview" class="flex justify-center mt-10 mb-5">
+  <!-- 預覽顯示 -->
+  <div *ngIf="isPreview" class="flex justify-center mt-10 mb-5" >
     <ul class="flex rounded-2xl p-6 border border-light-600">
       <li class="flex mx-3">
         <div class="seat seat-free mr-3"></div>
@@ -63,4 +64,9 @@
       </li>
     </ul>
   </div>
+  <!-- 編輯顯示 -->
+  <div *ngIf="!isPreview" class="mt-5 text-center">
+    還有 <span class="text-light-500" [class.text-primary-500]="remainSeat>0">{{ remainSeat }}</span> 張未確認座位
+  </div>
+
 </section>

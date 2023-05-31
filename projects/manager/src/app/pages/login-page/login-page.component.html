@@ -1,4 +1,16 @@
-<div class="w-screen h-screen flex justify-center items-center">
-  <lib-login></lib-login>
-</div>
+<div class="relative truncate">
+  <ul class="w-screen h-screen flex flex-row justify-center items-center">
+    <li class="basis-1/2 flex justify-end items-center">
+      <lib-login (loginDataEmit)="login($event)" [logoSrc]="'assets/images/logo/logo.svg'"></lib-login>
+    </li>
+    <li class="basis-1/2 flex justify-end items-center">
+      <img class="w-full max-w-md -mr-28"
+      src="assets/images/logo/logo-w.svg" alt="logo-w">
+    </li>
+  </ul>
 
+  <div class="absolute bottom-6 right-0 left-0 px-8 flex justify-between text-sm text-gray-400">
+    <span>{{currentVersion}}</span>
+    <span>© 2023 CinePOS All Right Reserved.</span>
+  </div>
+</div>
