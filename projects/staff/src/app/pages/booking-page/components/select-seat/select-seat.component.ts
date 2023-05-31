@@ -69,6 +69,8 @@ export class SelectSeatComponent implements OnInit {
           [`/${STATIC_ROUTES.BOOKING.ROOT}`]
         );
         console.log('ShopCart2',this.bookingService.getShopCart());
+        this.bookingService.deleteArr('seat');
+        this.bookingService.deleteArr('ticket');
       })
   }
 
