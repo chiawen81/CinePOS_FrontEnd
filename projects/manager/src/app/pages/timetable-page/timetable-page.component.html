@@ -1,10 +1,10 @@
-<div class="timetable ">
-    <div class="dx-viewport">
+<div class="timetable">
+    <div class="dx-viewport overflow-y-auto">
         <div style="overflow: auto;">
             <dx-scheduler id="scheduler" [dataSource]="data" [views]="['timelineDay']" currentView="timelineDay"
                 [firstDayOfWeek]="0" [startDayHour]="0" [endDayHour]="24" [showAllDayPanel]="false"
                 [groups]="['theatreId']" [currentDate]="currentDate" [crossScrollingEnabled]="true" [cellDuration]="30"
-                [height]="600" appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
+                [height]="550" appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
                 (onAppointmentDeleting)="deleteAppointment($event)" (onAppointmentUpdating)="updateAppointment($event)">
                 <dxo-editing [allowAdding]="false"></dxo-editing>
                 <div *dxTemplate="let data of 'timeCellTemplate'" class="text-white">
@@ -40,15 +40,14 @@
         </div>
     </div>
 </div>
-<div class="w-full bg-dark-300  p-20 custom-drag" style="height: 350px;">
+<div class="w-full bg-dark-300  p-10 custom-drag h-auto overflow-y-auto">
     <div class="title flex justify-between">
         <div>電影列表</div>
-
         <input class="form-input w-80 mr-10" type="text">
     </div>
-    <div style="height: 300px;overflow: auto;">
+    <div style="height: 210px;overflow: auto;">
     <dx-draggable id="list" data="dropArea" [group]="'appointmentsGroup'" (onDragStart)="onListDragStart($event)"
-        class="content grid grid-cols-3 gap-10 mt-20">
+        class="content grid grid-cols-5 gap-10 mt-5">
         <dx-draggable class="item dx-card dx-theme-text-color dx-theme-background-color" [clone]="true"
             [group]="'appointmentsGroup'" [data]="movieList" (onDragStart)="onItemDragStart($event)"
             (onDragEnd)="onItemDragEnd($event)" *ngFor="let item of movieList" [id]="item.id">

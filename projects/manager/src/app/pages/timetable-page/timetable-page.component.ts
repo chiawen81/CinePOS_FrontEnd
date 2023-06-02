@@ -1,13 +1,10 @@
-import { filter } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Data } from '@angular/router';
 import { DxSchedulerComponent } from 'devextreme-angular';
-import Query from 'devextreme/data/query';
 import { MovieData, RateCode, TheatreData, TimetableService } from './services/timetable.service';
 import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
-import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
-import { ManagerMovieListSuccessData, ManagerMovieListSuccessDataInner } from '../../api/cinePOS-api';
+import { ManagerMovieListSuccessDataInner, TimetableCreateReq } from '../../api/cinePOS-api';
 
 @Component({
   selector: 'app-timetable-page',
@@ -37,7 +34,7 @@ export class TimetablePageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getTimetableList();
-    this.getMovieList();
+    this.getMovieList('');
   }
 
 
@@ -68,20 +65,20 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onAppointmentAdd(e: any) {
-    const moviesData = this.moviesData.filter((item) => {
+    const moviesData = this.movieList.filter((item) => {
       return item.id = e.itemElement.id;
     });
     console.log(e);
     console.log(e.itemElement);
     console.log(e.itemElement.id);
     const param = {
-      movieId: e.itemElement._id,
+      movieId: e.itemElement.id,
       theaterId: e.itemData.theatreId,
-      startDate: new Date(e.itemData.startDate).toDateString(),
-      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toString()
+      startDate: new Date(e.itemData.startDate),
+      endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
     console.log(param);
-    this.timetableService.createTimetable(param).subscribe((res) => {
+    this.timetableService.createTimetable(param as TimetableCreateReq).subscribe((res) => {
       if (res) {
         alert(res.message);
         this.getTimetableList();
@@ -117,26 +114,26 @@ export class TimetablePageComponent implements OnInit {
   /**
    * 取得電影列表
    */
-  private getMovieList() {
+  private getMovieList(title: string) {
     // const startDate = moment(this.currentDate).format('yyyy/MM/DD');
     // const endDate = moment(startDate).add(7,'d').format('yyyy/MM/DD');
     const startDate = '';
     const endDate = '';
-    this.movieService.getMovieList(1, startDate, endDate, '').subscribe(res => {
+    this.movieService.getMovieList(1, startDate, endDate, title).subscribe(res => {
       console.log('取得列表資料-成功res', res);
-      // this.moviesData = this.mapTimetable(res.data as any) as MovieData[];
       this.movieList = this.getShowMovieList(res.data as any);
+      console.log('movieList', this.movieList);
 
     });
   }
 
 
   private getTimetableList() {
-    // const startDate = moment().startOf('week').valueOf();
-    // const endDate = moment(startDate).add('day', 7).valueOf();
-    // this.currentDate = new Date(startDate);
-    const startDate = moment('20230521').valueOf();
+    const startDate = moment().startOf('week').valueOf();
     const endDate = moment(startDate).add('day', 7).valueOf();
+    // this.currentDate = new Date(startDate);
+    // const startDate = moment('20230521').valueOf();
+    // const endDate = moment(startDate).add('day', 7).valueOf();
     this.currentDate = new Date(startDate);
 
     this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
@@ -146,15 +143,13 @@ export class TimetablePageComponent implements OnInit {
         console.log(this.data);
         this.theatreData = this.getTheaters(filterData);
         console.log(this.theatreData);
-        this.moviesData = this.getShowMovies(filterData);
+        this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
       }
     })
   }
 
   private mapTimetable(data: any[]) {
     const result = data.map((item) => {
-      console.log('item', item);
-
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
@@ -166,7 +161,7 @@ export class TimetablePageComponent implements OnInit {
     return result;
   }
 
-  private transformRateNameColor(type: string|undefined): string {
+  private transformRateNameColor(type: string | undefined): string {
     switch (type) {
       case '普通級':
         return '#363E31';
@@ -183,12 +178,12 @@ export class TimetablePageComponent implements OnInit {
     }
   }
 
-  private transformRateNameToRate(type: string|undefined): RateCode|null {
+  private transformRateNameToRate(type: string | undefined): RateCode | null {
     switch (type) {
       case '普通級':
         return RateCode.g;
       case '保護級':
-        return  RateCode.pg;
+        return RateCode.pg;
       case '輔12':
         return RateCode.pg12;
       case '輔15':
@@ -249,7 +244,7 @@ export class TimetablePageComponent implements OnInit {
         // runtime: item.runtime?? '',
         runtime: 90,
         color: this.transformRateNameColor(item.rateName),
-        rateName:item.rateName,
+        rateName: item.rateName,
         rate: this.transformRateNameToRate(item.rateName) as RateCode
       }
       return movieData;

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable, catchError, filter, throwError } from 'rxjs';
-import { TimetableUpdateReq } from '../../../api/cinePOS-api';
+import { TimetableCreateReq, TimetableUpdateReq } from '../../../api/cinePOS-api';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -65,12 +65,7 @@ export class TimetableService {
     return this.managerService.updateTimetable(param);
   }
 
-  createTimetable(param: {
-    movieId: string,
-    theaterId: string,
-    startDate: string,
-    endDate: string
-  }) {
+  createTimetable(param: TimetableCreateReq) {
     // const url = `timetable/create`
     // return this.request(HTTP_METHOD.POST, param, url);
     // const url = `timetable/create`
