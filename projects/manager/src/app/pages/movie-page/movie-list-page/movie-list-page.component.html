@@ -1,14 +1,12 @@
-<section class="w-full px-20 pb-20">
-
 <div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
-  <cine-card class="mb-12">
+  <cine-card class="mb-50">
     <cine-card-header>查詢條件</cine-card-header>
     <cine-card-content>
       <div class="row">
         <span class="form-title">上映狀態</span>
         <div class="form-content">
           <div class="form-select select-small">
-            <mat-form-field class="w-24" appearance="fill">
+            <mat-form-field class="w-100" appearance="fill">
               <mat-label>請選擇</mat-label>
               <mat-select formControlName="status">
                 <mat-option *ngFor="let item of statusOptions" [value]="item.value">{{item?.name}}</mat-option>
@@ -22,14 +20,14 @@
         <span class="form-title">查詢期間</span>
         <div class="form-content">
           <div class="form-date">
-            <mat-form-field class="w-80">
+            <mat-form-field class="w-300">
               <input matInput [matDatepicker]="picker1" [formControl]="searchDateS">
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <span class="ml-2.5 mr-2.5">～</span>
-            <mat-form-field class="w-80">
+            <span class="ml-10 mr-10">～</span>
+            <mat-form-field class="w-300">
               <input matInput [matDatepicker]="picker2"
                      [formControl]="searchDateE">
               <mat-hint>MM/DD/YYYY</mat-hint>
@@ -37,26 +35,28 @@
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
-          <p *ngIf="formGroup.hasError('dateRangeRequire')" class="text-12 mt-1 text-warn-100">{{formGroup.getError('dateRangeRequire')}}</p>
-          <p *ngIf="formGroup.hasError('dateRangeOrder')" class="text-12 mt-1 text-warn-100">{{formGroup.getError('dateRangeOrder')}}</p>
+          <p *ngIf="formGroup.hasError('dateRangeRequire')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeRequire')}}</p>
+          <p *ngIf="formGroup.hasError('dateRangeOrder')" class="text-12 mt-5 text-warn-100">{{formGroup.getError('dateRangeOrder')}}</p>
         </div>
       </div>
 
       <div class="row">
         <span class="form-title">電影名稱</span>
         <div class="form-content flex flex-row justify-between">
-          <input class="form-input w-80" type="text" formControlName="title">
-          <button mat-raised-button color="primary" type="submit" class="w-16 float-right" (click)="search()">查詢</button>
+          <input class="form-input w-300" type="text" formControlName="title">
+          <button mat-raised-button color="primary" type="submit" class="w-60 float-right" (click)="search()">查詢</button>
         </div>
       </div>
 
     </cine-card-content>
   </cine-card>
 
+
+
   <cine-card>
     <cine-card-header>查詢結果</cine-card-header>
     <cine-card-content>
-      <p *ngIf="!movieListView?.length" class="p-12 text-center">沒有符合條件的資料！</p>
+      <p *ngIf="!movieListView?.length" class="p-50 text-center">沒有符合條件的資料！</p>
       <cine-table *ngIf="movieListView?.length">
         <thead>
           <tr>
@@ -95,14 +95,14 @@
               <span *ngFor="let subItem of item.provideVersionName">{{subItem}}</span>
             </td>
             <td>
-              <span class="mr-3.5">
-                <button mat-raised-button color="primary" type="submit" class="w-16">發佈</button>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60">發佈</button>
               </span>
-              <span class="mr-3.5">
-                <button mat-raised-button color="primary" type="submit" class="w-16 mr-3.5">下架</button>
+              <span class="mr-15">
+                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15">下架</button>
               </span>
               <span>
-                <button mat-raised-button color="primary" type="submit" class="w-16">刪除</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60">刪除</button>
               </span>
             </td>
           </tr>
@@ -117,4 +117,3 @@
   </cine-card>
 
 </div>
-</section>

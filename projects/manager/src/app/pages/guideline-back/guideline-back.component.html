@@ -1,13 +1,13 @@
 <div class="wrapper-page utility-common-back">
   <!--————————————  表單元件 -————————————-->
-  <div class="form-common-back mb-12">
+  <div class="form-common-back mb-50">
     <h3 class="form-area-title">表單元件</h3>
     <!--————  一般input ————-->
     <div class="row">
       <span class="form-title">
         <i class="text-warn-100">*</i>一般input</span>
       <div class="form-content">
-        <input class="form-input w-80" type="text">
+        <input class="form-input w-300" type="text">
       </div>
     </div>
 
@@ -17,11 +17,11 @@
         <i class="text-warn-100">*</i>很多input</span>
       <div class="form-content flex flex-col">
         <div>
-          <input class="form-input w-80 mr-2.5" type="text">
-          <button mat-raised-button class="secondary btn-icon mr-2.5">+</button>
+          <input class="form-input w-300 mr-10" type="text">
+          <button mat-raised-button class="secondary btn-icon mr-10">+</button>
         </div>
-        <input class="form-input w-80 mr-2.5 mt-5" type="text">
-        <input class="form-input w-80 mr-2.5 mt-5" type="text">
+        <input class="form-input w-300 mr-10 mt-5" type="text">
+        <input class="form-input w-300 mr-10 mt-5" type="text">
       </div>
     </div>
 
@@ -40,7 +40,7 @@
         <i class="text-warn-100">*</i>選單（單選）</span>
       <div class="form-content">
         <div class="form-select">
-          <mat-form-field class="w-80" appearance="fill">
+          <mat-form-field class="w-300" appearance="fill">
             <mat-select>
               <mat-option [value]="null">請選擇</mat-option>
               <mat-option [value]="1">選項一</mat-option>
@@ -59,7 +59,7 @@
         <i class="text-warn-100">*</i>選單（多選）</span>
       <div class="form-content">
         <div class="form-select">
-          <mat-form-field class="w-80" appearance="fill">
+          <mat-form-field class="w-300" appearance="fill">
             <mat-label>請選擇</mat-label>
             <mat-select multiple>
               <mat-option [value]="1">選項一</mat-option>
@@ -113,7 +113,7 @@
       <span class="form-title">日期</span>
       <div class="form-content">
         <div class="form-date">
-          <mat-form-field class="w-80">
+          <mat-form-field class="w-300">
             <input matInput [matDatepicker]="picker">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -138,8 +138,8 @@
       <div class="form-content flex">
         <button class="btn gray small">登出</button>
         <button class="btn gray medium">登出</button>
-        <button mat-raised-button class="secondary mr-2.5">登出</button>
-        <button mat-raised-button color="primary" type="submit" class="w-16">送出</button>
+        <button mat-raised-button class="secondary mr-10">登出</button>
+        <button mat-raised-button color="primary" type="submit" class="w-60">送出</button>
       </div>
     </div>
   </div>
