@@ -36,6 +36,7 @@ export class TimetablePageComponent implements OnInit {
     this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
   }
   ngOnInit(): void {
+    this.currentDate = moment(new Date()).toDate();
     this.getTimetableList();
     this.getMovieList('');
     this.getTheaterList();
@@ -161,7 +162,6 @@ export class TimetablePageComponent implements OnInit {
     // this.currentDate = new Date(startDate);
     // const startDate = moment('20230521').valueOf();
     // const endDate = moment(startDate).add('day', 7).valueOf();
-    this.currentDate = moment(new Date(startDate)).toDate();
     console.log(this.currentDate);
 
     this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
@@ -177,7 +177,9 @@ export class TimetablePageComponent implements OnInit {
   }
 
   private mapTimetable(data: any[]) {
+    
     const result = data.map((item) => {
+      console.log(item);
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
