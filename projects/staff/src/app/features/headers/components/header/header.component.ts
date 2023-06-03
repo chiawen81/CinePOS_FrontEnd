@@ -41,7 +41,6 @@ export class HeaderComponent implements OnInit {
   }
 
   openProfile(): void {
-    this.componentInjector.injectComponent(ProfileGialogComponent);
     this.dialog.open(ProfileGialogComponent, {
         width: '450px',
         data: this.profileData

@@ -29,11 +29,13 @@ import { ManagerMovieListSuccess } from '../model/managerMovieListSuccess';
 import { MovieDetailCreateFaild } from '../model/movieDetailCreateFaild';
 import { MovieDetailCreateParameter } from '../model/movieDetailCreateParameter';
 import { MovieDetailCreateSuccess } from '../model/movieDetailCreateSuccess';
+import { MovieDetailDeleteSuccess } from '../model/movieDetailDeleteSuccess';
 import { MovieDetailGetInfoFailed } from '../model/movieDetailGetInfoFailed';
 import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
 import { MovieDetailUpdateParameter } from '../model/movieDetailUpdateParameter';
 import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
+import { MovieStatusPara } from '../model/movieStatusPara';
 import { TimetableCreateReq } from '../model/timetableCreateReq';
 import { TimetableListRes } from '../model/timetableListRes';
 import { TimetableRes } from '../model/timetableRes';
@@ -259,6 +261,47 @@ export class ManagerService {
     }
 
     /**
+     * 刪除單一電影資訊
+     * 
+     * @param id 電影id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieIdDelete(id: string, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailDeleteSuccess>;
+    public v1ManagerMovieIdDelete(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailDeleteSuccess>>;
+    public v1ManagerMovieIdDelete(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailDeleteSuccess>>;
+    public v1ManagerMovieIdDelete(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling v1ManagerMovieIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<MovieDetailDeleteSuccess>('delete',`${this.basePath}/v1/manager/movie/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 取得單一電影資訊
      * 
      * @param id 電影id
@@ -442,6 +485,53 @@ export class ManagerService {
         }
 
         return this.httpClient.request<MovieDetailCreateSuccess>('post',`${this.basePath}/v1/manager/movie`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新單一電影資訊上映狀態
+     * 
+     * @param body 電影ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailCreateSuccess>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailCreateSuccess>>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailCreateSuccess>>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1ManagerMovieStatusPut.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<MovieDetailCreateSuccess>('put',`${this.basePath}/v1/manager/movie/status`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

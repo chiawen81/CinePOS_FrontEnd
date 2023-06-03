@@ -27,6 +27,7 @@ import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
 import { ScheduleListRes } from '../model/scheduleListRes';
+import { SeatRes } from '../model/seatRes';
 import { StaffOrderCreateReq } from '../model/staffOrderCreateReq';
 import { StaffOrderCreateSuccess } from '../model/staffOrderCreateSuccess';
 import { StaffOrderSearchSuccess } from '../model/staffOrderSearchSuccess';
@@ -252,6 +253,47 @@ export class StaffService {
         return this.httpClient.request<ScheduleListRes>('get',`${this.basePath}/v1/staff/schedule/list`,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得場次座位表
+     * 
+     * @param scheduleId 場次ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffSeatScheduleIdGet(scheduleId: string, observe?: 'body', reportProgress?: boolean): Observable<SeatRes>;
+    public v1StaffSeatScheduleIdGet(scheduleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SeatRes>>;
+    public v1StaffSeatScheduleIdGet(scheduleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SeatRes>>;
+    public v1StaffSeatScheduleIdGet(scheduleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (scheduleId === null || scheduleId === undefined) {
+            throw new Error('Required parameter scheduleId was null or undefined when calling v1StaffSeatScheduleIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<SeatRes>('get',`${this.basePath}/v1/staff/seat/${encodeURIComponent(String(scheduleId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

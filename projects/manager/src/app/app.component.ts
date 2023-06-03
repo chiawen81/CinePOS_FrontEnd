@@ -41,9 +41,7 @@ export class AppComponent implements OnInit {
         this.isLoginPage = event.url === `/${STATIC_ROUTES.LOGIN}` ? true : false;
       }
     })
-
   }
-
 
   toLogin() {
     this.router.navigate([STATIC_ROUTES.LOGIN])

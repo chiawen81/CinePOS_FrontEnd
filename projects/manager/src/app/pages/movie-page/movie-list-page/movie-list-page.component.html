@@ -96,13 +96,13 @@
             </td>
             <td>
               <span class="mr-15">
-                <button mat-raised-button color="primary" type="submit" class="w-60">發佈</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60" (click)="updateReleaseStatus(true,item._id)">發佈</button>
               </span>
               <span class="mr-15">
-                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15">下架</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60 mr-15" (click)="updateReleaseStatus(false,item._id)">下架</button>
               </span>
               <span>
-                <button mat-raised-button color="primary" type="submit" class="w-60">刪除</button>
+                <button mat-raised-button color="primary" type="submit" class="w-60" (click)="deleteMovie(item._id)">刪除</button>
               </span>
             </td>
           </tr>

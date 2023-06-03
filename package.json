@@ -1,6 +1,6 @@
 {
   "name": "CinePOS_FrontEnd",
-  "version": "0.0.30",
+  "version": "0.0.38",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
@@ -15,7 +15,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "swagger:get-staff": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/staff/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
+    "swagger:get-staff": "java -jar swagger-codegen-cli-3.0.31.jar generate -i http://localhost:3005/v1/swagger.json -l typescript-angular -o ./projects/staff/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
     "swagger:get-manager": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/manager/src/app/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true",
     "swagger:get-share-libs": "java -jar swagger-codegen-cli-3.0.31.jar generate -i https://api-t.cine-pos.com/v1/swagger.json -l typescript-angular -o ./projects/share-libs/src/lib/api/cinePOS-api -D io.swagger.v3.parser.util.RemoteUrl.trustAll=true"
   },
@@ -45,6 +45,7 @@
     "@angular-devkit/build-angular": "^14.2.11",
     "@angular/cli": "~14.2.0",
     "@angular/compiler-cli": "^14.2.0",
+    "@fortawesome/fontawesome-free": "^6.4.0",
     "@nguniversal/express-engine": "^14.2.3",
     "@types/jasmine": "~4.0.0",
     "autoprefixer": "^10.4.14",

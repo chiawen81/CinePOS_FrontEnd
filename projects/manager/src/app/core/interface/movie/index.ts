@@ -3,3 +3,4 @@ export { ManagerMovieListSuccessDataInnerCustomer } from "./managerMovieListSucc
 export { MovieDetailCreateParameterCustomer } from "./movieDetailCreateParameter-customer";
 export { MovieDetailUpdateSuccessCustomer } from "./movieDetailUpdateSuccess-customer";
 export { MovieDetailUpdateParameterCustomer } from "./movieDetailUpdateParameter-customer";
+export { MovieDetailResCustomer } from "./movieDetailRes-customer";

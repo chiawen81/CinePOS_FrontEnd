@@ -1,4 +1,5 @@
 @import "../../../../../node_modules/@angular/material/theming";
+// @import "../../../../../node_modules/@angular/material/icon/";
 @include mat-core();
 $mat-primary: (
   100: theme('colors.primary.100'),
@@ -25,6 +26,7 @@ $mat-secondary: (
   900: theme('colors.secondary.900'),
   contrast: ()
 );
+
 $custom-primary: mat-palette($mat-primary);
 $custom-secondary: mat-palette($mat-secondary);
 $custom-warn: mat-palette($mat-red);
@@ -40,9 +42,15 @@ button{
     background: rgba(255, 255, 255, 0.12) !important;
   }
   &.mat-warn{
-    background: theme('colors.warn.200');
+    background: theme('colors.warn.400');
     color: theme('colors.warn.100') !important;
     @apply rounded-xl tracking-widest;
+  }
+  &.mat-accent{
+    background-color: theme('colors.lightPurple.200') !important;
+    color: theme('colors.primary.500') !important;
+    box-shadow: none !important;
+    @apply rounded-xl tracking-widest mr-3;
   }
 }
 
@@ -62,6 +70,6 @@ button{
 .mat-dialog-container{
   background: theme('colors.dark.200') !important;
   @apply rounded-xl tracking-widest #{!important};
-  
+
 }
 

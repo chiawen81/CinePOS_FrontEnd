@@ -18,10 +18,29 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { CommonResFailed } from '../model/commonResFailed';
+import { CommonResFailedAuthInvalid } from '../model/commonResFailedAuthInvalid';
+import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
+import { CommonUploadSuccess } from '../model/commonUploadSuccess';
 import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
+import { ManagerMovieListSuccess } from '../model/managerMovieListSuccess';
+import { MovieDetailCreateFaild } from '../model/movieDetailCreateFaild';
+import { MovieDetailCreateParameter } from '../model/movieDetailCreateParameter';
+import { MovieDetailCreateSuccess } from '../model/movieDetailCreateSuccess';
+import { MovieDetailDeleteSuccess } from '../model/movieDetailDeleteSuccess';
+import { MovieDetailGetInfoFailed } from '../model/movieDetailGetInfoFailed';
+import { MovieDetailGetInfoSuccess } from '../model/movieDetailGetInfoSuccess';
+import { MovieDetailUpdateFaild } from '../model/movieDetailUpdateFaild';
+import { MovieDetailUpdateParameter } from '../model/movieDetailUpdateParameter';
+import { MovieDetailUpdateSuccess } from '../model/movieDetailUpdateSuccess';
+import { MovieStatusPara } from '../model/movieStatusPara';
+import { TimetableCreateReq } from '../model/timetableCreateReq';
+import { TimetableListRes } from '../model/timetableListRes';
+import { TimetableRes } from '../model/timetableRes';
+import { TimetableUpdateReq } from '../model/timetableUpdateReq';
+import { UserProfileRes } from '../model/userProfileRes';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -30,7 +49,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class ManagerService {
 
-    protected basePath = '/';
+    protected basePath = 'http://localhost:3005/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -58,6 +77,141 @@ export class ManagerService {
         return false;
     }
 
+
+    /**
+     * 
+     * 新增時刻表
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createTimetable(body: TimetableCreateReq, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public createTimetable(body: TimetableCreateReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public createTimetable(body: TimetableCreateReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public createTimetable(body: TimetableCreateReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createTimetable.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<TimetableRes>('post',`${this.basePath}/v1/manager/timetable/create`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 刪除時刻表
+     * @param timetableId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteItem(timetableId: string, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public deleteItem(timetableId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public deleteItem(timetableId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public deleteItem(timetableId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (timetableId === null || timetableId === undefined) {
+            throw new Error('Required parameter timetableId was null or undefined when calling deleteItem.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<TimetableRes>('delete',`${this.basePath}/v1/manager/timetable/${encodeURIComponent(String(timetableId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 更新時刻表
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'body', reportProgress?: boolean): Observable<TimetableRes>;
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableRes>>;
+    public updateTimetable(body: TimetableUpdateReq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableRes>>;
+    public updateTimetable(body: TimetableUpdateReq, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateTimetable.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<TimetableRes>('patch',`${this.basePath}/v1/manager/timetable/update`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 登入請求
@@ -107,7 +261,344 @@ export class ManagerService {
     }
 
     /**
-     * 修改會員名字
+     * 刪除單一電影資訊
+     * 
+     * @param id 電影id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieIdDelete(id: string, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailDeleteSuccess>;
+    public v1ManagerMovieIdDelete(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailDeleteSuccess>>;
+    public v1ManagerMovieIdDelete(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailDeleteSuccess>>;
+    public v1ManagerMovieIdDelete(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling v1ManagerMovieIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<MovieDetailDeleteSuccess>('delete',`${this.basePath}/v1/manager/movie/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得單一電影資訊
+     * 
+     * @param id 電影id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailGetInfoSuccess>;
+    public v1ManagerMovieIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailGetInfoSuccess>>;
+    public v1ManagerMovieIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailGetInfoSuccess>>;
+    public v1ManagerMovieIdGet(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling v1ManagerMovieIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<MovieDetailGetInfoSuccess>('get',`${this.basePath}/v1/manager/movie/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 查詢電影資訊列表
+     * 
+     * @param status 上映狀態
+     * @param searchDateS 查詢起日
+     * @param searchDateE 查詢迄日
+     * @param title 電影中文名
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'body', reportProgress?: boolean): Observable<ManagerMovieListSuccess>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ManagerMovieListSuccess>>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ManagerMovieListSuccess>>;
+    public v1ManagerMovieListGet(status?: number, searchDateS?: string, searchDateE?: string, title?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (status !== undefined && status !== null) {
+            queryParameters = queryParameters.set('status', <any>status);
+        }
+        if (searchDateS !== undefined && searchDateS !== null) {
+            queryParameters = queryParameters.set('searchDateS', <any>searchDateS);
+        }
+        if (searchDateE !== undefined && searchDateE !== null) {
+            queryParameters = queryParameters.set('searchDateE', <any>searchDateE);
+        }
+        if (title !== undefined && title !== null) {
+            queryParameters = queryParameters.set('title', <any>title);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ManagerMovieListSuccess>('get',`${this.basePath}/v1/manager/movie/list`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新單一電影資訊
+     * 
+     * @param body 更新單一電影資訊參數
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailUpdateSuccess>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailUpdateSuccess>>;
+    public v1ManagerMoviePatch(body: MovieDetailUpdateParameter, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1ManagerMoviePatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<MovieDetailUpdateSuccess>('patch',`${this.basePath}/v1/manager/movie`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 新增單一電影資訊
+     * 
+     * @param body 新增單一電影資訊參數
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMoviePost(body: MovieDetailCreateParameter, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailCreateSuccess>;
+    public v1ManagerMoviePost(body: MovieDetailCreateParameter, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailCreateSuccess>>;
+    public v1ManagerMoviePost(body: MovieDetailCreateParameter, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailCreateSuccess>>;
+    public v1ManagerMoviePost(body: MovieDetailCreateParameter, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1ManagerMoviePost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<MovieDetailCreateSuccess>('post',`${this.basePath}/v1/manager/movie`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新單一電影資訊上映狀態
+     * 
+     * @param body 電影ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'body', reportProgress?: boolean): Observable<MovieDetailCreateSuccess>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MovieDetailCreateSuccess>>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MovieDetailCreateSuccess>>;
+    public v1ManagerMovieStatusPut(body: MovieStatusPara, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1ManagerMovieStatusPut.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<MovieDetailCreateSuccess>('put',`${this.basePath}/v1/manager/movie/status`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得時刻列表
+     * 取得時刻表
+     * @param startDate 
+     * @param endDate 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'body', reportProgress?: boolean): Observable<TimetableListRes>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (startDate === null || startDate === undefined) {
+            throw new Error('Required parameter startDate was null or undefined when calling v1ManagerTimetableListGet.');
+        }
+
+        if (endDate === null || endDate === undefined) {
+            throw new Error('Required parameter endDate was null or undefined when calling v1ManagerTimetableListGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (startDate !== undefined && startDate !== null) {
+            queryParameters = queryParameters.set('startDate', <any>startDate);
+        }
+        if (endDate !== undefined && endDate !== null) {
+            queryParameters = queryParameters.set('endDate', <any>endDate);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<TimetableListRes>('get',`${this.basePath}/v1/manager/timetable/list`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 修改員工姓名
      * 
      * @param body 資料格式
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -145,6 +636,113 @@ export class ManagerService {
         return this.httpClient.request<InfoUpdateRes>('post',`${this.basePath}/v1/manager/user/profile`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得管理人員資料
+     * 
+     * @param staffId 員編
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerUserProfileStaffIdGet(staffId: string, observe?: 'body', reportProgress?: boolean): Observable<UserProfileRes>;
+    public v1ManagerUserProfileStaffIdGet(staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserProfileRes>>;
+    public v1ManagerUserProfileStaffIdGet(staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserProfileRes>>;
+    public v1ManagerUserProfileStaffIdGet(staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (staffId === null || staffId === undefined) {
+            throw new Error('Required parameter staffId was null or undefined when calling v1ManagerUserProfileStaffIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<UserProfileRes>('get',`${this.basePath}/v1/manager/user/profile/${encodeURIComponent(String(staffId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 上傳管理人員大頭貼
+     * 
+     * @param upload 
+     * @param staffId 員編
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'body', reportProgress?: boolean): Observable<CommonUploadSuccess>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonUploadSuccess>>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonUploadSuccess>>;
+    public v1ManagerUserStickerStaffIdPostForm(upload: Blob, staffId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (upload === null || upload === undefined) {
+            throw new Error('Required parameter upload was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
+        }
+
+        if (staffId === null || staffId === undefined) {
+            throw new Error('Required parameter staffId was null or undefined when calling v1ManagerUserStickerStaffIdPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): void; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (upload !== undefined) {
+            formParams = formParams.append('upload', <any>upload) as any || formParams;
+        }
+
+        return this.httpClient.request<CommonUploadSuccess>('post',`${this.basePath}/v1/manager/user/sticker/${encodeURIComponent(String(staffId))}`,
+            {
+                body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

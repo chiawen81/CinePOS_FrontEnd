@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MoviePageService } from '../services/movie-page.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
+import { CommonOptionSuccessDataItem, MovieStatusPara } from '../../../api/cinePOS-api';
 import { CinePageSet } from '../../../share/pagination/page-set';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { ManagerMovieListPara, ManagerMovieListSuccessDataInnerCustomer } from '../../../core/interface/movie';
@@ -119,6 +119,34 @@ export class MovieListPageComponent implements OnInit {
   openDetailPage(_id: string | undefined) {
     this._Router.navigate([STATIC_ROUTES.MOVIE, STATIC_ROUTES.DETAIL, _id]);
   }
+
+
+
+  // 更新上架狀態
+  updateReleaseStatus(isRelease: boolean, movieId: string | undefined) {
+    let status: number = isRelease ? 1 : -1;
+    let para: MovieStatusPara = {
+      movieId: (movieId as string),
+      status: status,
+    };
+
+    this._MoviePageService.updateReleaseStatus(para).subscribe(res => {
+      console.log('更新上架狀態-成功res', res);
+      alert("更新上架狀態-成功");
+      this.getListAPI(this.getSearchCondition());
+    });
+  }
+
+
+
+  // 刪除電影
+  deleteMovie(movieId: string | undefined) {
+    this._MoviePageService.deleteMovie((movieId as string)).subscribe(res => {
+      console.log('刪除電影-成功res', res);
+      this.getListAPI(this.getSearchCondition());
+    });
+  }
+
 
 
 
