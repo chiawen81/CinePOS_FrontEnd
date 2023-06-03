@@ -46,30 +46,58 @@ export class TimetableService {
     private managerService: ManagerService
   ) { }
 
+  /** 
+   * 取得時刻表
+   */
   getTimetableList(startDate:number, endDate:number) {
     // const url = 'timetable/list'
 
     // return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
-    return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
+    // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
+    return this.managerService.v1ManagerTimetableListGet(0,0);
   }
 
+  /**
+   * 刪除時刻表
+   * @param id 時刻表id
+   * @returns 
+   */
   deleteTimetable(id: string) {
     // const url = `timetable/${id}`
     // return this.request(HTTP_METHOD.DELETE, {}, url);
     return this.managerService.deleteItem(id);
   }
 
+  /**
+   * 更新時刻表
+   * @param param 
+   * @returns 
+   */
   updateTimetable(param: TimetableUpdateReq) {
     // const url = `timetable/update`
     // return this.request(HTTP_METHOD.PATCH, param, url);
     return this.managerService.updateTimetable(param);
   }
 
+  /**
+   * 新增時刻表
+   * @param param 
+   * @returns 
+   */
   createTimetable(param: TimetableCreateReq) {
     // const url = `timetable/create`
     // return this.request(HTTP_METHOD.POST, param, url);
     // const url = `timetable/create`
     return this.managerService.createTimetable(param);
+  }
+
+  /**
+   * TODO: 先醜醜的寫
+   * @returns 
+   */
+  getTheaterList(){
+    const url = `theater/list`
+    return this.request(HTTP_METHOD.GET, '', url);
   }
 
   /**
@@ -84,6 +112,7 @@ export class TimetableService {
     // } else {
     const httpHeaders = this.getHTTPHeaders();
     const url = 'http://127.0.0.1:3005' + '/v1/manager/' + api;
+    // const url = 'https://api-t.cine-pos.com' + '/v1/manager/' + api;
 
     switch (method) {
       case HTTP_METHOD.GET:

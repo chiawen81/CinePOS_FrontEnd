@@ -19,7 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -99,6 +99,8 @@ export class MyDateAdapter extends NativeDateAdapter {
     DxSchedulerModule,
     HttpClientModule,
     DxDraggableModule,
+    ReactiveFormsModule,
+    FormsModule,
     CinePosApiModule.forRoot(() => new Configuration()),
   ],
   exports: [

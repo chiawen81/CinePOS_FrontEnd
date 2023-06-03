@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Data } from '@angular/router';
 import { DxSchedulerComponent } from 'devextreme-angular';
@@ -26,6 +27,8 @@ export class TimetablePageComponent implements OnInit {
 
   movieList: MovieData[] = [];
 
+  movieTitle = '';
+
   constructor(
     private timetableService: TimetableService,
     private movieService: MoviePageService
@@ -35,17 +38,18 @@ export class TimetablePageComponent implements OnInit {
   ngOnInit(): void {
     this.getTimetableList();
     this.getMovieList('');
+    this.getTheaterList();
   }
 
 
   updateAppointment(event: any) {
-    console.log('upate', event);
+    console.log('update', event);
     const param = {
       id: event.newData._id,
       movieId: event.newData.movieId,
       theaterId: event.newData.theatreId,
-      startDate: event.newData.startDate,
-      endDate: event.newData.endDate
+      startDate: moment(event.newData.startDate).toDate() as any,
+      endDate: moment(event.newData.endDate).toDate() as any
     }
     this.timetableService.updateTimetable(param).subscribe((res) => {
       if (res) {
@@ -114,35 +118,48 @@ export class TimetablePageComponent implements OnInit {
   /**
    * 取得電影列表
    */
-  private getMovieList(title: string) {
-    // const startDate = moment(this.currentDate).format('yyyy/MM/DD');
-    // const endDate = moment(startDate).add(7,'d').format('yyyy/MM/DD');
+  getMovieList(title: string) {
     const startDate = '';
     const endDate = '';
     this.movieService.getMovieList(1, startDate, endDate, title).subscribe(res => {
-      console.log('取得列表資料-成功res', res);
       this.movieList = this.getShowMovieList(res.data as any);
-      console.log('movieList', this.movieList);
 
     });
   }
 
+  /** 取得廳院列表 */
+  private getTheaterList() {
+    this.timetableService.getTheaterList().subscribe((res) => {
+      if (res.data) {
+        const theaterList = res.data as any[];
+        this.theatreData = theaterList.map((item) => {
+          const result = {
+            id :item._id,
+            text: item.name,
+          }
+          return result
+        })
+      }
+    });
+  }
 
+  /** 取得時刻表 */
   private getTimetableList() {
     const startDate = moment().startOf('week').valueOf();
     const endDate = moment(startDate).add('day', 7).valueOf();
     // this.currentDate = new Date(startDate);
     // const startDate = moment('20230521').valueOf();
     // const endDate = moment(startDate).add('day', 7).valueOf();
-    this.currentDate = new Date(startDate);
+    this.currentDate = moment(new Date(startDate)).toDate();
+    console.log(this.currentDate);
 
     this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
         console.log(this.data);
-        this.theatreData = this.getTheaters(filterData);
-        console.log(this.theatreData);
+        // this.theatreData = this.getTheaters(filterData);
+        // console.log(this.theatreData);
         this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
       }
     })
@@ -235,7 +252,7 @@ export class TimetablePageComponent implements OnInit {
     return movies;
   }
 
-  /**  */
+  /** 取得要顯示的電影 */
   private getShowMovieList(data: ManagerMovieListSuccessDataInner[]): MovieData[] {
     const result: MovieData[] = data.map((item) => {
       let movieData: MovieData = {
@@ -250,27 +267,6 @@ export class TimetablePageComponent implements OnInit {
       return movieData;
     });
     return result;
-  }
-
-  /** TODO: 應該要get所有的廳院 */
-  private getTheaters(data: any[]): TheatreData[] {
-    const theaterMap: { [key: string]: boolean } = {};
-    const theaters: TheatreData[] = [];
-
-    if (this.data) {
-      for (const entry of data) {
-        const theaterId = entry.theaterId._id;
-        const theaterName = entry.theaterId.name;
-
-
-        if (!theaterMap[theaterId]) {
-          theaterMap[theaterId] = true;
-          theaters.push({ text: theaterName, id: theaterId });
-          // theaters.push({ text: theaterName, id: id });
-        }
-      }
-    }
-    return theaters;
   }
 
 }
