@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable, catchError, filter, throwError } from 'rxjs';
 import { TimetableCreateReq, TimetableUpdateReq } from '../../../api/cinePOS-api';
+import { environment } from 'projects/manager/src/environments/environment';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -111,7 +112,7 @@ export class TimetableService {
     //   return this.closeAllAPI() as unknown as Observable<MercueResponse>;
     // } else {
     const httpHeaders = this.getHTTPHeaders();
-    const url = 'http://127.0.0.1:3005' + '/v1/manager/' + api;
+    const url = environment.cinePosApi + '/v1/manager/' + api;
     // const url = 'https://api-t.cine-pos.com' + '/v1/manager/' + api;
 
     switch (method) {

@@ -127,6 +127,17 @@ export class TimetablePageComponent implements OnInit {
     });
   }
 
+  isDisableDate(date: Date): boolean {
+    const startDate = moment().add('day', 7).startOf('week').valueOf();
+    const endDate = moment(startDate).add('day', 7).valueOf();
+    return moment(date).isBefore(startDate) || moment(date).isAfter(endDate);
+  }
+
+  onCurrentDateChange(event: any) {
+    console.log('換日子囉',event);
+    
+  }
+
   /** 取得廳院列表 */
   private getTheaterList() {
     this.timetableService.getTheaterList().subscribe((res) => {
@@ -134,7 +145,7 @@ export class TimetablePageComponent implements OnInit {
         const theaterList = res.data as any[];
         this.theatreData = theaterList.map((item) => {
           const result = {
-            id :item._id,
+            id: item._id,
             text: item.name,
           }
           return result
