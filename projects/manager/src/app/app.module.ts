@@ -116,11 +116,6 @@ export class MyDateAdapter extends NativeDateAdapter {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ApiHeaderInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
       useClass: ErrorHeaderInterceptor,
       multi: true
     },

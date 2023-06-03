@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class CommonService {
 
-    protected basePath = 'https://api-t.cine-pos.com/';
+    protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
