@@ -2,6 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from './services/orders.service';
 import { DialogOrderDetailComponent } from './components/dialog-order-detail/dialog-order-detail.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Pipe({ name: 'customCurrency' })
 export class CustomCurrencyPipe implements PipeTransform {
@@ -23,17 +24,28 @@ export class CustomCurrencyPipe implements PipeTransform {
 })
 export class PaymentPageComponent implements OnInit {
 
+  payMethod = 0;
   payTotal:number = 1000;
   payString:string = '';
   constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private orderService: OrderService
   ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.payMethod = params['id'];
+      console.log(this.payMethod); // 印出參數的值
+    });
   }
 
   openDialog() {
+
+    // 取得訂單資料
+
+    // 送出訂單
+
     this.orderService.generateOrder().subscribe(order => {
       const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
         width: '800px',

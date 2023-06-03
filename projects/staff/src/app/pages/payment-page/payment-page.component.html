@@ -27,9 +27,13 @@
 
   <div class="box-contain" style="margin-top: 15px;">
     <div class="box payment bg-dark"  id="payment">
-      <label class="small-title">支付方式</label>
-        <button class="btn btn-dark">LINE Pay 付款</button>
-        <button mat-button (click)="openDialog()" class="btn btn-dark">現金付款</button>
+      <label class="small-title" >支付方式</label>
+        <ng-container [ngSwitch]="payMethod">
+          <button *ngSwitchCase="2" class="btn btn-dark">LINE Pay 付款</button>
+        <button  *ngSwitchCase="1" class="btn btn-dark" (click)="openDialog()" >現金付款</button>
+        </ng-container>
+
+
     </div>
     <div class="box computer-keyboard bg-dark" id="keyboard">
       <div class="keyboard-1">
