@@ -14,7 +14,7 @@ export interface ManagerMovieListSuccessDataInner {
     /**
      * 電影編號
      */
-    id?: string;
+    _id?: string;
     /**
      * 上映狀態文字
      */

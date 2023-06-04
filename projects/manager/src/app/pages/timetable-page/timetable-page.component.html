@@ -1,13 +1,17 @@
-<div class="timetable ">
-    <div class="dx-viewport">
+<div class="timetable">
+    <div class="dx-viewport overflow-y-auto">
         <div style="overflow: auto;">
             <dx-scheduler id="scheduler" [dataSource]="data" [views]="['timelineDay']" currentView="timelineDay"
                 [firstDayOfWeek]="0" [startDayHour]="0" [endDayHour]="24" [showAllDayPanel]="false"
                 [groups]="['theatreId']" [currentDate]="currentDate" [crossScrollingEnabled]="true" [cellDuration]="30"
-                [height]="600" appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
-                (onAppointmentDeleting)="deleteAppointment($event)" (onAppointmentUpdating)="updateAppointment($event)"
-                >
-                <dxo-editing [allowAdding]="false"></dxo-editing>
+                [height]="500" appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
+                 (onAppointmentDeleting)="deleteAppointment($event)"
+                (onAppointmentUpdating)="updateAppointment($event)" (currentDateChange)="onCurrentDateChange($event)">
+                <!-- <dxi-view type="timelineDay" name="timelineDay"></dxi-view> -->
+                <dxo-editing [allowAdding]="false" [allowResizing]="false"></dxo-editing>
+                <!-- <div *dxTemplate="let dataCell of 'dataCellTemplate'" [ngClass]="{
+                    'disable-date': isDisableDate(dataCell.startDate)}">
+                </div> -->
                 <div *dxTemplate="let data of 'timeCellTemplate'" class="text-white">
                     {{data.date.getHours()}}:{{(data.date.getMinutes() < 10 ? '0' : '' ) + data.date.getMinutes()}}
                         </div>
@@ -20,7 +24,7 @@
                         </dxi-resource> -->
                         <dxi-resource fieldExpr="theatreId" [dataSource]="theatreData">
                         </dxi-resource>
-
+                        <!-- [ngClass]="{ 'disable-date': isDisableDate(model.endDate)}" -->
                         <div *dxTemplate="let model of 'appointment-template'">
                             <div class="showtime-preview text-white p-12 flex w-full justify-between">
                                 <div>{{ (model.targetedAppointmentData.movie).title }}</div>
@@ -35,48 +39,39 @@
                         </div>
 
 
-                        <dxo-appointment-dragging [group]="'appointmentsGroup'"
-                            [onAdd]="onAppointmentAdd">
+                        <dxo-appointment-dragging [group]="'appointmentsGroup'" [onAdd]="onAppointmentAdd">
                         </dxo-appointment-dragging>
             </dx-scheduler>
         </div>
     </div>
 </div>
-<div class="w-full bg-dark-300  p-20 custom-drag" style="height: 350px;">
+<div class="w-full bg-dark-300  p-9 custom-drag h-[calc(100%-500px)] overflow-y-auto">
     <div class="title flex justify-between">
         <div>電影列表</div>
-
-        <input class="form-input w-300 mr-10" type="text">
+        <div>
+            <input class="form-input w-80 mr-10" type="text" [(ngModel)]="movieTitle">
+            <button mat-raised-button color="primary" type="submit" class="w-[60px]"
+                (click)="getMovieList(movieTitle)">送出</button>
+        </div>
     </div>
-    <!-- <div class="content grid grid-cols-3 gap-10 mt-20"> -->
-        <dx-draggable id="list" data="dropArea" [group]="'appointmentsGroup'" (onDragStart)="onListDragStart($event)"class="content grid grid-cols-3 gap-10 mt-20">
-            <dx-draggable class="item dx-card dx-theme-text-color dx-theme-background-color" [clone]="true"
-                [group]="'appointmentsGroup'" [data]="moviesData" (onDragStart)="onItemDragStart($event)"
-                (onDragEnd)="onItemDragEnd($event)" *ngFor="let item of moviesData"[id]="item.id">
-                <div  class="rounded-large p-4" style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
+    <div>
+        <dx-draggable id="list" data="dropArea" [group]="'appointmentsGroup'" (onDragStart)="onListDragStart($event)"
+            class="flex flex-wrap mt-5">
+            <dx-draggable
+                class="item dx-card dx-theme-text-color dx-theme-background-color w-full xl:w-1/6 lg:w-1/4 md:w-1/3 sm:w-/2 m-2"
+                [clone]="true" [group]="'appointmentsGroup'" [data]="movieList" (onDragStart)="onItemDragStart($event)"
+                (onDragEnd)="onItemDragEnd($event)" *ngFor="let item of movieList" [id]="item.id">
+                <div class="rounded-large p-4" style="height: 122px;" [ngStyle]="{background: item.color}">
                     <div class="font-bold">{{ item.text }}</div>
                     <div class="flex">
                         <div class="dropdown-appointment-dates">
-                            {{item.duration}}
+                            {{item.runtime}}
                         </div>
                         <div class="px-3">|</div>
-                        <div>{{item.rate | rate}}</div>
+                        <div>{{item.rateName}}</div>
                     </div>
                 </div>
             </dx-draggable>
         </dx-draggable>
-
-        <!-- <ng-container *ngFor="let item of moviesData">
-            <div class="rounded-large p-16" style="width: 200px;height: 122px;" [ngStyle]="{background: item.color}">
-                <div class="font-bold">{{ item.text }}</div>
-                <div class="flex">
-                    <div class="dropdown-appointment-dates">
-                        {{item.duration}}
-                    </div>
-                    <div class="px-12">|</div>
-                    <div>{{item.rate | rate}}</div>
-                </div>
-            </div>
-        </ng-container> -->
-    <!-- </div> -->
+    </div>
 </div>
