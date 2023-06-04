@@ -20,7 +20,6 @@ export class ErrorHeaderInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
           catchError((err: HttpErrorResponse) => {
-            console.log('??',err.error?.message);
             if(err.status === 403){
               this.loginService.logout();
             }

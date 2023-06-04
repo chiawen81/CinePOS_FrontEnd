@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: STATIC_ROUTES.TIMETABLE,
-    component: TimetablePageComponent,
+    loadChildren: () => import('./pages/timetable-page/timetable-page.module').then(m => m.TimetablePageModule),
     canActivate: [AuthGuard]
   },
   {

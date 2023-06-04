@@ -21,7 +21,7 @@
     <app-side-nav *ngIf="isLogin && !isLoginPage"></app-side-nav>
     <section class="w-full" [class.section-router]="!isLoginPage">
       <app-header *ngIf="isLogin && !isLoginPage"></app-header>
-      <section class="relative">
+      <section class="relative h-[calc(100%-80px)]">
         <router-outlet></router-outlet>
       </section>
     </section>
