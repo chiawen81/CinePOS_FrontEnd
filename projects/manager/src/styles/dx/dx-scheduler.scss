@@ -63,7 +63,7 @@
         color: white;
         z-index: 200;
         width: 100%;
-        cursor:not-allowed;
+        cursor: not-allowed;
     }
 }
 
@@ -79,4 +79,8 @@
     .dex-card {
         background-color: transparent !important;
     }
+}
+
+.dx-scheduler-header {
+    display: none;
 }

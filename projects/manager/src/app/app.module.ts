@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeadersModule } from './features/headers/components/headers.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
-import { TimetablePageComponent } from './pages/timetable-page/timetable-page.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { ShareLibsModule } from 'projects/share-libs/src/public-api';
 import { TableModule } from './features/table/table.module';
@@ -19,19 +18,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { DxSchedulerModule,DxDraggableModule } from 'devextreme-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { RatePipe } from './pages/timetable-page/pipe/rate.pipe';
 import { ExternalApiModule } from './api/external-api.module';
 import { environment } from '../environments/environment';
 import { ApiModule as CinePosApiModule ,BASE_PATH, Configuration } from "./api/cinePOS-api";
 import { ApiHeaderInterceptor } from './core/interceptor/api-header';
 import { ErrorHeaderInterceptor } from './core/interceptor/error-interceptor';
-import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
+import { PlatformLocation } from '@angular/common';
+import { DxDraggableModule, DxSchedulerModule } from 'devextreme-angular';
+import { TimetablePageModule } from './pages/timetable-page/timetable-page.module';
 
 const materialModules = [
   MatInputModule,
@@ -81,11 +80,9 @@ export class MyDateAdapter extends NativeDateAdapter {
   declarations: [
     AppComponent,
     DashboardPageComponent,
-    TimetablePageComponent,
     LayoutComponent,
     SamplePageComponent,
     GuidelineBackComponent,
-    RatePipe,
   ],
   imports: [
     BrowserModule,
@@ -96,11 +93,7 @@ export class MyDateAdapter extends NativeDateAdapter {
     ShareLibsModule,
     ReactiveFormsModule,
     CoreDirectivesModule,
-    DxSchedulerModule,
     HttpClientModule,
-    DxDraggableModule,
-    ReactiveFormsModule,
-    FormsModule,
     CinePosApiModule.forRoot(() => new Configuration()),
   ],
   exports: [
