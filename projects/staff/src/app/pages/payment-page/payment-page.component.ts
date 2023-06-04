@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnDestroy, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from './services/orders.service';
 import { DialogOrderDetailComponent } from './components/dialog-order-detail/dialog-order-detail.component';
@@ -7,6 +7,7 @@ import { StaffOrderCreateReq } from '../../api/cinePOS-api';
 import { ShopCartInterface } from '../../core/interface/shop-cart.interface';
 import { StorageEnum } from '../../core/enums/storage/storage-enum';
 import { StorageService } from '../../core/services/storage/storage.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Pipe({ name: 'customCurrency' })
 export class CustomCurrencyPipe implements PipeTransform {
@@ -26,7 +27,7 @@ export class CustomCurrencyPipe implements PipeTransform {
   templateUrl: './payment-page.component.html',
   styleUrls: ['./payment-page.component.scss']
 })
-export class PaymentPageComponent implements OnInit {
+export class PaymentPageComponent implements OnInit,OnDestroy {
 
   payMethod = 0;
 
@@ -43,6 +44,8 @@ export class PaymentPageComponent implements OnInit {
   };
   shopCar?:ShopCartInterface[];
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -55,12 +58,15 @@ export class PaymentPageComponent implements OnInit {
       this.payMethod = params['id'];
       console.log(this.payMethod); // 印出參數的值
     });
+
+    /** 取得購物車資料 */
     this.shopCar = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[];
 
+    /** 取得訂單資料 */
     this.getOrder();
-    console.log('總金額', this.getSubtotal());
   }
 
+  /** 計算訂單金額 */
   getSubtotal(): number{
     let subtotal = 0;
     this.shopCar?.forEach(data => {
@@ -72,32 +78,36 @@ export class PaymentPageComponent implements OnInit {
     return subtotal;
   }
 
+  /** 計算找零金額 */
   getPayBack(): number{
     return (this.payTotal!= 0) ? this.payTotal - this.getSubtotal() : 0 ;
   }
 
+  /** 取得訂單資料 */
   getOrder(): void{
-
     this.staffOrderCreateReq.amount = this.getSubtotal();
-
     this.shopCar?.forEach(data => {
-      data.ticket.forEach(item => {
-        this.staffOrderCreateReq.ticketList.push(item);
-      });
+      this.staffOrderCreateReq.ticketList.push(data!);
     });
-
     console.log('ticketList', this.staffOrderCreateReq);
-
   }
 
+  /** 現金付款 */
   openDialog() {
-    // 檢查localstorage訂單資料
+    /** 檢查localstorage訂單資料 */
     if (!!this.staffOrderCreateReq) {
-      // 檢查付款金額是否大於訂單金額
+      /** 檢查付款金額是否大於訂單金額 */
       if(this.payTotal >= this.getSubtotal()){
-        // 送出訂單
-        this.orderService.generateOrder(this.staffOrderCreateReq).subscribe(order => {
+
+        /** 本地端暫時模擬資料才會打得過 */
+        /** 送出訂單 */
+        this.orderService.generateOrder(this.staffOrderCreateReq)
+        .pipe(
+          takeUntil(this.destroy$)
+        )
+        .subscribe(order => {
           console.log('order', order);
+          /** 送出訂單成功 */
           if(order.code === 1){
             const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
               width: '800px',
@@ -105,51 +115,61 @@ export class PaymentPageComponent implements OnInit {
             });
 
             dialogRef.afterClosed().subscribe(result => {
-              // 彈跳式視窗關閉後的處理邏輯
+              /** 彈跳式視窗關閉後的處理邏輯 */
               console.log('Dialog result:', result);
             });
 
           }else{
+            /** 送出訂單失敗 */
             alert(order.message);
           }
         });
       }else{
-        // 付款金額不足
+        /** 付款金額不足 */
         alert('付款金額不足, 請輸入付款金額');
         console.log('shopCartData 不存在於 Local Storage 中');
       }
     } else {
+      /** 購物車為空 */
       alert('購物車為空, 請重新選擇商品');
       console.log('shopCartData 不存在於 Local Storage 中');
     }
   }
 
+  /** 文字轉數字 */
   convertToNumber(text: string): number {
     return parseInt(text, 10);
   }
 
+  /** 數字轉文字 */
   convertToString(number: number): string {
     return number.toString();
   }
 
+  /** 計算機 */
   calculate(value: any, method: string): void{
     if(!value) return;
     if(method === 'str'){
-      //拼湊字串
+      /** 拼湊字串 */
       this.payString += value;
       this.payTotal = this.convertToNumber(this.payString);
     }else if(method === 'method'){
-      // 歸零
+      /** 歸零 */
       this.payTotal = 0;
       this.payString = this.convertToString(this.payTotal);
     }else if(method === 'number'){
-      // 直接加減
+      /** 直接加減 */
       const numbeValue = this.convertToNumber(value);
       this.payTotal = this.payTotal + numbeValue;
       this.payString = this.payTotal.toString();
     }else{
-      // 例外狀況
+      /** 例外狀況 */
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
