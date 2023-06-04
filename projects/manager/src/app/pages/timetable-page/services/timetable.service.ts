@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable, catchError, filter, throwError } from 'rxjs';
+import { TimetableCreateReq, TimetableUpdateReq } from '../../../api/cinePOS-api';
+import { environment } from 'projects/manager/src/environments/environment';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -42,41 +44,61 @@ export class TimetableService {
   isPopupInvalidMsg = false;
   constructor(
     private http: HttpClient,
-    // private managerService: ManagerService
+    private managerService: ManagerService
   ) { }
 
+  /** 
+   * 取得時刻表
+   */
   getTimetableList(startDate:number, endDate:number) {
-    // return data;
-    const url = 'timetable/list'
+    // const url = 'timetable/list'
 
-    return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
+    // return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
     // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
+    return this.managerService.v1ManagerTimetableListGet(0,0);
   }
 
+  /**
+   * 刪除時刻表
+   * @param id 時刻表id
+   * @returns 
+   */
   deleteTimetable(id: string) {
-    const url = `timetable/${id}`
-    return this.request(HTTP_METHOD.DELETE, {}, url);
+    // const url = `timetable/${id}`
+    // return this.request(HTTP_METHOD.DELETE, {}, url);
+    return this.managerService.deleteItem(id);
   }
 
-  updateTimetable(param: {
-    _id: string,
-    movieId: string,
-    theaterId: string,
-    startDate: number,
-    endDate: number
-  }) {
-    const url = `timetable/update`
-    return this.request(HTTP_METHOD.PATCH, param, url);
+  /**
+   * 更新時刻表
+   * @param param 
+   * @returns 
+   */
+  updateTimetable(param: TimetableUpdateReq) {
+    // const url = `timetable/update`
+    // return this.request(HTTP_METHOD.PATCH, param, url);
+    return this.managerService.updateTimetable(param);
   }
 
-  createTimetable(param: {
-    movieId: string,
-    theaterId: string,
-    startDate: Date,
-    endDate: Date
-  }) {
-    const url = `timetable/create`
-    return this.request(HTTP_METHOD.POST, param, url);
+  /**
+   * 新增時刻表
+   * @param param 
+   * @returns 
+   */
+  createTimetable(param: TimetableCreateReq) {
+    // const url = `timetable/create`
+    // return this.request(HTTP_METHOD.POST, param, url);
+    // const url = `timetable/create`
+    return this.managerService.createTimetable(param);
+  }
+
+  /**
+   * TODO: 先醜醜的寫
+   * @returns 
+   */
+  getTheaterList(){
+    const url = `theater/list`
+    return this.request(HTTP_METHOD.GET, '', url);
   }
 
   /**
@@ -90,7 +112,8 @@ export class TimetableService {
     //   return this.closeAllAPI() as unknown as Observable<MercueResponse>;
     // } else {
     const httpHeaders = this.getHTTPHeaders();
-    const url = 'http://127.0.0.1:3005' + '/v1/manager/' + api;
+    const url = environment.cinePosApi + '/v1/manager/' + api;
+    // const url = 'https://api-t.cine-pos.com' + '/v1/manager/' + api;
 
     switch (method) {
       case HTTP_METHOD.GET:
@@ -200,11 +223,14 @@ export class MovieData {
 
   image?: string;
 
-  duration: number;
+  runtime: number;
 
   color: string;
 
-  rate: RateCode
+  rate: RateCode;
+
+  rateName?: string;
+  
 
   constructor(data: MovieData) {
     this.id = data.id;
@@ -212,9 +238,10 @@ export class MovieData {
     this.director = data.director;
     this.year = data.year;
     this.image = data.image;
-    this.duration = data.duration;
+    this.runtime = data.runtime;
     this.color = data.color;
     this.rate = data.rate;
+    this.rateName = data.rateName;
   }
 }
 
