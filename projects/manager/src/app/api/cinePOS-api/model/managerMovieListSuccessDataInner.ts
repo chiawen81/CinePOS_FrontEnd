@@ -36,6 +36,10 @@ export interface ManagerMovieListSuccessDataInner {
      */
     releaseDate?: any;
     /**
+     * 片長
+     */
+    runtime:number;
+    /**
      * 支援設備文字
      */
     provideVersionName?: Array<string>;

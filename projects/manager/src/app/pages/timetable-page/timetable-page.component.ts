@@ -16,7 +16,6 @@ export class TimetablePageComponent implements OnInit {
 
   @ViewChild(DxSchedulerComponent, { static: false }) scheduler!: DxSchedulerComponent;
 
-  // data: Data[];
   data: any[] = [];
 
   currentDate!: Date;
@@ -29,6 +28,11 @@ export class TimetablePageComponent implements OnInit {
 
   movieTitle = '';
 
+  dateCount = 7;
+  dateArr: Date[] = [];
+
+  tempTime = '';
+
   constructor(
     private timetableService: TimetableService,
     private movieService: MoviePageService
@@ -36,12 +40,33 @@ export class TimetablePageComponent implements OnInit {
     this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
   }
   ngOnInit(): void {
-    this.currentDate = moment(new Date()).toDate();
+
+    this.dateArr = this.createDates(this.dateCount);
+    
     this.getTimetableList();
     this.getMovieList('');
     this.getTheaterList();
   }
 
+
+  /**
+   * 生成日期
+   * @param num 
+   * @returns 
+   */
+  createDates(num: number): Date[] {
+    const dateArr: Date[] = [];
+    // const today = new Date(); // 當前日期和時間
+    const today = moment().add(7,'day').startOf('week').toDate();
+    this.currentDate = today;
+    for (var i = 0; i < num; i++) {
+      var date = new Date(today); // 複製當前日期
+      date.setDate(today.getDate() + i); // 設定日期為當前日期加上索引值
+      date.setHours(0, 0, 0, 0);
+      dateArr.push(date);
+    }
+    return dateArr;
+  }
 
   updateAppointment(event: any) {
     console.log('update', event);
@@ -71,11 +96,9 @@ export class TimetablePageComponent implements OnInit {
 
   onAppointmentAdd(e: any) {
     const moviesData = this.movieList.filter((item) => {
-      return item.id = e.itemElement.id;
+      return item.id === e.itemElement.id;
     });
-    console.log(e);
-    console.log(e.itemElement);
-    console.log(e.itemElement.id);
+
     const param = {
       movieId: e.itemElement.id,
       theaterId: e.itemData.theatreId,
@@ -97,6 +120,8 @@ export class TimetablePageComponent implements OnInit {
   }
 
   onItemDragStart(e: any) {
+    console.log(e);
+    console.log(e.fromData);
     e.itemData = e.fromData;
   }
 
@@ -128,15 +153,15 @@ export class TimetablePageComponent implements OnInit {
     });
   }
 
-  isDisableDate(date: Date): boolean {
-    const startDate = moment().add('day', 7).startOf('week').valueOf();
-    const endDate = moment(startDate).add('day', 7).valueOf();
-    return moment(date).isBefore(startDate) || moment(date).isAfter(endDate);
-  }
+  // isDisableDate(date: Date): boolean {
+  //   const startDate = moment().add('day', 7).startOf('week').valueOf();
+  //   const endDate = moment(startDate).add('day', 7).valueOf();
+  //   return moment(date).isBefore(startDate) || moment(date).isAfter(endDate);
+  // }
 
   onCurrentDateChange(event: any) {
-    console.log('換日子囉',event);
-    
+    this.currentDate = moment(event).toDate();
+    this.timetableService.dateSelect$.next(event);
   }
 
   /** 取得廳院列表 */
@@ -157,14 +182,11 @@ export class TimetablePageComponent implements OnInit {
 
   /** 取得時刻表 */
   private getTimetableList() {
-    const startDate = moment().startOf('week').valueOf();
-    const endDate = moment(startDate).add('day', 7).valueOf();
+
     // this.currentDate = new Date(startDate);
     // const startDate = moment('20230521').valueOf();
     // const endDate = moment(startDate).add('day', 7).valueOf();
-    console.log(this.currentDate);
-
-    this.timetableService.getTimetableList(startDate, endDate).subscribe((res: any) => {
+    this.timetableService.getTimetableList(0, 0).subscribe((res: any) => {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
@@ -177,9 +199,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   private mapTimetable(data: any[]) {
-    
     const result = data.map((item) => {
-      console.log(item);
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
@@ -271,8 +291,7 @@ export class TimetablePageComponent implements OnInit {
       let movieData: MovieData = {
         id: item._id ?? '',
         text: item.title ?? '',
-        // runtime: item.runtime?? '',
-        runtime: 90,
+        runtime: item.runtime?? '',
         color: this.transformRateNameColor(item.rateName),
         rateName: item.rateName,
         rate: this.transformRateNameToRate(item.rateName) as RateCode
