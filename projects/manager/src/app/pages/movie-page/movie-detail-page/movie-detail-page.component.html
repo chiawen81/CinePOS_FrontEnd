@@ -1,8 +1,8 @@
-<section class="w-full px-20">
+<section class="w-full px-[20px]">
   <div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
-    <div class="form-select flex justify-end mb-10">
+    <div class="form-select flex justify-end mb-[10px]">
       <div class="flex flex-col justify-center items-center">
-        <mat-form-field class="w-100" appearance="fill">
+        <mat-form-field class="w-[100]" appearance="fill">
           <mat-label>請選擇</mat-label>
           <mat-select formControlName="status">
             <mat-option *ngFor="let item of statusOptions" [value]="item.value">{{item?.name}}</mat-option>
@@ -14,30 +14,30 @@
 
 
 
-    <cine-card class="mb-50">
+    <cine-card class="mb-[50px]">
       <cine-card-header>基本資訊</cine-card-header>
       <cine-card-content>
         <div class="row">
           <span class="form-title">
             <i class="text-warn-100">*</i>電影中文名</span>
           <div class="form-content">
-            <input class="form-input w-300" type="text" formControlName="title">
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(title)}}</p>
+            <input class="form-input w-[300]" type="text" formControlName="title">
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(title)}}</p>
           </div>
         </div>
         <div class="row">
           <span class="form-title">電影英文名</span>
           <div class="form-content">
-            <input class="form-input w-300" type="text" formControlName="enTitle">
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(enTitle)}}</p>
+            <input class="form-input w-[300]" type="text" formControlName="enTitle">
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(enTitle)}}</p>
           </div>
         </div>
 
         <div class="row">
-          <span class="form-title">預定上映日期</span>
+          <span class="form-title"><i class="text-warn-100">*</i>預定上映日期</span>
           <div class="form-content">
             <div class="form-date">
-              <mat-form-field class="w-300">
+              <mat-form-field class="w-[300]">
                 <input matInput [matDatepicker]="picker" formControlName="releaseDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -50,14 +50,13 @@
     </cine-card>
 
 
-
-    <cine-card>
+    <cine-card class="mb-[20px]">
       <cine-card-header>電影資訊</cine-card-header>
       <cine-card-content>
         <div class="row">
           <span class="form-title">導演</span>
           <div class="form-content">
-            <input class="form-input w-300" type="text" formControlName="director">
+            <input class="form-input w-[300]" type="text" formControlName="director">
           </div>
         </div>
 
@@ -65,10 +64,10 @@
           <span class="form-title">主演</span>
           <div class="form-content flex flex-col" formArrayName="cast">
             <div class="flex" *ngFor="let actor of cast.controls; let i=index">
-              <input class="form-input w-300 mr-10" type="text" [formControlName]="i">
+              <input class="form-input w-[300] mr-[10px]" type="text" [formControlName]="i">
               <div class="flex">
-                <button class="secondary btn-icon mr-10" *ngIf="i===0" mat-raised-button (click)="addCast()">+</button>
-                <img class="ml-10 cursor-pointer" *ngIf="i" src="assets/images/icon/cross.svg" alt="" (click)="removeCast(i)">
+                <button class="secondary btn-icon mr-[10px]" *ngIf="i===0" mat-raised-button (click)="addCast()">+</button>
+                <img class="ml-[10px] cursor-pointer" *ngIf="i" src="assets/images/icon/cross.svg" alt="" (click)="removeCast(i)">
               </div>
             </div>
           </div>
@@ -78,8 +77,8 @@
           <span class="form-title">
             <i class="text-warn-100">*</i>片長</span>
           <div class="form-content">
-            <input class="form-input w-300 mr-10" type="text" formControlName="runtime">分鐘
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(runtime)}}</p>
+            <input class="form-input w-[300] mr-[10px]" type="text" formControlName="runtime">分鐘
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(runtime)}}</p>
           </div>
         </div>
 
@@ -89,10 +88,10 @@
           <div class="form-content">
             <div class="form-radio list-row text-12">
               <mat-radio-group aria-label="Select an option" formControlName="rate">
-                <mat-radio-button class='mr-25' *ngFor="let item of rateOptions" [value]="item.value">{{item.name}}</mat-radio-button>
+                <mat-radio-button class='mr-[25px]' *ngFor="let item of rateOptions" [value]="item.value">{{item.name}}</mat-radio-button>
               </mat-radio-group>
             </div>
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(rate)}}</p>
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(rate)}}</p>
           </div>
         </div>
 
@@ -101,22 +100,22 @@
             <i class="text-warn-100">*</i>劇情類型</span>
           <div class="form-content">
             <div class="form-select select-small">
-              <mat-form-field class="w-300" appearance="fill">
+              <mat-form-field class="w-[300]" appearance="fill">
                 <mat-label>請選擇</mat-label>
                 <mat-select multiple formControlName="genre">
                   <mat-option *ngFor="let item of genreOptions" [value]="item.value">{{item.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(genre)}}</p>
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(genre)}}</p>
           </div>
         </div>
 
         <div class="row">
-          <span class="form-title">支援硬體設備</span>
+          <span class="form-title"><i class="text-warn-100">*</i>支援硬體設備</span>
           <div class="form-content">
             <div class="form-select">
-              <mat-form-field class="w-300" appearance="fill">
+              <mat-form-field class="w-[300]" appearance="fill">
                 <mat-label>請選擇</mat-label>
                 <mat-select multiple formControlName="provideVersion">
                   <mat-option *ngFor="let item of provideVersionOptions" [value]="item.value">{{item.name}}</mat-option>
@@ -130,7 +129,7 @@
           <span class="form-title">電影介紹</span>
           <div class="form-content">
             <button mat-raised-button class="secondary">一鍵潤飾</button>
-            <textarea class="form-input input-textarea mt-10" name="" id="" cols="30" rows="10" formControlName="description" maxlength="300" placeholder="限輸入300字"></textarea>
+            <textarea class="form-input input-textarea mt-[10px]" name="" id="" cols="30" rows="10" formControlName="description" maxlength="300" placeholder="限輸入300字"></textarea>
           </div>
         </div>
 
@@ -143,28 +142,27 @@
                    type="file"
                    class="hidden" #fileUpload
                    (change)="onFileSelect($event)">
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(posterUrl)}}</p>
-            <img *ngIf="posterUrl?.value" src="{{posterUrl.value}}" alt="" class="h-300 w-auto mt-10">
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(posterUrl)}}</p>
+            <img *ngIf="posterUrl?.value" src="{{posterUrl.value}}" alt="" class="h-300 w-auto mt-[10px]">
           </div>
         </div>
 
         <div class="row">
           <span class="form-title">預告片連結</span>
           <div class="form-content">
-            <input class="form-input w-full mr-10" type="text" formControlName="trailerLink">
-            <p class="text-12 mt-5 text-warn-100">{{getErrorMsg(trailerLink)}}</p>
+            <input class="form-input w-full mr-[10px]" type="text" formControlName="trailerLink">
+            <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(trailerLink)}}</p>
           </div>
         </div>
 
         <div class="row">
           <span class="form-title">發行商</span>
           <div class="form-content">
-            <input class="form-input w-full mr-10" type="text" formControlName="distributor">
+            <input class="form-input w-full mr-[10px]" type="text" formControlName="distributor">
           </div>
         </div>
       </cine-card-content>
     </cine-card>
 
-    <button mat-raised-button color="primary" type="submit" class="w-60 float-right">送出</button>
+    <button mat-raised-button color="primary" type="submit" class="w-[60] float-right" (click)="submit()">送出</button>
   </div>
-</section>
