@@ -2,7 +2,7 @@ import { ManagerService } from './../../../api/cinePOS-api/api/manager.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Observable, catchError, filter, throwError } from 'rxjs';
+import { Observable, Subject, catchError, filter, throwError } from 'rxjs';
 import { TimetableCreateReq, TimetableUpdateReq } from '../../../api/cinePOS-api';
 import { environment } from 'projects/manager/src/environments/environment';
 
@@ -35,7 +35,8 @@ export enum ResponseCode {
 })
 export class TimetableService {
 
-
+  dateSelect$ = new Subject<number>(); // 日期選擇控制
+  onDestroy$ = new Subject<void>(); // 結束後結束訂閱控制
   /**
    * 關閉所有API
    * - 需要擺脫後端的時候，可以手動改成 true
