@@ -12,7 +12,7 @@
       <p class="small-title">應付金額</p>
       <div class="cont">
         <div class="cont-symbol">NTD</div>
-        <div>680</div>
+        <div>{{ getSubtotal() }}</div>
       </div>
     </div>
     <div class="computer-calculate-symbol">=</div>
@@ -20,7 +20,7 @@
       <p class="small-title">找零</p>
       <div class="cont">
         <div class="cont-symbol">NTD</div>
-        <div>320</div>
+        <div>{{ getPayBack() | customCurrency }}</div>
       </div>
     </div>
   </div>
@@ -45,27 +45,27 @@
         <button (click)="calculate('4', 'str')" class="btn-circle btn-dark">4</button>
         <button (click)="calculate('5', 'str')" class="btn-circle  btn-dark">5</button>
         <button (click)="calculate('6', 'str')" class="btn-circle  btn-dark">6</button>
-        <button (click)="calculate('100', 'pay')" class="btn-circle-1 btn-dark">+100</button>
+        <button (click)="calculate('100', 'number')" class="btn-circle-1 btn-dark">+100</button>
       </div>
 
       <div class="flex just-cont-between">
         <button (click)="calculate('7', 'str')" class="btn-circle  btn-dark">7</button>
         <button (click)="calculate('8', 'str')" class="btn-circle  btn-dark">8</button>
         <button (click)="calculate('9', 'str')" class="btn-circle  btn-dark">9</button>
-        <button (click)="calculate('300', 'pay')" class="btn-circle-1 btn-dark">+300</button>
+        <button (click)="calculate('300', 'number')" class="btn-circle-1 btn-dark">+300</button>
       </div>
 
       <div class="flex just-cont-between">
         <button (click)="calculate('1', 'str')" class="btn-circle  btn-dark">1</button>
         <button (click)="calculate('2', 'str')" class="btn-circle  btn-dark">2</button>
         <button (click)="calculate('3', 'str')" class="btn-circle  btn-dark">3</button>
-        <button (click)="calculate('500', 'pay')" class="btn-circle-1 btn-dark">+500</button>
+        <button (click)="calculate('500', 'number')" class="btn-circle-1 btn-dark">+500</button>
       </div>
 
       <div class="flex just-cont-between">
         <button (click)="calculate('00', 'str')" class="btn-circle-2 btn-dark">00</button>
         <button (click)="calculate('0', 'str')" class="btn-circle btn-dark">0</button>
-        <button (click)="calculate('1000', 'pay')" class="btn-circle-1 btn-dark">+1000</button>
+        <button (click)="calculate('1000', 'number')" class="btn-circle-1 btn-dark">+1000</button>
       </div>
 
     </div>

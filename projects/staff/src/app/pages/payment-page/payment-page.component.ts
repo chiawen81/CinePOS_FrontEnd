@@ -29,8 +29,20 @@ export class CustomCurrencyPipe implements PipeTransform {
 export class PaymentPageComponent implements OnInit {
 
   payMethod = 0;
-  payTotal:number = 1000;
+
+  payTotal:number = 0;
   payString:string = '';
+
+  // 訂單資料格式
+  staffOrderCreateReq: StaffOrderCreateReq = {
+    /*** 付款方式(1:現金,2:Line Pay) */
+    paymentMethod: 1,
+    /***  訂單總金額 */
+    amount: 0,
+    ticketList: []
+  };
+
+  shopCar?:ShopCartInterface[];
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -43,42 +55,52 @@ export class PaymentPageComponent implements OnInit {
       this.payMethod = params['id'];
       console.log(this.payMethod); // 印出參數的值
     });
+    this.shopCar = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[];
+
+    this.getOrder();
+    console.log('總金額', this.getSubtotal());
+  }
+
+  getSubtotal(): number{
+    let subtotal = 0;
+    this.shopCar?.forEach(data => {
+      data.ticket.forEach(item => {
+        subtotal += item.price;
+      });
+    });
+
+    return subtotal;
+  }
+
+  getPayBack(): number{
+    return (this.payTotal!= 0) ? this.payTotal - this.getSubtotal() : 0 ;
+  }
+
+  getOrder(): void{
+
+    this.staffOrderCreateReq.amount = this.getSubtotal();
+
+    this.shopCar?.forEach(data => {
+      data.ticket.forEach(item => {
+        this.staffOrderCreateReq.ticketList.push(item);
+      });
+    });
+
+    console.log('ticketList', this.staffOrderCreateReq);
+
   }
 
   openDialog() {
-
-    // 取得localstorage訂單資料
-
-   const shopCartData = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[];
-
-    if (!!shopCartData) {
-
-      shopCartData.forEach((item: any) => {
-        console.log( 'item' , item);
-      });
-      console.log('解析後的直',shopCartData); // 輸出解析後的值
+    // 檢查localstorage訂單資料
+    if (!!this.staffOrderCreateReq) {
+      // 檢查是否已付款
     } else {
       alert('購物車為空, 請重新選擇商品');
       console.log('shopCartData 不存在於 Local Storage 中');
     }
 
-
-
-    const staffOrderCreateReq: StaffOrderCreateReq = {
-      /**
-       * 付款方式(1:現金,2:Line Pay)
-       */
-      paymentMethod: 1,
-      /**
-       *  訂單總金額
-       */
-      amount: 0,
-      ticketList: []
-    };
-
     // 送出訂單
-
-    this.orderService.generateOrder(staffOrderCreateReq).subscribe(order => {
+    this.orderService.generateOrder(this.staffOrderCreateReq).subscribe(order => {
 
       console.log('order', order);
       if(order.code === 1){
@@ -92,56 +114,35 @@ export class PaymentPageComponent implements OnInit {
           console.log('Dialog result:', result);
         });
 
-      }else{
-
-      }
-
+      }else{}
     });
   }
 
-
-  openOder():void{
-    // this.orderService.generateOrder().subscribe(order => {
-    //   console.log('訂單資料:', order);
-    // });
+  convertToNumber(text: string): number {
+    return parseInt(text, 10);
   }
 
-  calculate(number: any, method: string): void{
+  convertToString(number: number): string {
+    return number.toString();
+  }
 
-    if(!number) return;
+  calculate(value: any, method: string): void{
+    if(!value) return;
     if(method === 'str'){
       //拼湊字串
-    }else if(method === 'zero'){
+      this.payString += value;
+      this.payTotal = this.convertToNumber(this.payString);
+    }else if(method === 'method'){
       // 歸零
-
-    }else if(method === 'remove'){
-      // 移除
-
-    }else if(method === 'pay'){
-      // 直接替換
+      this.payTotal = 0;
+      this.payString = this.convertToString(this.payTotal);
+    }else if(method === 'number'){
+      // 直接加減
+      const numbeValue = this.convertToNumber(value);
+      this.payTotal = this.payTotal + numbeValue;
+      this.payString = this.payTotal.toString();
     }else{
       // 例外狀況
-
-    }
-
-    switch(number){
-      case 'zero':
-        break;
-
-      case 'remove':
-        break;
-
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-      case '8':
-      case '9':
-      case '0':
-        break;
     }
   }
 
