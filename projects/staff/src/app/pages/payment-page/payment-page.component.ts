@@ -41,8 +41,8 @@ export class PaymentPageComponent implements OnInit {
     amount: 0,
     ticketList: []
   };
-
   shopCar?:ShopCartInterface[];
+
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -93,29 +93,35 @@ export class PaymentPageComponent implements OnInit {
   openDialog() {
     // 檢查localstorage訂單資料
     if (!!this.staffOrderCreateReq) {
-      // 檢查是否已付款
+      // 檢查付款金額是否大於訂單金額
+      if(this.payTotal >= this.getSubtotal()){
+        // 送出訂單
+        this.orderService.generateOrder(this.staffOrderCreateReq).subscribe(order => {
+          console.log('order', order);
+          if(order.code === 1){
+            const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
+              width: '800px',
+              data: order
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+              // 彈跳式視窗關閉後的處理邏輯
+              console.log('Dialog result:', result);
+            });
+
+          }else{
+            alert(order.message);
+          }
+        });
+      }else{
+        // 付款金額不足
+        alert('付款金額不足, 請輸入付款金額');
+        console.log('shopCartData 不存在於 Local Storage 中');
+      }
     } else {
       alert('購物車為空, 請重新選擇商品');
       console.log('shopCartData 不存在於 Local Storage 中');
     }
-
-    // 送出訂單
-    this.orderService.generateOrder(this.staffOrderCreateReq).subscribe(order => {
-
-      console.log('order', order);
-      if(order.code === 1){
-        const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
-          width: '800px',
-          data: order
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-          // 彈跳式視窗關閉後的處理邏輯
-          console.log('Dialog result:', result);
-        });
-
-      }else{}
-    });
   }
 
   convertToNumber(text: string): number {
