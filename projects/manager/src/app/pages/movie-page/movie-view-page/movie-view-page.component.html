@@ -1,109 +1,114 @@
 <div class="wrapper-page form-common-back utility-common-back">
-  <div class="form-select flex justify-end mb-10">
+  <div class="form-select flex justify-end mb-[10px]">
     <p class="form-text">{{movieInfoAPI?.statusName}}</p>
   </div>
 
-  <cine-card class="mb-50">
-    <cine-card-header>基本資訊</cine-card-header>
-    <cine-card-content>
-      <div class="row">
-        <span class="form-title">電影中文名</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.title}}</p>
+  <div class="card-wrap">
+    <cine-card>
+      <cine-card-header>基本資訊</cine-card-header>
+      <cine-card-content>
+        <div class="row">
+          <span class="form-title">電影中文名</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.title}}</p>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <span class="form-title">電影英文名</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.enTitle}}</p>
+        <div class="row">
+          <span class="form-title">電影英文名</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.enTitle}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">預定上映日期</span>
-        <div class="form-content">
-          <p class="form-text" *ngIf="movieInfoAPI?.releaseDate">{{movieInfoAPI.releaseDate | date:'yyyy/MM/dd' }}</p>
+        <div class="row">
+          <span class="form-title">預定上映日期</span>
+          <div class="form-content">
+            <p class="form-text" *ngIf="movieInfoAPI?.releaseDate">{{movieInfoAPI.releaseDate | date:'yyyy/MM/dd' }}</p>
+          </div>
         </div>
-      </div>
-    </cine-card-content>
-  </cine-card>
+      </cine-card-content>
+    </cine-card>
+  </div>
 
 
 
-  <cine-card>
-    <cine-card-header>電影資訊</cine-card-header>
-    <cine-card-content>
-      <div class="row">
-        <span class="form-title">導演</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.director}}</p>
+  <div class="card-wrap">
+    <cine-card>
+      <cine-card-header>電影資訊</cine-card-header>
+      <cine-card-content>
+        <div class="row">
+          <span class="form-title">導演</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.director}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">主演</span>
-        <div class="form-content">
-          <p class="form-text">
-            <span class="mr-10" *ngFor="let item of movieInfoAPI?.cast">{{item}}</span>
-          </p>
+        <div class="row">
+          <span class="form-title">主演</span>
+          <div class="form-content">
+            <p class="form-text">
+              <span class="mr-[10px]" *ngFor="let item of movieInfoAPI?.cast">{{item}}</span>
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">片長</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.runtime}}</p>
+        <div class="row">
+          <span class="form-title">片長</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.runtime}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">分級</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.rateName}}</p>
+        <div class="row">
+          <span class="form-title">分級</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.rateName}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">劇情類型</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.genreName}}</p>
+        <div class="row">
+          <span class="form-title">劇情類型</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.genreName}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">支援硬體設備</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.provideVersionName}}</p>
+        <div class="row">
+          <span class="form-title">支援硬體設備</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.provideVersionName}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row align-items-start">
-        <span class="form-title">電影介紹</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.description}}</p>
+        <div class="row align-items-start">
+          <span class="form-title">電影介紹</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.description}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row" [ngClass]="{'align-items-start':movieInfoAPI?.posterUrl}">
-        <span class="form-title">封片圖片</span>
-        <div class="form-content">
-          <img *ngIf="movieInfoAPI?.posterUrl" src="{{movieInfoAPI.posterUrl}}" alt="" class="h-300 w-auto mt-10">
+        <div class="row" [ngClass]="{'align-items-start':movieInfoAPI?.posterUrl}">
+          <span class="form-title">封片圖片</span>
+          <div class="form-content">
+            <img *ngIf="movieInfoAPI?.posterUrl" src="{{movieInfoAPI.posterUrl}}" alt="" class="h-300 mt-[10px]">
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">預告片連結</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.trailerLink}}</p>
+        <div class="row">
+          <span class="form-title">預告片連結</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.trailerLink}}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <span class="form-title">發行商</span>
-        <div class="form-content">
-          <p class="form-text">{{movieInfoAPI?.distributor}}</p>
+        <div class="row">
+          <span class="form-title">發行商</span>
+          <div class="form-content">
+            <p class="form-text">{{movieInfoAPI?.distributor}}</p>
+          </div>
         </div>
-      </div>
-    </cine-card-content>
-  </cine-card>
+      </cine-card-content>
+    </cine-card>
+  </div>
+
 </div>
