@@ -76,7 +76,6 @@ module.exports = {
         }
         return result;
       })(),
-      spacing: Object.fromEntries(Array.from({ length: 1000 }, (_, i) => [(i + 1).toString(), `${i + 1}px`])),
     },
   },
   plugins: [],
