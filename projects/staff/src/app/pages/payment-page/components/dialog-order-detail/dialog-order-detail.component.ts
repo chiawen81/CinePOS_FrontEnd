@@ -7,21 +7,34 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-order-detail.component.scss']
 })
 export class DialogOrderDetailComponent implements OnInit {
-  // data = {
-  //   orderNumber: 'ORD123',
-  //   products: [
-  //     {
-  //       id: 'P001',
-  //       name: 'Product 1',
-  //       price: 10
-  //     },
-  //     {
-  //       id: 'P002',
-  //       name: 'Product 2',
-  //       price: 15
-  //     }
-  //   ]
-  // };
+
+    // {
+    //   "code": 1,
+    //   "message": "成功結帳!",
+    //   "data": {
+    //     "status": 1,
+    //     "orderId": "202305172236200001",
+    //     "paymentMethod": 1,
+    //     "amount": 280,
+    //     "ticketList": [
+    //       {
+    //         "ticketId": "202305172236200001",
+    //         "type": "全票",
+    //         "seatName": "A17"
+    //       }
+    //     ]
+    //   }
+    // }
+
+
+    // {
+    //   "code": -1,
+    //   "message": "系統發生錯誤!"
+    // }
+
+
+    order: any;
+    ticketList: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,6 +48,9 @@ export class DialogOrderDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.ticketList = this.data.data.ticketList;
+    this.order = this.data;
+    console.log('ticketList', this.ticketList);
   }
 
   onClose() {

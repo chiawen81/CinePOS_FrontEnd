@@ -3,6 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from './services/orders.service';
 import { DialogOrderDetailComponent } from './components/dialog-order-detail/dialog-order-detail.component';
 import { ActivatedRoute } from '@angular/router';
+import { StaffOrderCreateReq } from '../../api/cinePOS-api';
+import { ShopCartInterface } from '../../core/interface/shop-cart.interface';
+import { StorageEnum } from '../../core/enums/storage/storage-enum';
+import { StorageService } from '../../core/services/storage/storage.service';
 
 @Pipe({ name: 'customCurrency' })
 export class CustomCurrencyPipe implements PipeTransform {
@@ -30,7 +34,8 @@ export class PaymentPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit(): void {
@@ -42,28 +47,63 @@ export class PaymentPageComponent implements OnInit {
 
   openDialog() {
 
-    // 取得訂單資料
+    // 取得localstorage訂單資料
+
+   const shopCartData = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[];
+
+    if (!!shopCartData) {
+
+      shopCartData.forEach((item: any) => {
+        console.log( 'item' , item);
+      });
+      console.log('解析後的直',shopCartData); // 輸出解析後的值
+    } else {
+      alert('購物車為空, 請重新選擇商品');
+      console.log('shopCartData 不存在於 Local Storage 中');
+    }
+
+
+
+    const staffOrderCreateReq: StaffOrderCreateReq = {
+      /**
+       * 付款方式(1:現金,2:Line Pay)
+       */
+      paymentMethod: 1,
+      /**
+       *  訂單總金額
+       */
+      amount: 0,
+      ticketList: []
+    };
 
     // 送出訂單
 
-    this.orderService.generateOrder().subscribe(order => {
-      const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
-        width: '800px',
-        data: order
-      });
+    this.orderService.generateOrder(staffOrderCreateReq).subscribe(order => {
 
-      dialogRef.afterClosed().subscribe(result => {
-        // 彈跳式視窗關閉後的處理邏輯
-        console.log('Dialog result:', result);
-      });
+      console.log('order', order);
+      if(order.code === 1){
+        const dialogRef = this.dialog.open(DialogOrderDetailComponent, {
+          width: '800px',
+          data: order
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          // 彈跳式視窗關閉後的處理邏輯
+          console.log('Dialog result:', result);
+        });
+
+      }else{
+
+      }
+
     });
   }
 
 
   openOder():void{
-    this.orderService.generateOrder().subscribe(order => {
-      console.log('訂單資料:', order);
-    });
+    // this.orderService.generateOrder().subscribe(order => {
+    //   console.log('訂單資料:', order);
+    // });
   }
 
   calculate(number: any, method: string): void{
