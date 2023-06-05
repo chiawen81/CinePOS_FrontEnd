@@ -1,1 +1,116 @@
-<p>dashboard-page works!</p>
+<div class="wrapper-page">
+  <cine-card class="card-wrap px-[15px]">
+    <cine-card-content>
+      <div class="main-record-box">
+        <div class="main-record-card">
+          <span>本日累計營收</span>
+          <div>
+            <span class="num">66.7W</span>
+            <span class="unit">NT$</span>
+          </div>
+          <div class="increase">
+            <span>↑</span>
+            <span>123.5%</span>
+          </div>
+        </div>
+        <div class="main-record-card">
+          <span>本日累計觀影人數</span>
+          <div>
+            <span class="num">739</span>
+            <span class="unit">人</span>
+          </div>
+          <div class="increase">
+            <span>↑</span>
+            <span>23.5%</span>
+          </div>
+        </div>
+        <div class="main-record-card">
+          <span>本日平均上座率</span>
+          <div>
+            <span class="num">85</span>
+            <span class="unit">%</span>
+          </div>
+          <div class="increase">
+            <span>↑</span>
+            <span>8.4%</span>
+          </div>
+        </div>
+        <div class="main-record-card">
+          <span>本日平均退票率</span>
+          <div>
+            <span class="num">1</span>
+            <span class="unit">%</span>
+          </div>
+          <div class="discrease">
+            <span>↓</span>
+            <span>0.5%</span>
+          </div>
+        </div>
+      </div>
+    </cine-card-content>
+  </cine-card>
+
+
+
+  <div class="card-wrap mb-[100px] cursor-pointer" (click)="triggerSchedule()">
+    <cine-card>
+      <cine-card-header>放映中場次表
+        <span class="mr-[15px] float-right text-30" [ngClass]="{'trans-arrow-open':isShowSchedule}">⏏︎</span>
+      </cine-card-header>
+
+      <cine-card-content *ngIf="isShowSchedule">
+        <p *ngIf="!scheduleListView?.length" class="p-[50px] text-center">沒有符合條件的資料！</p>
+        <cine-table *ngIf="scheduleListView?.length">
+          <thead>
+            <tr>
+              <th>廳院</th>
+              <th>電影名稱</th>
+              <th>放映時間</th>
+              <th>時長</th>
+              <!-- 以下欄位寫死 -->
+              <th>上座率</th>
+              <th>退票數</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of scheduleListView">
+              <td data-title="廳院">{{item.theaterId.name}}</td>
+              <td data-title="電影名稱">{{item.movieId.title}}</td>
+              <td data-title="放映時間">{{item.startDate | date:'hh:mm a'}} - {{item.endDate| date:'hh:mm a'}}</td>
+              <td data-title="時長">{{item.movieId.runtime}}</td>
+              <!-- 以下欄位寫死 -->
+              <td data-title="上座率">68%</td>
+              <td data-title="退票數">0</td>
+            </tr>
+          </tbody>
+        </cine-table>
+
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="pageSet1.totalCounts"
+                       [pageSize]="pageSet1.currentPageSize" [showFirstLastButtons]="true"
+                       [pageIndex]="pageSet1.currentPage-1" aria-label="Select page">
+        </mat-paginator>
+      </cine-card-content>
+    </cine-card>
+  </div>
+
+
+
+  <div class="chart-area">
+    <div class="chart-wrap">
+      <h3 class="text-24">本日電影票房佔比</h3>
+      <div id="income-percent-chart" style="width:100%;height:360px;"></div>
+    </div>
+
+    <div class="chart-wrap ml-[100px]">
+      <h3 class="text-24 ml-[40px]">本日電影票房收入排行</h3>
+      <div id="income-rank-chart" style="width:90%;height:360px;"></div>
+    </div>
+  </div>
+
+
+
+  <div class="chart-area2 mt-[50px]">
+    <h3 class="text-24 ml-[40px]">觀影人數變化</h3>
+    <div id="customer-chart" style="width:100%;height:360px;"></div>
+  </div>
+</div>

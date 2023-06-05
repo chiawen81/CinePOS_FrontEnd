@@ -9,34 +9,32 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Row } from './row';
 
-export interface TimetableListResDataInner { 
+export interface SeatResData { 
     /**
-     * id
+     * 已售數量
      */
-    id?: string;
+    sold: number;
     /**
-     * 電影資料
+     * 未售數量
      */
-    movieId?: any;
+    free: number;
     /**
-     * 廳院資訊
+     * 總Rows
      */
-    theaterId?: any;
+    maxRows: number;
     /**
-     * 開始時間
+     * 總Columns
      */
-    startDate?: string;
+    maxColumns: number;
     /**
-     * 結束時間
+     * row項目
      */
-    endDate?: string;
+    rowLabel: Array<string>;
     /**
-     * 新增時間
+     * col項目
      */
-    createdAt?: Date;
-    /**
-     * 更新時間
-     */
-    updatedAt?: Date;
+    colLabel: Array<string>;
+    list: Array<Row>;
 }

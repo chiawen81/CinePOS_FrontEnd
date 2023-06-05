@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
-import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, } from '../../../api/cinePOS-api';
+import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
 import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
 import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
-import { MovieDetailCreateParameterCustomer } from '../../../core/interface/movie';
+import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
 import { StorageService } from '../../../core/services/storage/storage.service';
 import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
 import { StorageEnum } from '../../../core/enums/storage/storage-enum';
@@ -53,8 +53,30 @@ export class MoviePageService {
 
 
   // 更新電影資訊
-  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccess> {
-    return this._ManagerService.v1ManagerMoviePatch(para)
+  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
+    return (this._ManagerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1)
+      )
+  }
+
+
+
+  // 更新電影上映狀態
+  updateReleaseStatus(para: MovieStatusPara): Observable<MovieDetailDeleteSuccess> {
+    return this._ManagerService.v1ManagerMovieStatusPut(para)
+      .pipe(
+        tap(res => res.code !== 1 && alert(res.message)),
+        filter(res => res.code === 1)
+      )
+  }
+
+
+
+  // 刪除電影
+  deleteMovie(movieId: string): Observable<MovieDetailDeleteSuccess> {
+    return this._ManagerService.v1ManagerMovieIdDelete(movieId)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)

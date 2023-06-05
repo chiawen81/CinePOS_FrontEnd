@@ -1,1 +1,9 @@
 @import "../../guideline-back/guideline-back.component.scss";
+
+.wrapper-page {
+  margin: 0 30px !important;
+
+  .card-wrap {
+    margin-bottom: 50px !important;
+  }
+}

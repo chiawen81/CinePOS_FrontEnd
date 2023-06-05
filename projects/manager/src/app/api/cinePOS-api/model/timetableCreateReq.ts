@@ -9,22 +9,16 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TimetableCreateReqTheaterId } from './timetableCreateReqTheaterId';
+import { TimetableListResDataEndDate } from './timetableListResDataEndDate';
+import { TimetableListResDataStartDate } from './timetableListResDataStartDate';
 
 export interface TimetableCreateReq { 
     /**
      * 電影ID
      */
     movieId: string;
-    /**
-     * 廳院ID
-     */
-    theaterId: string;
-    /**
-     * 開始時間
-     */
-    startDate: string;
-    /**
-     * 結束時間
-     */
-    endDate: string;
+    theaterId: TimetableCreateReqTheaterId;
+    startDate: TimetableListResDataStartDate;
+    endDate: TimetableListResDataEndDate;
 }
