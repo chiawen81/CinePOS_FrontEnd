@@ -114,6 +114,9 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
               data: order
             });
 
+            /** 清除購物車 */
+            this.storageService.clearSessionStorage();
+
             dialogRef.afterClosed().subscribe(result => {
               /** 彈跳式視窗關閉後的處理邏輯 */
               console.log('Dialog result:', result);
@@ -127,6 +130,9 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       }else{
         /** 付款金額不足 */
         alert('付款金額不足, 請輸入付款金額');
+        /** 清除購物車 */
+        this.storageService.removeLocalStorage(StorageEnum.shopCartData);
+        this.reloadPage();
         console.log('shopCartData 不存在於 Local Storage 中');
       }
     } else {
@@ -134,6 +140,11 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       alert('購物車為空, 請重新選擇商品');
       console.log('shopCartData 不存在於 Local Storage 中');
     }
+  }
+
+  /** 刷新頁面 */
+  reloadPage(): void {
+    location.reload();
   }
 
   /** 文字轉數字 */
