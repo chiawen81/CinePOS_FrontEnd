@@ -5,8 +5,8 @@
   @apply bg-white cursor-pointer;
 }
 .seat-lock{
-  @apply bg-gray-600;
-} 
+  @apply bg-gray-400;
+}
 .seat-sold{
   @apply bg-gray-600;
 }
@@ -14,5 +14,5 @@
   @apply bg-transparent;
 }
 .active-seat{
-  @apply bg-green-600;
+  @apply bg-secondary-500;
 }

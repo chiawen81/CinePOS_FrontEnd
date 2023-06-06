@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking/booking.service';
-import { filter, tap } from 'rxjs';
+import { catchError, concatMap, filter, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 
@@ -35,43 +35,43 @@ export class SelectSeatComponent implements OnInit {
     }
     this.bookingService.v1StaffSeatCheckLockPost$()
       .pipe(
-        tap(res => {
-          if (res.code !== 1) {
-            this.bookingService.deleteTempSeatArray();
-            this.getSeatData();
-            alert(res.message);
-          }
+        catchError(err => {
+          return throwError(err);
         }),
-        filter(res => res.code === 1)
+        tap(
+          (res) => {
+            // 將目前選擇的座位寫入shopCart
+            res.data.forEach(item => {
+              this.bookingService.setShopCart('seat', item)
+            });
+            this.bookingService.deleteTempSeatArray();
+          },
+          (err) => {
+            this.getSeatData();
+            this.bookingService.deleteTempSeatArray();
+          }
+        ),
+        filter(res => res.code === 1),
+        concatMap(() => {
+          return this.bookingService.v1StaffTicketPost$()
+        })
       ).subscribe((res) => {
-        console.log(res);
-        // // 將目前選擇的座位寫入shopCart
-        res.data.forEach(item => {
-          this.bookingService.setShopCart('seat', item)
+        const ticket = shopCart.ticket.map((obj, index) => {
+          return {
+            ...obj,
+            ticketId: res.data[index]
+          };
         });
-        this.bookingService.deleteTempSeatArray();
-        this.bookingService.v1StaffTicketPost$()
-          .subscribe((res)=>{
-            const ticket = shopCart.ticket.map((obj, index) => {
-              return {
-                ...obj,
-                ticketId: res.data[index]
-              };
-            });
-            // 先刪除歷史選到的票
-            this.bookingService.deleteArr('ticket');
-            ticket.forEach(item => {
-              this.bookingService.setShopCart('ticket', item)
-            });
-          })
+        this.bookingService.deleteShopCart('ticket');
+        ticket.forEach(item => {
+          this.bookingService.setShopCart('ticket', item)
+        });
+        console.log('劃位完後', this.bookingService.getShopCart());
         this.bookingService.setShopCartToLocal(true);
         this.router.navigate(
           [`/${STATIC_ROUTES.BOOKING.ROOT}`]
         );
-        console.log('ShopCart2',this.bookingService.getShopCart());
-        this.bookingService.deleteArr('seat');
-        this.bookingService.deleteArr('ticket');
-      })
+      });
   }
 
 
