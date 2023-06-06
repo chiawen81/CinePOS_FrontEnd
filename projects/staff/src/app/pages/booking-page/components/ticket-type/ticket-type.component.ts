@@ -36,7 +36,7 @@ export class TicketTypeComponent implements OnInit {
     if ($event.isAdd) {
       const addData = this.ticketTypeData.find(item => item['_id'] === $event.ticketTypeId)!;
       this.ticketData.push({
-        ticketId: addData._id, //TODO 這裡要改
+        ticketId: '', //
         ticketTypeId: addData._id,
         ticketType: addData.type,
         price: addData.price
@@ -49,8 +49,6 @@ export class TicketTypeComponent implements OnInit {
         this.ticketData.splice(reduceIndex, 1);
       }
     }
-
-    console.log('ticketData', this.ticketData);
   }
   goSelectSeat(): void {
     if (this.ticketData.length <= 0) {
@@ -58,7 +56,7 @@ export class TicketTypeComponent implements OnInit {
       return;
     }
     // 先刪除歷史選到的票
-    this.bookingService.deleteArr('ticket');
+    this.bookingService.deleteShopCart('ticket');
     // 將目前選擇的票寫入shopCart
     this.ticketData.forEach(item => {
       this.bookingService.setShopCart('ticket', item)

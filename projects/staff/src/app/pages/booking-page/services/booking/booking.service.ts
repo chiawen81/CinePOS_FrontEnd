@@ -105,10 +105,12 @@ export class BookingService {
     !!ShopCartData ? ShopCartData = ShopCartData: ShopCartData = []
     if(isAdd){
       ShopCartData.push(this.shopCart);
+
     }else{
       ShopCartData = ShopCartData.filter((_, index) => index !== deleteIndex);
     }
     this.storageService.setLocalStorage(StorageEnum.shopCartData,ShopCartData);
+    isAdd? this.deleteShopCart('all'): '';
     this.shopCartSelect$.next();
   }
 
@@ -131,8 +133,18 @@ export class BookingService {
     this.tempSeatArray = [];
   }
 
-  /**刪除購物車資訊(陣列) */
-  deleteArr(key: 'ticket' | 'seat'): void {
+  /**刪除購物車資訊(ticket、seat、all) */
+  deleteShopCart(key: 'ticket' | 'seat' | 'all'): void {
+    if(key=== 'all'){
+      this.shopCart = {
+        ticket: [],
+        seat: [],
+        movieId: '',
+        title: '',
+        scheduleId: ''
+      }
+      return;
+    }
     this.shopCart[key] = [];
   }
   /**設定單筆購物車資訊*/

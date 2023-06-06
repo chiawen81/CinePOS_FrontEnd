@@ -59,8 +59,12 @@
         未出售 : {{ seatData.free }}
       </li>
       <li class="flex mx-3">
-        <div class="seat seat-lock mr-3"></div>
+        <div class="seat seat-sold mr-3"></div>
         已出售 : {{ seatData.sold }}
+      </li>
+      <li class="flex mx-3">
+        <div class="seat seat-lock mr-3"></div>
+        已鎖住 : {{ seatData.lock }}
       </li>
     </ul>
   </div>
