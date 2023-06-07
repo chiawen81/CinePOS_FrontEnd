@@ -30,6 +30,7 @@ import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
+import { RefundRes } from '../model/refundRes';
 import { ScheduleListRes } from '../model/scheduleListRes';
 import { SeatRes } from '../model/seatRes';
 import { StaffOrderCreateReq } from '../model/staffOrderCreateReq';
@@ -202,6 +203,47 @@ export class StaffService {
         return this.httpClient.request<StaffOrderCreateSuccess>('post',`${this.basePath}/v1/staff/order`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得訂單下電影票
+     * 
+     * @param orderId 訂單ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffRefundOrderIdGet(orderId: string, observe?: 'body', reportProgress?: boolean): Observable<RefundRes>;
+    public v1StaffRefundOrderIdGet(orderId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RefundRes>>;
+    public v1StaffRefundOrderIdGet(orderId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RefundRes>>;
+    public v1StaffRefundOrderIdGet(orderId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling v1StaffRefundOrderIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<RefundRes>('get',`${this.basePath}/v1/staff/refund/${encodeURIComponent(String(orderId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
