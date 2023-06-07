@@ -20,6 +20,10 @@ export interface RefundResTicketList {
      */
     ticketId: string;
     /**
+     * 電影票狀態 0:未退,1已退
+     */
+    ticketStatus?: number;
+    /**
      * 座位ID
      */
     seatId: string;
