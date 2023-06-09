@@ -28,17 +28,7 @@ export class RefundPageComponent implements OnInit {
     orderId: ['', [Validators.required]],
   });
 
-  task: Task = {
-    name: '全選',
-    completed: false,
-    color: 'primary',
-    subtasks: [
-      { name: 'Accent1', completed: false, color: 'accent' },
-      { name: 'Accent2', completed: false, color: 'accent' },
-      { name: 'Accent3', completed: false, color: 'accent' },
-      { name: 'Accent4', completed: false, color: 'accent' },
-    ],
-  };
+
   allCheck: boolean = false;
 
   checkData: CheckboxItem[] = [];
@@ -164,34 +154,17 @@ export class RefundPageComponent implements OnInit {
       })
   }
 
-  updateAllComplete1() {
-    this.allCheck = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
-  }
   updateAllComplete() {
     this.allCheck = this.checkData != null && this.checkData.every(item => item.isCheck);
   }
 
-  someCheck1(): boolean {
-    if (this.task.subtasks == null) {
-      return false;
-    }
-    return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allCheck;
-  }
   someCheck(): boolean {
     if (this.checkData == null) {
       return false;
     }
     return  this.checkData.filter(item => item.isCheck).length > 0 && !this.allCheck;
   }
-
-  setAll1(completed: boolean) {
-    this.allCheck = completed;
-    if (this.task.subtasks == null) {
-      return;
-    }
-    this.task.subtasks.forEach(t => (t.completed = completed));
-  }
-
+  
   setAll(check: boolean) {
     this.allCheck = check;
     if (this.checkData == null) {
