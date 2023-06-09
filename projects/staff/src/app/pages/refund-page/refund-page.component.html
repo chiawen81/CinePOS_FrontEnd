@@ -25,7 +25,7 @@
     <div class="example-list-section ml-5 pr-4 w-11/12" [class.ml-5]="this.checkData.length>1">
       <ul>
         <li *ngFor="let item of checkData" class="border-b border-primary-400 pb-2 my-4  ">
-          <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllComplete()">
+          <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllCheck()">
             <app-refund-item [data]="item.data"></app-refund-item>
           </mat-checkbox>
         </li>

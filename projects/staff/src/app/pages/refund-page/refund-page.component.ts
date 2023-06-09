@@ -154,7 +154,7 @@ export class RefundPageComponent implements OnInit {
       })
   }
 
-  updateAllComplete() {
+  updateAllCheck() {
     this.allCheck = this.checkData != null && this.checkData.every(item => item.isCheck);
   }
 
@@ -164,7 +164,7 @@ export class RefundPageComponent implements OnInit {
     }
     return  this.checkData.filter(item => item.isCheck).length > 0 && !this.allCheck;
   }
-  
+
   setAll(check: boolean) {
     this.allCheck = check;
     if (this.checkData == null) {
