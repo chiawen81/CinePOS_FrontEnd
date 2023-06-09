@@ -151,6 +151,7 @@ export class RefundPageComponent implements OnInit {
             }
           )
         });
+        this.form.controls['orderId'].setValue('');
       })
   }
 
