@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RefundModule } from '../../features/refund/refund.module';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
     component: RefundPageComponent,
   },
 ]
+const materialModules = [
+  MatInputModule,
+  MatButtonModule,
+  MatCheckboxModule,
+];
 
 @NgModule({
   declarations: [
@@ -21,11 +27,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatInputModule,
     ReactiveFormsModule,
     FormsModule,
-    MatButtonModule,
-    MatCheckboxModule
+    RefundModule,
+    ...materialModules
   ]
 })
 export class RefundPageModule { }

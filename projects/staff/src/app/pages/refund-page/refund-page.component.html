@@ -1,42 +1,42 @@
-<div class="p-5">
+<div class="p-5 mt-6 w-8/12 mx-auto">
   <!-- 輸入訂單編號 -->
   <div>
     <form class="example-form flex flex-row items-stretch" [formGroup]="form" (ngSubmit)="findOrderInfo()">
-      <div class="text-sm -mb-5 basis-7/12">
+      <div class="text-sm -mb-5 basis-10/12">
         <mat-form-field class="example-full-width w-full text-sm" appearance="fill">
           <mat-label>訂單編號</mat-label>
-          <input matInput  formControlName="orderId" type="text">
+          <input matInput formControlName="orderId" type="text">
         </mat-form-field>
       </div>
       <div class="ml-4 -mr-20 basis-1/12">
-        <button mat-raised-button color="primary" type="submit" class="h-full w-full" [disabled]="form.invalid">查詢</button>
+        <button mat-raised-button color="primary" type="submit" class="h-full w-full"
+          [disabled]="form.invalid">查詢</button>
       </div>
     </form>
   </div>
   <!-- 顯示訂單內電影票資訊 -->
-  <section class="example-section">
-    <span class="example-list-section">
-      <mat-checkbox class="example-margin"
-                    [checked]="allComplete"
-                    [color]="task.color"
-                    [indeterminate]="someComplete()"
-                    (change)="setAll($event.checked)">
-        {{task.name}}
+  <div class="example-section  mt-6 pt-2 pl-6 checkbox-item" *ngIf="this.checkData.length>0">
+    <div class="example-list-section" *ngIf="this.checkData.length>1">
+      <mat-checkbox class="example-margin" [checked]="allCheck" [color]="'primary'" [indeterminate]="someCheck()"
+        (change)="setAll($event.checked)">
+        全選
       </mat-checkbox>
-    </span>
-    <span class="example-list-section">
+    </div>
+    <div class="example-list-section ml-5 pr-4 w-11/12" [class.ml-5]="this.checkData.length>1">
       <ul>
-        <li *ngFor="let subtask of task.subtasks">
-          <mat-checkbox [(ngModel)]="subtask.completed"
-                        [color]="subtask.color"
-                        (ngModelChange)="updateAllComplete()">
-            {{subtask.name}}
+        <li *ngFor="let item of checkData" class="border-b border-primary-400 pb-2 my-4  ">
+          <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllComplete()">
+            <app-refund-item [data]="item.data"></app-refund-item>
           </mat-checkbox>
         </li>
       </ul>
-    </span>
-  </section>
+    </div>
+  </div>
 
-  <button (click)="tt()">click</button>
+</div>
 
+<div class="absolute bottom-10 right-10">
+  <button mat-raised-button color="primary" class="w-60" type="button" (click)="tt()">
+    確認
+  </button>
 </div>

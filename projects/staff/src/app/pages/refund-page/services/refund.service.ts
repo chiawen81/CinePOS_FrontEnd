@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RefundRes, StaffService } from '../../../api/cinePOS-api';
+import { StaffOrderSearchSuccess, StaffService } from '../../../api/cinePOS-api';
 import { Observable, filter, tap } from 'rxjs';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class RefundService {
   ) { }
 
   /**取得訂單下電影票 */
-  v1StaffRefundOrderIdGet$(orderId: string): Observable<RefundRes> {
-    return this.staffService.v1StaffRefundOrderIdGet(orderId)
+  v1StaffRefundOrderIdGet$(orderId: string): Observable<StaffOrderSearchSuccess> {
+    return this.staffService.v1StaffOrderOrderIdGet(orderId)
       .pipe(
         tap(res => res.code !== 1 && alert(res.message)),
         filter(res => res.code === 1)

@@ -1,0 +1,16 @@
+<ul class="ml-3">
+  <!-- 日期時間 -->
+  <li class="font-medium">
+    {{ data.time| date:'M/d HH:mm' }}
+  </li>
+  <!-- 電影名稱 -->
+  <li>
+    {{ data.title }}
+  </li>
+  <!-- 座位&電影票資訊 -->
+  <li class="font-medium">
+    <span class="">{{ data.seatName }}</span>
+    <span class="mx-3">{{ data.ticketType }}</span>
+    <span>{{ data.ticketId }}</span>
+  </li>
+</ul>
