@@ -10,9 +10,9 @@ export const STATIC_ROUTES = {
   MOVIE: 'movie',
 
   /**
-   * 座位表
+   * 影廳
    */
-  SEATING_PLAN: 'seating-plan',
+  THEATER: 'theater',
 
   /**
    * 時刻表

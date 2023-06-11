@@ -15,8 +15,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: STATIC_ROUTES.SEATING_PLAN,
-    loadChildren: () => import('./pages/seating-plan-page/seating-plan-page.module').then(m => m.SeatingPlanPageModule),
+    path: STATIC_ROUTES.THEATER,
+    loadChildren: () => import('./pages/theater-page/theater-page.module').then(m => m.TheaterPageModule),
     canLoad:[AuthGuard]
   },
   {

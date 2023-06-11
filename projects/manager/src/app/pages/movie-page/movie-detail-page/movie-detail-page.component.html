@@ -85,7 +85,7 @@
         <div class="row">
           <span class="form-title">
             <i class="text-warn-100">*</i>分級</span>
-          <div class="form-content">
+          <div class="form-content" style="display: flex;">
             <div class="form-radio list-row text-12">
               <mat-radio-group aria-label="Select an option" formControlName="rate">
                 <mat-radio-button class='mr-[25px]' *ngFor="let item of rateOptions" [value]="item.value">{{item.name}}</mat-radio-button>

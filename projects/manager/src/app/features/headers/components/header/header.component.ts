@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
       case STATIC_ROUTES.TIMETABLE:
         this.mainCrumb = '排片規劃';
         break;
-      case STATIC_ROUTES.SEATING_PLAN:
+      case STATIC_ROUTES.THEATER:
         this.mainCrumb = '影廳管理';
         break;
       case STATIC_ROUTES.DASHBOARD:
