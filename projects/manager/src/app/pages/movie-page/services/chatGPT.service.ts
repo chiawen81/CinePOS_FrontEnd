@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { environment } from 'projects/manager/src/environments/environment';
 
 
 
@@ -9,7 +10,7 @@ import axios from 'axios';
 
 export class ChatGPTService {
   apiUrl = "https://api.openai.com/v1/chat/completions";
-  token = "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";
+  token = "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";
   config = {
     headers: {
       Authorization: `Bearer ${this.token}`,
@@ -20,7 +21,7 @@ export class ChatGPTService {
     role: string,
     content: string
   }[]) => {
-    console.log('openApiRequest')
+    console.log('openApiRequest- message', message);
 
     try {
       const { data } = await axios.post(
