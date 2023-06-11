@@ -1,6 +1,6 @@
 {
   "name": "CinePOS_FrontEnd",
-  "version": "0.0.46",
+  "version": "0.0.48",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
@@ -33,9 +33,9 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "angular-cli-ghpages": "^1.0.5",
+    "axios": "^1.4.0",
     "devextreme": "^22.2.6",
     "devextreme-angular": "^22.2.6",
-    "echarts": "^5.4.2",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "rxjs": "~7.5.0",
@@ -50,6 +50,7 @@
     "@nguniversal/express-engine": "^14.2.3",
     "@types/jasmine": "~4.0.0",
     "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
