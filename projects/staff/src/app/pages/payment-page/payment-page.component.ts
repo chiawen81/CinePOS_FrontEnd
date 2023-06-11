@@ -95,10 +95,10 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
           "ticketTypeId": data.ticket[i].ticketTypeId,
           "movieId": data.movieId,
           "scheduleId": data.scheduleId,
-          "seatName": data.seat[i]
+          "seatName": data.seat[i].seatName
       };
       i++;
-      this.staffOrderCreateReq.ticketList.push(data!);
+      this.staffOrderCreateReq.ticketList.push(item);
     });
 
     console.log('ticketList', this.staffOrderCreateReq);
@@ -106,6 +106,8 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
 
   /** 現金付款 */
   openDialog() {
+
+    this.getOrder();
     /** 檢查localstorage訂單資料 */
     if (!!this.staffOrderCreateReq) {
       /** 檢查付款金額是否大於訂單金額 */
