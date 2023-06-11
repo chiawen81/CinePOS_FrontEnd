@@ -42,7 +42,7 @@ export class TimetablePageComponent implements OnInit {
   ngOnInit(): void {
 
     this.dateArr = this.createDates(this.dateCount);
-    
+
     this.getTimetableList();
     this.getMovieList('');
     this.getTheaterList();
@@ -57,7 +57,7 @@ export class TimetablePageComponent implements OnInit {
   createDates(num: number): Date[] {
     const dateArr: Date[] = [];
     // const today = new Date(); // 當前日期和時間
-    const today = moment().add(7,'day').startOf('week').toDate();
+    const today = moment().add(7, 'day').startOf('week').toDate();
     this.currentDate = today;
     for (var i = 0; i < num; i++) {
       var date = new Date(today); // 複製當前日期
@@ -199,7 +199,22 @@ export class TimetablePageComponent implements OnInit {
   }
 
   private mapTimetable(data: any[]) {
-    const result = data.map((item) => {
+    // const result = data.map((item) => {
+
+    //   item.startDate = new Date(item.startDate);
+    //   item.endDate = new Date(item.endDate);
+    //   item.movie = item.movieId;
+    //   item.color = this.transformRateColor(item.movie.rate);
+    //   item.movieId = item.movieId._id;
+    //   item.theatreId = item.theaterId._id;
+    //   return item;
+    // });
+
+    const result = data.filter((item) => {
+      if (item.movieId) {
+        return item;
+      };
+    }).map((item) => {
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
@@ -207,7 +222,7 @@ export class TimetablePageComponent implements OnInit {
       item.movieId = item.movieId._id;
       item.theatreId = item.theaterId._id;
       return item;
-    });
+    });;
     return result;
   }
 
@@ -291,7 +306,7 @@ export class TimetablePageComponent implements OnInit {
       let movieData: MovieData = {
         id: item._id ?? '',
         text: item.title ?? '',
-        runtime: item.runtime?? '',
+        runtime: item.runtime ?? '',
         color: this.transformRateNameColor(item.rateName),
         rateName: item.rateName,
         rate: this.transformRateNameToRate(item.rateName) as RateCode

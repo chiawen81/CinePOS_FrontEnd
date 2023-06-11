@@ -1,1 +1,75 @@
-<p>結帳頁</p>
+<div class="main">
+  <div class="box computer-calculate bg-dark-parmary" id="calulate" style="maring-bottom:15px;">
+    <div class="computer-calculate-contain box-dark">
+      <p class="small-title">實付金額</p>
+      <div class="cont">
+        <div class="cont-symbol">NTD</div>
+        <div>{{ payTotal | customCurrency }}</div>
+      </div>
+    </div>
+    <div class="computer-calculate-symbol">-</div>
+    <div class="computer-calculate-contain">
+      <p class="small-title">應付金額</p>
+      <div class="cont">
+        <div class="cont-symbol">NTD</div>
+        <div>{{ getSubtotal() }}</div>
+      </div>
+    </div>
+    <div class="computer-calculate-symbol">=</div>
+    <div class="computer-calculate-contain">
+      <p class="small-title">找零</p>
+      <div class="cont">
+        <div class="cont-symbol">NTD</div>
+        <div>{{ getPayBack() | customCurrency }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-contain" style="margin-top: 15px;">
+    <div class="box payment bg-dark"  id="payment">
+      <label class="small-title" >支付方式</label>
+        <ng-container [ngSwitch]="payMethod">
+          <button *ngSwitchCase="2" class="btn btn-dark">LINE Pay 付款</button>
+        <button  *ngSwitchCase="1" class="btn btn-dark" (click)="openDialog()" >現金付款</button>
+        </ng-container>
+
+
+    </div>
+    <div class="box computer-keyboard bg-dark" id="keyboard">
+      <div class="keyboard-1">
+        <button (click)="calculate('zero', 'method')" class="btn btn-1 btn-dark">c</button>
+        <button (click)="calculate('remove', 'method')" class="btn btn-1 btn-remove btn-gray"></button>
+      </div>
+
+      <div class="flex just-cont-between">
+        <button (click)="calculate('4', 'str')" class="btn-circle btn-dark">4</button>
+        <button (click)="calculate('5', 'str')" class="btn-circle  btn-dark">5</button>
+        <button (click)="calculate('6', 'str')" class="btn-circle  btn-dark">6</button>
+        <button (click)="calculate('100', 'number')" class="btn-circle-1 btn-dark">+100</button>
+      </div>
+
+      <div class="flex just-cont-between">
+        <button (click)="calculate('7', 'str')" class="btn-circle  btn-dark">7</button>
+        <button (click)="calculate('8', 'str')" class="btn-circle  btn-dark">8</button>
+        <button (click)="calculate('9', 'str')" class="btn-circle  btn-dark">9</button>
+        <button (click)="calculate('300', 'number')" class="btn-circle-1 btn-dark">+300</button>
+      </div>
+
+      <div class="flex just-cont-between">
+        <button (click)="calculate('1', 'str')" class="btn-circle  btn-dark">1</button>
+        <button (click)="calculate('2', 'str')" class="btn-circle  btn-dark">2</button>
+        <button (click)="calculate('3', 'str')" class="btn-circle  btn-dark">3</button>
+        <button (click)="calculate('500', 'number')" class="btn-circle-1 btn-dark">+500</button>
+      </div>
+
+      <div class="flex just-cont-between">
+        <button (click)="calculate('00', 'str')" class="btn-circle-2 btn-dark">00</button>
+        <button (click)="calculate('0', 'str')" class="btn-circle btn-dark">0</button>
+        <button (click)="calculate('1000', 'number')" class="btn-circle-1 btn-dark">+1000</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
