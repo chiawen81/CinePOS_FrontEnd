@@ -1,7 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
+import { Step } from './step/enums/step';
+
+type ACTION_CONFIG = 'next' | 'back' | 'finish';
 
 
 @Component({
@@ -14,7 +17,7 @@ export class TheaterDetailPageComponent implements OnInit {
   formGroup!: FormGroup;
 
   /* API */
-  typeOptions: CommonOptionSuccessDataItem[] = []; 
+  typeOptions: CommonOptionSuccessDataItem[] = [];
 
   /* 表單取值 */
   get theaterName() { return this.formGroup.get('theaterName') as FormControl; }        // 影廳名稱
@@ -26,36 +29,34 @@ export class TheaterDetailPageComponent implements OnInit {
 
   constructor(
     private commonAPIService: CommonAPIService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private fb :FormBuilder
   ) { }
 
   ngOnInit(): void {
-    
+
     this.initForm();
 
     //取得影廳類型資料
-    this.getOptionAPI(2); 
+    this.getOptionAPI(2);
 
     //default: row是英文
     this.formGroup.get('rowType')?.setValue(1);
   }
 
-  // 當row & col輸入為小數點時自動轉為整數
-  inputRow!: number;
-  inputCol!: number;
-  handleChange() {
-    this.inputRow = Math.ceil(this.inputRow);
-    this.inputCol = Math.ceil(this.inputCol);
+  handleChange(event:any) {
+
   }
+
 
   // 查詢- 初始化表單
   initForm() {
-    this.formGroup = new FormGroup({
+    this.formGroup = this.fb.group({
       theaterName: new FormControl(""),
       theaterFloor: new FormControl(""),
       theaterType: new FormControl(""),
-      row:  new FormControl(null),
-      col: new FormControl(null),
+      row:  ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      col:  ['', [Validators.required, Validators.pattern('[0-9]*')]],
       rowType: new FormControl(true)
     });
   }
@@ -68,41 +69,79 @@ export class TheaterDetailPageComponent implements OnInit {
   equipmentOption: number = 0;
   type: boolean = true;
   isVisible = false;
-  createMap():void {
+  createMap(): void {
+    const rows = this.formGroup.get('rows')?.value;
+    const cols = this.formGroup.get('cols')?.value;
 
-    this.name = this.theaterName?.value;
-    this.floor = this.theaterFloor?.value;
-    this.equipmentOption = this.theaterType?.value;
-    this.equipment = this.selectedText;
-    this.rows = this.row?.value;
-    this.cols = this.col?.value;
-    this.type = this.rowType?.value;
-
-    if(this.rows > 0 && this.cols > 0){
+    if (rows > 0 && cols > 0) {
       this.isVisible = true;
     } else {
       this.isVisible = false;
     }
   }
 
-  step = 1; // 步驟順序
-  nextStep():void {
-    if(this.step < 3){
-      this.step++;
+  onPositiveClick(action: ACTION_CONFIG) {
+    switch (action) {
+      case 'next':
+        this.nextStep();
+        break;
+      case 'back':
+        this.lastStep();
+        break;
+      default:
+        break;
     }
   }
 
-  lastStep():void {
-    if(this.step != 1){
-      this.step--;
+  step: Step = Step.createMap; // 步驟順序
+  nextStep(): void {
+    switch (this.step) {
+      case Step.createMap:
+        this.step++;
+        this.formGroup.disable();
+        break;
+      case Step.seatMapSetting:
+        this.step++;
+        break;
+      case Step.seatTypeSetting:
+        this.step++;
+        break;
+      case Step.finish:
+        break;
+      default:
+        break;
+    }
+  }
+
+  lastStep(): void {
+    switch (this.step) {
+      case Step.createMap:
+        break;
+      case Step.seatMapSetting:
+        this.formGroup.enable();
+        this.step--;
+        break;
+      case Step.seatTypeSetting:
+        this.step--;
+        break;
+      case Step.finish:
+        this.step--;
+        break;
+      default:
+        break;
     }
 
-    // 若沒有按產生座位表，要把上一次輸入的值洗掉
-    // TODO: 輸入框的值不知道為什麼洗不掉ＱＱ
-    this.formGroup.get('theaterFloor')?.setValue(this.floor);
-    this.formGroup.get('theaterType')?.setValue(this.equipmentOption);
-    this.formGroup.get('rowType')?.setValue(this.type);
-    this.formGroup.get('row')?.setValue(this.rows);
+
+    // if (this.step != 1) {
+    //   this.step--;
+    // }
+
+    // // 若沒有按產生座位表，要把上一次輸入的值洗掉
+    // // TODO: 輸入框的值不知道為什麼洗不掉ＱＱ
+    // this.formGroup.get('theaterFloor')?.setValue(this.floor);
+    // this.formGroup.get('theaterType')?.setValue(this.equipmentOption);
+    // this.formGroup.get('rowType')?.setValue(this.type);
+    // this.formGroup.get('row')?.setValue(this.rows);
   }
 
   selectedText = "";

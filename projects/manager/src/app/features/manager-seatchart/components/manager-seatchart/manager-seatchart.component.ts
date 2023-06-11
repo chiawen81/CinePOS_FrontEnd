@@ -81,12 +81,12 @@ export class ManagerSeatchartComponent implements OnInit {
     this.responseArr[$event.seatIndex] = $event.type;
     console.log("activeOut");
     console.log(this.responseArr);
-
-    this.seatMapResult.emit({
+   const param = JSON.parse(JSON.stringify({
       seatMap: this.responseArr,
       rowLabel: this.rowsOrder,
       colLabel: this.colsOrder
-    });
+    }));
+    this.seatMapResult.emit(param);
   }
 
 

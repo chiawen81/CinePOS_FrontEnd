@@ -2,47 +2,44 @@
     <section class="w-[30%] px-[20px]">
         <div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
             <cine-card class="mb-[30px]">
-            <cine-card-header class="mb-[20px]" style="font-size: 14px;;">基礎資訊</cine-card-header>
-            <cine-card-content>
-                <ng-template [ngIf]="step === 1" [ngIfElse]="noEdit">
+                <cine-card-header class="mb-[20px]" style="font-size: 14px;;">基礎資訊</cine-card-header>
+                <cine-card-content>
                     <div class="row">
                         <span class="form-title">名稱</span>
                         <div class="form-content">
                             <input class="form-input" type="text" formControlName="theaterName">
                         </div>
                     </div>
-    
                     <div class="row">
                         <span class="form-title">樓層</span>
                         <div class="form-content">
-                        <div class="form-select select-small">
-                            <mat-form-field appearance="fill">
-                            <mat-label>請選擇</mat-label>
-                            <mat-select placeholder="請選擇" formControlName="theaterFloor">
-                                <mat-option [value]="1">1F</mat-option>
-                                <mat-option [value]="2">2F</mat-option>
-                                <mat-option [value]="3">3F</mat-option>
-                                <mat-option [value]="4">4F</mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                        </div>
+                            <div class="form-select select-small">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>請選擇</mat-label>
+                                    <mat-select placeholder="請選擇" formControlName="theaterFloor">
+                                        <mat-option [value]="1">1F</mat-option>
+                                        <mat-option [value]="2">2F</mat-option>
+                                        <mat-option [value]="3">3F</mat-option>
+                                        <mat-option [value]="4">4F</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
-    
                     <div class="row">
                         <span class="form-title">類型</span>
                         <div class="form-content">
-                        <div class="form-select">
-                            <mat-form-field appearance="fill">
-                            <mat-label>請選擇</mat-label>
-                            <mat-select placeholder="請選擇" formControlName="theaterType">
-                                <mat-option *ngFor="let item of typeOptions" [value]="item.value" (click)="handleOptionSelected(item)">{{item?.name}}</mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                        </div>
+                            <div class="form-select">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>請選擇</mat-label>
+                                    <mat-select placeholder="請選擇" formControlName="theaterType">
+                                        <mat-option *ngFor="let item of typeOptions" [value]="item.value"
+                                            (click)="handleOptionSelected(item)">{{item?.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
-    
                     <cine-card-header class="mt-[30px]" style="font-size: 14px;">
                         <div class="flex-container">
                             <div>
@@ -53,98 +50,34 @@
                             </div>
                         </div>
                     </cine-card-header>
-    
                     <div class="row">
                         <span class="form-title">直排牌號</span>
                         <div class="form-content ml-[20px]" style="display: flex;">
-                        <div class="form-radio list-row text-[13px]">
-                            <mat-radio-group aria-label="Select an option" formControlName="rowType">
-                            <mat-radio-button class='mr-[25px]' [value]="1">A ~ Z</mat-radio-button>
-                            <mat-radio-button class='mr-[25px]' [value]="0">1, 2, 3...</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
+                            <div class="form-radio list-row text-[13px]">
+                                <mat-radio-group aria-label="Select an option" formControlName="rowType">
+                                    <mat-radio-button class='mr-[25px]' [value]="1">A ~ Z</mat-radio-button>
+                                    <mat-radio-button class='mr-[25px]' [value]="0">1, 2, 3...</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
                         </div>
                     </div>
-    
                     <div class="row">
                         <span class="form-title">直排格數</span>
                         <div class="form-content">
-                        <input class="form-input" type="number" min="1" [(ngModel)]="inputRow" (input)="handleChange()" formControlName="row">
+                            <input class="form-input" type="number" min="1" formControlName="row">
                         </div>
                     </div>
-    
                     <div class="row">
                         <span class="form-title">橫排格數</span>
                         <div class="form-content">
-                        <input class="form-input" type="number" min="1" [(ngModel)]="inputCol" (input)="handleChange()" formControlName="col">
+                            <input class="form-input" type="number" min="1" formControlName="col">
                         </div>
                     </div>
-
                     <div class="flex" style="justify-content: right;">
-                        <button class='w-2/3' mat-raised-button color="primary" type="submit" (click)="createMap()">產生座位圖</button>
+                        <button class='w-2/3' mat-raised-button color="primary" type="submit"
+                            (click)="onPositiveClick('next')">產生座位圖</button>
                     </div>
-                </ng-template>
-
-                <ng-template #noEdit> 
-                    <div class="row">
-                        <span class="form-title">名稱</span>
-                        <div class="form-content">
-                            <p class="form-text">{{name}}</p>
-                        </div>
-                    </div>
-    
-                    <div class="row">
-                        <span class="form-title">樓層</span>
-                        <div class="form-content">
-                            <p class="form-text">{{floor}}</p>
-                        </div>
-                    </div>
-    
-                    <div class="row">
-                        <span class="form-title">類型</span>
-                        <div class="form-content">
-                            <p class="form-text">{{equipment}}</p>
-                        </div>
-                    </div>
-    
-                    <cine-card-header class="mt-[30px]" style="font-size: 14px;">
-                        <div class="flex-container">
-                            <div>
-                                座位數量
-                            </div>
-                            <div class="text-right">
-                                ※走道也算1行/列
-                            </div>
-                        </div>
-                    </cine-card-header>
-    
-                    <div class="row">
-                        <span class="form-title">直排牌號</span>
-                        <div class="form-content">
-                            <p *ngIf="type" class="form-text">A ~ Z</p>
-                            <p *ngIf="!type" class="form-text">1, 2, 3...</p>
-                        </div>
-                    </div>
-    
-                    <div class="row">
-                        <span class="form-title">直排格數</span>
-                        <div class="form-content">
-                            <p class="form-text">{{rows}}</p>
-                        </div>
-                    </div>
-    
-                    <div class="row">
-                        <span class="form-title">橫排格數</span>
-                        <div class="form-content">
-                            <p class="form-text">{{cols}}</p>
-                        </div>
-                    </div>
-
-                    <div class="flex" style="justify-content: right;">
-                        <button class='w-2/3' mat-raised-button color="primary" type="submit" [disabled]="true">產生座位圖</button>
-                    </div>
-                </ng-template>
-            </cine-card-content>
+                </cine-card-content>
             </cine-card>
         </div>
     </section>
@@ -152,10 +85,12 @@
     <section class="w-[70%] pr-[20px]" [hidden]="!isVisible">
         <div class="wrapper-page form-common-back utility-common-back">
             <cine-card class="mb-[30px]">
-            <cine-card-header class="text-center mb-[30px]" style="font-size: 14px;">※點選以設定非座位區(ex:走道)</cine-card-header>
-            <cine-card-content >
-                <app-manager-seatchart [step]="step" [rows]="rows" [cols]="cols" [type]="type" (seatMapResult)="getSeatMapResult($event)"></app-manager-seatchart>
-            </cine-card-content>
+                <cine-card-header class="text-center mb-[30px]"
+                    style="font-size: 14px;">※點選以設定非座位區(ex:走道)</cine-card-header>
+                <cine-card-content>
+                    <app-manager-seatchart [step]="step" [rows]="rows" [cols]="cols" [type]="type"
+                        (seatMapResult)="getSeatMapResult($event)"></app-manager-seatchart>
+                </cine-card-content>
             </cine-card>
         </div>
     </section>
@@ -167,7 +102,7 @@
 
             <ng-template [ngIf]="step > 1" [ngIfElse]="showBlank">
                 <div class="flex-container">
-                    <button mat-raised-button color="accent" class="secondary btn-icon mr-[10px]" (click)="lastStep()">
+                    <button mat-raised-button color="accent" class="secondary btn-icon mr-[10px]" (click)="onPositiveClick('back')">
                         <img src="assets/images/icon/arrowR.svg" alt="arrow">
                     </button>
                     <div class="mt-[10px] ml-[8px]">上一步</div>
@@ -176,16 +111,16 @@
             <ng-template #showBlank>
                 <div class="flex-container"></div>
             </ng-template>
-            
+
             <div *ngIf="step < 3" class="flex-container">
                 <div class="mt-[10px] mr-[8px]">下一步</div>
-                <button mat-raised-button color="primary" class="secondary btn-icon mr-[10px]" (click)="nextStep()">
+                <button mat-raised-button color="primary" class="secondary btn-icon mr-[10px]" (click)="onPositiveClick('next')">
                     <img src="assets/images/icon/arrowL.svg" alt="arrow">
                 </button>
             </div>
-            
+
             <div *ngIf="step === 3" class="flex-container">
-                <button mat-raised-button color="primary" class='w-1/6' type="submit" (click)="finish()">完成</button>
+                <button mat-raised-button color="primary" class='w-1/6' type="submit" (click)="onPositiveClick('finish')">完成</button>
             </div>
         </div>
     </section>
