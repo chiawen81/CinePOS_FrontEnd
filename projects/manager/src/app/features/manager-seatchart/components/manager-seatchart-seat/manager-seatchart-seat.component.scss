@@ -1,22 +1,24 @@
 .seat{
-  @apply w-40 h-30 rounded-t-lg rounded-b-md p-1;
+  @apply w-full h-7 rounded-t-lg rounded-b-md p-1;
 }
 .seat-free{
   @apply bg-white hover:bg-slate-400 cursor-pointer;
 }
+.seat-free-show{
+  @apply bg-white;
+}
 .seat-lock{
   @apply bg-gray-600;
-}
+} 
 .seat-sold{
   @apply bg-gray-600;
 }
 .seat-none{
-  @apply bg-transparent ;
+  @apply bg-transparent;
+}
+.active-seat{
+  @apply bg-green-600;
 }
 .step1-none{
   @apply border border-white hover:bg-gray-800 cursor-pointer;
-}
-
-.active-seat{
-  @apply bg-green-600;
 }
