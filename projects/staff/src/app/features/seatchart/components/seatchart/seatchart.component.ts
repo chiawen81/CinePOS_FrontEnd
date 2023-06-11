@@ -27,9 +27,9 @@ export class SeatchartComponent implements OnInit {
   seatArray: string[] = [];
 
   ngOnInit(): void {
-    if(this.isPreview){
-
-    }
+  }
+  ngOnChanges(): void {
+    this.remainSeat = this.bookingService.getShopCart().ticket.length;
   }
 
   changeSeatArray($event: SeatData): void {
