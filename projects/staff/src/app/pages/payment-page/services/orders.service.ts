@@ -39,22 +39,8 @@ export class OrderService {
 
   generateOrder(item: StaffOrderCreateReq): Observable<StaffOrderCreateSuccess> {
     console.log(item);
-    const staffOrderCreateReq: StaffOrderCreateReq = {
-      "ticketList" : [
-          {
-              "ticketId" : "6471e9fcbe714b8e2a3dd231",
-              "price" : 280,
-              "ticketTypeId":"6460a7626b1ed843a113b9b6",
-              "movieId":"6458680f68d71390eb9fe56b",
-               "scheduleId":"645cf11f2e05063973b5f9ed",
-               "seatName":"F12"
-          }
-      ],
-      "paymentMethod" : 1,
-      "amount" : 280
-    }
 
-    return this.staffService.v1StaffOrderPost(staffOrderCreateReq);
+    return this.staffService.v1StaffOrderPost(item);
   }
 
 

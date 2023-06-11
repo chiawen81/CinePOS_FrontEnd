@@ -86,9 +86,21 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
   /** 取得訂單資料 */
   getOrder(): void{
     this.staffOrderCreateReq.amount = this.getSubtotal();
+    let i = 0;
     this.shopCar?.forEach(data => {
+
+      const item = {
+          "ticketId" : data.ticket[i].ticketId,
+          "price" : data.ticket[i].price,
+          "ticketTypeId": data.ticket[i].ticketTypeId,
+          "movieId": data.movieId,
+          "scheduleId": data.scheduleId,
+          "seatName": data.seat[i]
+      };
+      i++;
       this.staffOrderCreateReq.ticketList.push(data!);
     });
+
     console.log('ticketList', this.staffOrderCreateReq);
   }
 
@@ -99,7 +111,32 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       /** 檢查付款金額是否大於訂單金額 */
       if(this.payTotal >= this.getSubtotal()){
 
+        const data = this.staffOrderCreateReq;
+
         /** 本地端暫時模擬資料才會打得過 */
+        // const data =  {
+        //   "ticketList" : [
+        //       {
+        //           "ticketId" : "6471e9fcbe714b8e2a3dd231",
+        //           "price" : 280,
+        //           "ticketTypeId":"6460a7626b1ed843a113b9b6",
+        //           "movieId":"645869f668d71390eba143d3",
+        //            "scheduleId":"646a0b3091a4e35d3806be4e",
+        //            "seatName":"C16"
+        //       },
+        //       {
+        //           "ticketId" : "6460a7626b1ed843a113b9b6",
+        //           "price" : 280,
+        //           "ticketTypeId":"6460a7626b1ed843a113b9b6",
+        //           "movieId":"645869f668d71390eba143d3",
+        //            "scheduleId":"646a0b3091a4e35d3806be4e",
+        //            "seatName":"D16"
+        //       }
+        //   ],
+        //   "paymentMethod" : 1,
+        //   "amount" : 560
+        // };
+
         /** 送出訂單 */
         this.orderService.generateOrder(this.staffOrderCreateReq)
         .pipe(
