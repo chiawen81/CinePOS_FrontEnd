@@ -21,8 +21,17 @@
           <span class="form-title">
             <i class="text-warn-100">*</i>電影中文名</span>
           <div class="form-content">
-            <input class="form-input w-[300]" type="text" formControlName="title">
+            <div>
+              <input class="form-input w-[300] mr-[15px]" type="text" formControlName="title">
+              <button mat-raised-button color="primary" class="w-[120]" (click)="createMovieTitle()">一鍵取名</button>
+              <span class="text-12 text-primary-100 ml-[15px]" *ngIf="!brainStormTitle">想不出中譯片名？ 快問問小精靈！</span>
+            </div>
+
             <p class="text-12 mt-[5px] text-warn-100">{{getErrorMsg(title)}}</p>
+
+            <p class="text-12 text-primary-100" *ngIf="brainStormTitle">這是來自小精靈的建議：</p>
+            <p>{{brainStormTitle}}</p>
+            <p class="text-12 text-primary-100 mt-[25px]" *ngIf="brainStormTitle">沒看到適合的名稱嗎？ 再按一次按鈕取得小精靈的建議！</p>
           </div>
         </div>
         <div class="row">
@@ -64,7 +73,7 @@
           <span class="form-title">主演</span>
           <div class="form-content flex flex-col" formArrayName="cast">
             <div class="flex" *ngFor="let actor of cast.controls; let i=index">
-              <input class="form-input w-[300] mr-[10px]" type="text" [formControlName]="i">
+              <input class="form-input w-[300] mr-[10px] mb-[5px]" type="text" [formControlName]="i">
               <div class="flex">
                 <button class="secondary btn-icon mr-[10px]" *ngIf="i===0" mat-raised-button (click)="addCast()">+</button>
                 <img class="ml-[10px] cursor-pointer" *ngIf="i" src="assets/images/icon/cross.svg" alt="" (click)="removeCast(i)">
@@ -128,7 +137,8 @@
         <div class="row align-items-start">
           <span class="form-title">電影介紹</span>
           <div class="form-content">
-            <button mat-raised-button class="secondary">一鍵潤飾</button>
+            <button mat-raised-button color="primary" class="w-[120]" (click)="improveArticle()">一鍵潤飾</button>
+            <span class="text-12 text-primary-100 ml-[10px]">文筆不好？ 別怕，小精靈來幫你潤稿！</span>
             <textarea class="form-input input-textarea mt-[10px]" name="" id="" cols="30" rows="10" formControlName="description" maxlength="300" placeholder="限輸入300字"></textarea>
           </div>
         </div>
@@ -166,3 +176,8 @@
 
     <button mat-raised-button color="primary" type="submit" class="w-[60] float-right" (click)="submit()">送出</button>
   </div>
+
+
+
+  <!-- UI block -->
+  <lib-loading></lib-loading>
