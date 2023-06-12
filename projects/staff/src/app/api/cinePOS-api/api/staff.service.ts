@@ -23,6 +23,7 @@ import { CommonResFailed } from '../model/commonResFailed';
 import { CommonResFailedFieldInvalid } from '../model/commonResFailedFieldInvalid';
 import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
 import { CommonResFailedWrongPassword } from '../model/commonResFailedWrongPassword';
+import { CommonResSuccess } from '../model/commonResSuccess';
 import { CommonUploadSuccess } from '../model/commonUploadSuccess';
 import { CreateTicketReq } from '../model/createTicketReq';
 import { CreateTicketRes } from '../model/createTicketRes';
@@ -30,6 +31,9 @@ import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
 import { LoginRes } from '../model/loginRes';
+import { PatchOrderReqInner } from '../model/patchOrderReqInner';
+import { PatchSeatReqInner } from '../model/patchSeatReqInner';
+import { PatchTicketReqInner } from '../model/patchTicketReqInner';
 import { ScheduleListRes } from '../model/scheduleListRes';
 import { SeatRes } from '../model/seatRes';
 import { StaffOrderCreateReq } from '../model/staffOrderCreateReq';
@@ -155,6 +159,53 @@ export class StaffService {
 
         return this.httpClient.request<StaffOrderSearchSuccess>('get',`${this.basePath}/v1/staff/order/${encodeURIComponent(String(orderId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新訂單狀態
+     * 
+     * @param body 更新訂單狀態資料
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffOrderPatch(body: Array<PatchOrderReqInner>, observe?: 'body', reportProgress?: boolean): Observable<CommonResSuccess>;
+    public v1StaffOrderPatch(body: Array<PatchOrderReqInner>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonResSuccess>>;
+    public v1StaffOrderPatch(body: Array<PatchOrderReqInner>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonResSuccess>>;
+    public v1StaffOrderPatch(body: Array<PatchOrderReqInner>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffOrderPatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CommonResSuccess>('patch',`${this.basePath}/v1/staff/order`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -313,6 +364,53 @@ export class StaffService {
     }
 
     /**
+     * 更新座位狀態
+     * 
+     * @param body 更新訂單狀態資料
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffSeatPatch(body: Array<PatchSeatReqInner>, observe?: 'body', reportProgress?: boolean): Observable<CommonResSuccess>;
+    public v1StaffSeatPatch(body: Array<PatchSeatReqInner>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonResSuccess>>;
+    public v1StaffSeatPatch(body: Array<PatchSeatReqInner>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonResSuccess>>;
+    public v1StaffSeatPatch(body: Array<PatchSeatReqInner>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffSeatPatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CommonResSuccess>('patch',`${this.basePath}/v1/staff/seat`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 取得場次座位表
      * 
      * @param scheduleId 場次ID
@@ -345,6 +443,53 @@ export class StaffService {
 
         return this.httpClient.request<SeatRes>('get',`${this.basePath}/v1/staff/seat/${encodeURIComponent(String(scheduleId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 更新電影票狀態
+     * 
+     * @param body 資料格式
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffTicketPatch(body: Array<PatchTicketReqInner>, observe?: 'body', reportProgress?: boolean): Observable<CommonResSuccess>;
+    public v1StaffTicketPatch(body: Array<PatchTicketReqInner>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonResSuccess>>;
+    public v1StaffTicketPatch(body: Array<PatchTicketReqInner>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonResSuccess>>;
+    public v1StaffTicketPatch(body: Array<PatchTicketReqInner>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffTicketPatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CommonResSuccess>('patch',`${this.basePath}/v1/staff/ticket`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
