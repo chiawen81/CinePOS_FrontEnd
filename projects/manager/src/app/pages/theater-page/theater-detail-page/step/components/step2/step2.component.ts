@@ -1,7 +1,8 @@
 import { SeatData } from 'projects/manager/src/app/features/manager-seatchart/interface/seat-data.interface';
 import { Step } from './../../enums/step';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
+import { SeatSettingType } from 'projects/manager/src/app/features/manager-seatchart/enums/seat-setting.enum';
 
 @Component({
   selector: 'app-step2',
@@ -28,15 +29,20 @@ export class Step2Component implements OnInit {
 
   @Output() fg = new EventEmitter<FormGroup>();
   validateForm!: FormGroup;
+  seatSetting!: SeatSettingType;
   constructor(
     // public parentF: FormGroupDirective,
-
+    private fb :FormBuilder
   ) { }
 
   ngOnInit(): void {
     // 裝進去一次之後，根表單會控管
+    this.validateForm = this.fb.group({
+      responseArr:[]
+    })
     this.fg.emit(this.validateForm);
   }
+
 
   /**
    * 根據提供的參數生成座位圖。
@@ -51,22 +57,20 @@ export class Step2Component implements OnInit {
     this.rowsArr = Array(rows).fill('0'); // 生成 rowsArr
     this.colsArr = Array(cols).fill('0'); // 生成 colsArr
     this.type = type
-    this.rowsOrder = this.createRowsOrder(rows,type);
-    this.colsOrder = this.createRowsOrder(rows,false);
+    this.rowsOrder = this.createRowsOrder(rows, type);
+    this.colsOrder = this.createRowsOrder(rows, false);
+  }
 
+  setSeatSettingType(seatSetting :SeatSettingType){
+    this.seatSetting = seatSetting;
   }
 
   activeOut($event: SeatData): void {
     // 將取到的seatIndex跟type寫回responseArr
     this.responseArr[$event.seatIndex] = $event.type;
-    console.log("activeOut");
+    console.log($event.seatIndex);
     console.log(this.responseArr);
-    const param = JSON.parse(JSON.stringify({
-      seatMap: this.responseArr,
-      rowLabel: this.rowsOrder,
-      colLabel: this.colsOrder
-    }));
-    // this.seatMapResult.emit(param);
+    this.validateForm.get('responseArr')?.patchValue(this.responseArr);
   }
   selectAllText(): void {
     if (document.activeElement instanceof HTMLInputElement) {

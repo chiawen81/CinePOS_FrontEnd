@@ -4,6 +4,7 @@ import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { Step } from './step/enums/step';
 import { Step2Component } from './step/components/step2/step2.component';
+import { SeatSettingType } from '../../../features/manager-seatchart/enums/seat-setting.enum';
 
 type ACTION_CONFIG = 'next' | 'back' | 'finish';
 
@@ -13,7 +14,7 @@ type ACTION_CONFIG = 'next' | 'back' | 'finish';
   templateUrl: './theater-detail-page.component.html',
   styleUrls: ['./theater-detail-page.component.scss']
 })
-export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
+export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild(Step2Component) step2?: Step2Component;
 
   Step = Step;
@@ -40,7 +41,7 @@ export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
     this.getOptionAPI(2);
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     console.log(this.step2);
 
   }
@@ -53,13 +54,21 @@ export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
     this.formGroup = this.fb.group({
       theaterName: ['', [Validators.required]],
       theaterFloor: ['', [Validators.required]],
-      theaterType:['', [Validators.required]],
+      theaterType: ['', [Validators.required]],
       row: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       col: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      rowType: [true]
+      rowType: [true],
+      step2: this.fb.group({})
     });
   }
-
+  /**
+   * 設定子表單
+   * @param event 傳入值
+   * @param fgName 'sampleSchedule' | 'applyQualify'
+   */
+  addForm(event: any, fgName: 'step2'): void {
+    this.formGroup.setControl(fgName, event);
+  }
 
   onPositiveClick(action: ACTION_CONFIG) {
     switch (action) {
@@ -83,16 +92,23 @@ export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
         const col = this.formGroup.get('col')?.value;
         const rowType = this.formGroup.get('rowType')?.value;
         this.step2?.seatChartGenerator(col, row, rowType);
+        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
         this.formGroup.disable();
         break;
       case Step.seatMapSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.seatType);
         this.step++;
         break;
       case Step.seatTypeSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.disable);
         this.step++;
+        const formValue= this.formGroup.getRawValue();
+        console.log(formValue);
+        
+        this.finish();
         break;
       case Step.finish:
-        this.finish();
+
         break;
       default:
         break;
@@ -108,26 +124,16 @@ export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
         this.step--;
         break;
       case Step.seatTypeSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
         this.step--;
         break;
       case Step.finish:
+        this.step2?.setSeatSettingType(SeatSettingType.seatType);
         this.step--;
         break;
       default:
         break;
     }
-
-
-    // if (this.step != 1) {
-    //   this.step--;
-    // }
-
-    // // 若沒有按產生座位表，要把上一次輸入的值洗掉
-    // // TODO: 輸入框的值不知道為什麼洗不掉ＱＱ
-    // this.formGroup.get('theaterFloor')?.setValue(this.floor);
-    // this.formGroup.get('theaterType')?.setValue(this.equipmentOption);
-    // this.formGroup.get('rowType')?.setValue(this.type);
-    // this.formGroup.get('row')?.setValue(this.row);
   }
 
   selectedText = "";

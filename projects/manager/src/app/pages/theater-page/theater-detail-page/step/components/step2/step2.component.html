@@ -31,7 +31,7 @@
             <li *ngFor="let row of rowsArr index as i">
                 <ul class="flex">
                     <li *ngFor="let col of colsArr index as j" class="m-0.5 flex-1">
-                        <app-manager-seatchart-seat [seatIndex]="(i*(colsArr.length+1)) + j" [step]="step"
+                        <app-manager-seatchart-seat [seatIndex]="(i*(colsArr.length+1)) + j" [seatSetting]="seatSetting"
                             (activeOut)="activeOut($event)"></app-manager-seatchart-seat>
                     </li>
                 </ul>

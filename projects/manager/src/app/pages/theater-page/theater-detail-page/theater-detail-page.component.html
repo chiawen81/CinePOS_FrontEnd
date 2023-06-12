@@ -90,7 +90,7 @@
                 <cine-card-content>
                     <!-- <app-manager-seatchart [step]="step" [row]="row" [col]="col" [type]="type"
                         (seatMapResult)="getSeatMapResult($event)"></app-manager-seatchart> -->
-                    <app-step2 [step]="step" (seatMapResult)="getSeatMapResult($event)"></app-step2>
+                    <app-step2 [step]="step" (fg)="addForm($event,'step2')"></app-step2>
                 </cine-card-content>
             </cine-card>
         </div>
@@ -113,7 +113,7 @@
                 <div class="flex-container"></div>
             </ng-template>
 
-            <div *ngIf="step < Step.finish" class="flex-container">
+            <div *ngIf="step < Step.finish && step !== Step.createMap" class="flex-container">
                 <div class="mt-[10px] mr-[8px]">下一步</div>
                 <button mat-raised-button color="primary" class="secondary btn-icon mr-[10px]"
                     (click)="onPositiveClick('next')">
