@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ScheduleListResData } from 'projects/staff/src/app/api/cinePOS-api';
 import { ShopCartInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
-import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking/booking.service';
+import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking.service';
 
 @Component({
   selector: 'app-movie',

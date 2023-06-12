@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking/booking.service';
+import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking.service';
 import { takeUntil } from 'rxjs';
 
 @Component({
