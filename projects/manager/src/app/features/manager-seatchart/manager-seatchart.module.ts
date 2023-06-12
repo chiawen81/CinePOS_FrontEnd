@@ -17,7 +17,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
   ],
   exports: [
-    ManagerSeatchartComponent
+    ManagerSeatchartComponent,
+    ManagerSeatchartSeatComponent
+
   ]
 })
 export class ManagerSeatchartModule { }

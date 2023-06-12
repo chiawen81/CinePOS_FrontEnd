@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { Step } from './step/enums/step';
+import { Step2Component } from './step/components/step2/step2.component';
 
 type ACTION_CONFIG = 'next' | 'back' | 'finish';
 
@@ -12,25 +13,23 @@ type ACTION_CONFIG = 'next' | 'back' | 'finish';
   templateUrl: './theater-detail-page.component.html',
   styleUrls: ['./theater-detail-page.component.scss']
 })
-export class TheaterDetailPageComponent implements OnInit {
+export class TheaterDetailPageComponent implements OnInit,AfterViewInit {
+  @ViewChild(Step2Component) step2?: Step2Component;
 
+  Step = Step;
   formGroup!: FormGroup;
 
   /* API */
   typeOptions: CommonOptionSuccessDataItem[] = [];
 
-  /* 表單取值 */
-  get theaterName() { return this.formGroup.get('theaterName') as FormControl; }        // 影廳名稱
-  get theaterFloor() { return this.formGroup.get('theaterFloor') as FormControl; }        // 影廳樓層
-  get theaterType() { return this.formGroup.get('theaterType') as FormControl; }        // 影廳類型
-  get row() { return this.formGroup.get('row') as FormControl; }        // 直排格數
-  get col() { return this.formGroup.get('col') as FormControl; }        // 橫排格數
-  get rowType() { return this.formGroup.get('rowType') as FormControl; }        // row是英文還數字
+  row: number = 0;
+  col: number = 0;
+  type: boolean = true;
 
   constructor(
     private commonAPIService: CommonAPIService,
     private changeDetectorRef: ChangeDetectorRef,
-    private fb :FormBuilder
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -39,46 +38,28 @@ export class TheaterDetailPageComponent implements OnInit {
 
     //取得影廳類型資料
     this.getOptionAPI(2);
-
-    //default: row是英文
-    this.formGroup.get('rowType')?.setValue(1);
   }
 
-  handleChange(event:any) {
+  ngAfterViewInit(){
+    console.log(this.step2);
 
   }
+  handleChange(event: any) {
 
+  }
 
   // 查詢- 初始化表單
   initForm() {
     this.formGroup = this.fb.group({
-      theaterName: new FormControl(""),
-      theaterFloor: new FormControl(""),
-      theaterType: new FormControl(""),
-      row:  ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      col:  ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      rowType: new FormControl(true)
+      theaterName: ['', [Validators.required]],
+      theaterFloor: ['', [Validators.required]],
+      theaterType:['', [Validators.required]],
+      row: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      col: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      rowType: [true]
     });
   }
 
-  rows: number = 0;
-  cols: number = 0;
-  name: string = "";
-  floor: number = 0;
-  equipment: string = "";
-  equipmentOption: number = 0;
-  type: boolean = true;
-  isVisible = false;
-  createMap(): void {
-    const rows = this.formGroup.get('rows')?.value;
-    const cols = this.formGroup.get('cols')?.value;
-
-    if (rows > 0 && cols > 0) {
-      this.isVisible = true;
-    } else {
-      this.isVisible = false;
-    }
-  }
 
   onPositiveClick(action: ACTION_CONFIG) {
     switch (action) {
@@ -98,6 +79,10 @@ export class TheaterDetailPageComponent implements OnInit {
     switch (this.step) {
       case Step.createMap:
         this.step++;
+        const row = this.formGroup.get('row')?.value;
+        const col = this.formGroup.get('col')?.value;
+        const rowType = this.formGroup.get('rowType')?.value;
+        this.step2?.seatChartGenerator(col, row, rowType);
         this.formGroup.disable();
         break;
       case Step.seatMapSetting:
@@ -107,6 +92,7 @@ export class TheaterDetailPageComponent implements OnInit {
         this.step++;
         break;
       case Step.finish:
+        this.finish();
         break;
       default:
         break;
@@ -141,7 +127,7 @@ export class TheaterDetailPageComponent implements OnInit {
     // this.formGroup.get('theaterFloor')?.setValue(this.floor);
     // this.formGroup.get('theaterType')?.setValue(this.equipmentOption);
     // this.formGroup.get('rowType')?.setValue(this.type);
-    // this.formGroup.get('row')?.setValue(this.rows);
+    // this.formGroup.get('row')?.setValue(this.row);
   }
 
   selectedText = "";
