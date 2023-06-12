@@ -16,7 +16,7 @@
   </div>
   <!-- 顯示訂單內電影票資訊 -->
   <div class="example-section  mt-6 pt-2 pl-6 checkbox-item" *ngIf="this.checkData.length>0">
-    <div class="example-list-section" *ngIf="this.checkData.length>1">
+    <div class="example-list-section" *ngIf="this.checkData.length>1 && !allTimeOver && !allIsRefund">
       <mat-checkbox class="example-margin" [checked]="allCheck" [color]="'primary'" [indeterminate]="someCheck()"
         (change)="setAll($event.checked)">
         全選
@@ -25,9 +25,25 @@
     <div class="example-list-section ml-5 pr-4 w-11/12" [class.ml-5]="this.checkData.length>1">
       <ul>
         <li *ngFor="let item of checkData" class="border-b border-primary-400 pb-2 my-4  ">
-          <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllCheck()">
-            <app-refund-item [data]="item.data"></app-refund-item>
-          </mat-checkbox>
+          <ng-template [ngIf]="item.data.ticketStatus!==1" [ngIfElse]="cantRefund">
+            <ng-template [ngIf]="checkTime(item.data.time)" [ngIfElse]="timeOver">
+              <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllCheck()">
+                <app-refund-item [data]="item.data" [isOverTime]="false"></app-refund-item>
+              </mat-checkbox>
+            </ng-template>
+            <ng-template #timeOver>
+              <app-refund-item [data]="item.data" [isOverTime]="true"></app-refund-item>
+            </ng-template>
+
+          </ng-template>
+          <ng-template #cantRefund>
+            <div class="relative">
+              <div class="absolute inset-0 flex justify-center items-center">
+                <span class="origin-center -rotate-12 text-2xl">已退</span>
+              </div>
+              <app-refund-item [data]="item.data" class="opacity-25"></app-refund-item>
+            </div>
+          </ng-template>
         </li>
       </ul>
     </div>

@@ -17,6 +17,7 @@ export class RefundItemComponent implements OnInit {
     seatId: '',
     seatName: ''
   }
+  @Input() isOverTime:boolean = false;
   constructor() { }
   ngOnInit(): void {
   }

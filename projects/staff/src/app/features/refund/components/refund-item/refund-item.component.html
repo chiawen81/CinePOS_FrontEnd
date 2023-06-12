@@ -1,7 +1,13 @@
 <ul class="ml-3">
   <!-- 日期時間 -->
   <li class="font-medium">
-    {{ data.time| date:'M/d HH:mm' }}
+    <ng-template [ngIf]="isOverTime" [ngIfElse]="noOverTime">
+      <span class="text-warn-100">{{ data.time| date:'M/d HH:mm' }} 開演前30分鐘內無法退票</span>
+    </ng-template>
+    <ng-template #noOverTime>
+      <span>{{ data.time| date:'M/d HH:mm' }}</span>
+    </ng-template>
+
   </li>
   <!-- 電影名稱 -->
   <li>
