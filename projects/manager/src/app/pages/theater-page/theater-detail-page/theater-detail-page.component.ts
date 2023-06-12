@@ -102,9 +102,6 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       case Step.seatTypeSetting:
         this.step2?.setSeatSettingType(SeatSettingType.disable);
         this.step++;
-        const formValue= this.formGroup.getRawValue();
-        console.log(formValue);
-        
         this.finish();
         break;
       case Step.finish:
@@ -154,9 +151,8 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
 
   finish(): void {
     console.log("=== get result ===");
-    console.log(this.seatMap);
-    console.log(this.rowLabel);
-    console.log(this.colLabel);
+    const formValue= this.formGroup.getRawValue();
+    console.log(formValue);
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
