@@ -14,6 +14,31 @@
     flex-grow: 0;
 }
 
-.text-input {
+// .text-input {
+//     background: #1A1A1A;
+// }
+
+.row-rank {
+    color: #9C6DFF;
+    border: 1px solid #9C6DFF;
     background: #1A1A1A;
+
+    &:disabled {
+        border: 0px;
+        @apply text-gray-400;
+        background: unset;
+    }
+}
+
+.col-rank {
+    color: #71DDFF;
+    border: 1px solid #71DDFF;
+    font-size: 60%;
+    background: #1A1A1A;
+
+    &:disabled {
+        border: 0px;
+        @apply text-gray-400;
+        background: unset;
+    }
 }

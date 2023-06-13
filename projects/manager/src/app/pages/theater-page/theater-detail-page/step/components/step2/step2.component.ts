@@ -52,10 +52,11 @@ export class Step2Component implements OnInit {
    * @param {boolean} type - 座位圖的類型（可選）。
    */
   seatChartGenerator(cols: number, rows: number, type: boolean) {
-
+    console.log('seatChartGenerator');
+    
     this.responseArr = Array(rows * cols).fill('0'); // 生成 responseArr
     this.rowsArr = Array(rows).fill('0'); // 生成 rowsArr
-    this.colsArr = Array(cols).fill('0'); // 生成 colsArr
+    this.colsArr = Array(rows).fill('0'); // 生成 colsArr
     this.type = type
     this.rowsOrder = this.createRowsOrder(rows, type);
     this.colsOrder = this.createRowsOrder(cols, false);

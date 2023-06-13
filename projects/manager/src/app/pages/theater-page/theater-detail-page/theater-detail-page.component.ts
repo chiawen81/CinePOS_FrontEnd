@@ -87,13 +87,21 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   nextStep(): void {
     switch (this.step) {
       case Step.createMap:
+        // if(this.formGroup.invalid){
+        //   return;
+        // }
         this.step++;
         const row = this.formGroup.get('row')?.value;
         const col = this.formGroup.get('col')?.value;
         const rowType = this.formGroup.get('rowType')?.value;
         this.step2?.seatChartGenerator(col, row, rowType);
-        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
+        this.step2?.setSeatSettingType(SeatSettingType.disable);
         this.formGroup.disable();
+        break;
+      case Step.rank:
+
+        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
+        this.step++;
         break;
       case Step.seatMapSetting:
         this.step2?.setSeatSettingType(SeatSettingType.seatType);
@@ -116,8 +124,12 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     switch (this.step) {
       case Step.createMap:
         break;
-      case Step.seatMapSetting:
+      case Step.rank:
         this.formGroup.enable();
+        this.step--;
+        break;
+      case Step.seatMapSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.disable);
         this.step--;
         break;
       case Step.seatTypeSetting:
@@ -151,7 +163,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
 
   finish(): void {
     console.log("=== get result ===");
-    const formValue= this.formGroup.getRawValue();
+    const formValue = this.formGroup.getRawValue();
     console.log(formValue);
   }
 
