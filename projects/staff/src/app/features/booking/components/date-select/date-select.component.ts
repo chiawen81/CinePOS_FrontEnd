@@ -24,7 +24,6 @@ export class DateSelectComponent implements OnInit {
   ngOnInit(): void {
     this.dateIndex === 0 ? this.isActive = true: this.isActive = false;
 
-
     this.bookingService.dateSelect$
       .pipe(
         takeUntil(this.bookingService.onDestroy$)
@@ -38,13 +37,15 @@ export class DateSelectComponent implements OnInit {
       })
   }
 
+  ngOnDestroy(): void {
+    this.bookingService.onDestroy$.next();
+  }
+
   dateOutput(): void{
     this.dateEmit.emit(String(this.date.getTime()));
   }
 
-  ngOnDestroy(): void {
-    this.bookingService.onDestroy$.next();
-  }
+
 
 
 
