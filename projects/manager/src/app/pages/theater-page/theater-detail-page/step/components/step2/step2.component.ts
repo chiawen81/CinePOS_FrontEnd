@@ -30,7 +30,6 @@ export class Step2Component implements OnInit {
   @Output() fg = new EventEmitter<FormGroup>();
   validateForm!: FormGroup;
   seatSetting!: SeatSettingType;
-  cols = 0;
   constructor(
     // public parentF: FormGroupDirective,
     private fb: FormBuilder
@@ -57,10 +56,9 @@ export class Step2Component implements OnInit {
     this.responseArr = Array(rows * cols).fill('0'); // 生成 responseArr
     this.rowsArr = Array(rows).fill('0'); // 生成 rowsArr
     this.colsArr = Array(cols).fill('0'); // 生成 colsArr
-    this.cols = cols;
     this.type = type
     this.rowsOrder = this.createRowsOrder(rows, type);
-    this.colsOrder = this.createRowsOrder(rows, false);
+    this.colsOrder = this.createRowsOrder(cols, false);
   }
 
   setSeatSettingType(seatSetting: SeatSettingType) {
