@@ -550,18 +550,12 @@ export class ManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'body', reportProgress?: boolean): Observable<TimetableListRes>;
-    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableListRes>>;
-    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableListRes>>;
-    public v1ManagerTimetableListGet(startDate: number, endDate: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public v1ManagerTimetableListGet(startDate?: number, endDate?: number, observe?: 'body', reportProgress?: boolean): Observable<TimetableListRes>;
+    public v1ManagerTimetableListGet(startDate?: number, endDate?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate?: number, endDate?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimetableListRes>>;
+    public v1ManagerTimetableListGet(startDate?: number, endDate?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (startDate === null || startDate === undefined) {
-            throw new Error('Required parameter startDate was null or undefined when calling v1ManagerTimetableListGet.');
-        }
 
-        if (endDate === null || endDate === undefined) {
-            throw new Error('Required parameter endDate was null or undefined when calling v1ManagerTimetableListGet.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (startDate !== undefined && startDate !== null) {

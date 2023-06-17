@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
-import { BookingService } from '../../services/booking/booking.service';
+import { BookingService } from '../../services/booking.service';
 import { TicketTypeResData } from 'projects/manager/src/app/api/cinePOS-api';
 interface TicketSelect {
   isAdd: boolean;

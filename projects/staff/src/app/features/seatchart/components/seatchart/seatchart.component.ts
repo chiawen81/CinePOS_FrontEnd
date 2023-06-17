@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking/booking.service';
+import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking.service';
 interface SeatData {
   seatName: string;
   isActive: boolean;
