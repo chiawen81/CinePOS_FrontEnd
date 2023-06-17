@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaymentPageComponent } from './payment-page.component';
+import { CustomCurrencyPipe, PaymentPageComponent } from './payment-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { DialogOrderDetailComponent } from './components/dialog-order-detail/dialog-order-detail.component';
 
 const routes: Routes = [
   {
@@ -12,10 +15,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PaymentPageComponent
+    PaymentPageComponent,
+    CustomCurrencyPipe,
+    DialogOrderDetailComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
   ]
 })

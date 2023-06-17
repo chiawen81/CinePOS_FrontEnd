@@ -9,6 +9,8 @@ import { range } from 'rxjs';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
 import { MovieDetailCreateParameterCustomer, MovieDetailUpdateParameterCustomer } from '../../../core/interface/movie';
 import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
+import { ChatGPTService } from '../services/chatGPT.service';
+import { LoadingService } from 'projects/share-libs/src/public-api';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -20,6 +22,8 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   isEdit: boolean = false;                                                                  // 是否為編輯頁（true：是）
   formGroup!: FormGroup;
   movieId: string = "";                                                                     // 電影編號
+  isOpenBrainStormTitleArea: boolean = false;                                               // 電影名稱- 是否開啟電影中文發想區
+  brainStormTitle: string = "";                                                             // 電影名稱- chatGPT發想的中文片名
 
   /* API */
   movieInfoAPI!: MovieDetailRes;                                                            // API- 電影資訊
@@ -27,6 +31,14 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   provideVersionOptions: CommonOptionSuccessDataItem[] = [];                                // API- 選項：提供設備
   rateOptions: CommonOptionSuccessDataItem[] = [];                                          // API- 選項：分級
   statusOptions: CommonOptionSuccessDataItem[] = [];                                        // API- 選項：狀態
+  titleChatGPTMsg = [{                                                                      // API- 電影中文發想chatGPT相關API參數
+    role: 'assistant',
+    content: "你今後的對話中，請你扮演我的電影企劃，負責幫我發想適合的中文片名。我會給你這部影片的相關資訊，請你以電影主旨、劇情、原文片名等等相關資訊，給我五個具有創意、令人印象深刻的中文片名！請以數字列點式的方式回答我（不需要告知命名原因），每筆資料結尾請幫我換行。謝謝你！}"
+  }];
+  articleChatGPTMsg = [{                                                                    // API- 電影描述chatGPT相關API參數
+    role: 'assistant',
+    content: "你今後的對話中，請你扮演我的文字編輯，負責幫我把「電影介紹的文案」做潤飾，使我的文案看起來更加順暢(請注意，不可改變片名、演員名稱)。"
+  }];
 
   /* 表單取值 */
   get title() { return this.formGroup.get('title') as FormControl; }                        // 電影名稱
@@ -49,7 +61,9 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     private _Router: Router,
     private _MoviePageService: MoviePageService,
     private _CommonAPIService: CommonAPIService,
+    private _ChatGPTService: ChatGPTService,
     private _ChangeDetectorRef: ChangeDetectorRef,
+    private _LoadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -109,6 +123,64 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
 
 
+  // 電影中文- 顯示電影中文發想區
+  toggleBrainStormTitleArea() {
+    this.isOpenBrainStormTitleArea = true;
+  }
+
+
+
+  // 電影中文- 取得建議
+  async createMovieTitle() {
+    if (this.enTitle.value || this.title.value || this.description.value) {
+      this._LoadingService.loading(true);
+      let newTitleMsg = this.getNewTitleMsg();
+      let newAdvice = await this._ChatGPTService.getAdvice(newTitleMsg);
+      console.log('newArticle', newAdvice, newAdvice.choices[0].message.content);
+      this.brainStormTitle = newAdvice.choices[0].message.content;
+      this._LoadingService.loading(false);
+
+    } else {
+      alert("請至少輸入電影英文名稱、電影簡介，或是目前發想的中文片名！");
+    };
+  }
+
+
+
+  // 電影描述- 取得一鍵優化API參數
+  getNewTitleMsg() {
+    let movieInfo = "";
+    let messgae = { role: 'assistant', content: "" };
+
+    // 基本指令
+    if (this.titleChatGPTMsg.length > 1) {
+      messgae.content = '謝謝你之前提供的電影中文名稱發想。請你根據我最新提供的電影資訊，再給我五個具有創意、令人印象深刻的中文片名！請注意，請以數字列點式的方式回答我（不需要告知命名原因），每筆資料結尾請幫我換行。謝謝你！';
+    } else {
+      messgae.content = '請你根據我提供的電影資訊，給我五個具有創意、令人印象深刻的中文片名！';
+    };
+
+    // 電影資訊
+    if (this.title.value) {
+      movieInfo += `現在暫定的電影中文名稱：${this.title.value},`;
+    };
+
+    if (this.enTitle.value) {
+      movieInfo += `電影原文片名：${this.enTitle.value},`;
+    };
+
+    if (this.description.value) {
+      movieInfo += `電影簡介：${this.description.value},`;
+    };
+
+    messgae.content += movieInfo;
+    this.titleChatGPTMsg.push(messgae);
+
+    return this.titleChatGPTMsg;
+  }
+
+
+
+
   // 主演- 新增
   addCast(): void {
     this.cast.push(new FormControl(""));
@@ -130,6 +202,42 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
 
       this.postPosterAPI(file);
     };
+  }
+
+
+
+  // 電影描述- 一鍵優化
+  async improveArticle() {
+    console.log(123)
+    if (this.description.value) {
+      this._LoadingService.loading(true);
+      let newArticleMsg = this.getNewArticleMsg(this.description.value);
+      let newAdvice = await this._ChatGPTService.getAdvice(newArticleMsg);
+      console.log('newArticle', newAdvice, newAdvice.choices[0].message.content);
+      this._LoadingService.loading(false);
+      this.description.setValue(newAdvice.choices[0].message.content);
+
+    } else {
+      alert("請先填寫電影描述，才能使用此功能！");
+    };
+  }
+
+
+
+  // 電影描述- 取得一鍵優化API參數
+  getNewArticleMsg(description: string) {
+    let messgae = { role: 'assistant', content: description };
+
+    if (this.titleChatGPTMsg.length > 1) {
+      if (description) {
+        messgae.content = '謝謝你之前提供的文案，我已經將你的文案稍作調整，請你根據調整方向再給我一份更符合我需求的文案。以下為我剛剛微調的文案：' + description;
+      } else {
+        messgae.content = "剛剛的文案我不太滿意，請你再幫我做一次文案的潤飾！謝謝你！"
+      };
+    };
+
+    this.articleChatGPTMsg.push(messgae);
+    return this.articleChatGPTMsg;
   }
 
 
