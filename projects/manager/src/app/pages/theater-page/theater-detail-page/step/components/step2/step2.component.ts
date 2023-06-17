@@ -62,6 +62,10 @@ export class Step2Component implements OnInit {
     this.type = type
     this.rowsOrder = this.createRowsOrder(rows, type);
     this.colsOrder = this.createRowsOrder(cols, false);
+
+    this.validateForm.get('seatMap')?.patchValue(this.responseArr);
+    this.validateForm.get('rowLabel')?.patchValue(this.rowsOrder);
+    this.validateForm.get('colLabel')?.patchValue(this.colsOrder);
   }
 
   setSeatSettingType(seatSetting: SeatSettingType) {

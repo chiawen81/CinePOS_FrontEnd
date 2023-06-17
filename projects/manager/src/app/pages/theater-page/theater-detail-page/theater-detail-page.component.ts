@@ -53,8 +53,13 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     console.log(this.step2);
 
   }
-  handleChange(event: any) {
 
+  // 當row & col輸入為小數點時自動轉為整數
+  inputRow!: number;
+  inputCol!: number;
+  handleChange() {
+    this.inputRow = Math.ceil(this.inputRow);
+    this.inputCol = Math.ceil(this.inputCol);
   }
 
   // 查詢- 初始化表單
@@ -99,6 +104,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     switch (this.step) {
       case Step.createMap:
         if(this.formGroup.invalid){
+          alert("請填寫所有欄位");
           return;
         }
         this.step++;

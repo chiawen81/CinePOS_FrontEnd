@@ -64,13 +64,13 @@
                     <div class="row">
                         <span class="form-title">直排格數</span>
                         <div class="form-content">
-                            <input class="form-input" type="number" min="1" formControlName="row">
+                            <input class="form-input" type="number" min="1" [(ngModel)]="inputRow" (input)="handleChange()" formControlName="row">
                         </div>
                     </div>
                     <div class="row">
                         <span class="form-title">橫排格數</span>
                         <div class="form-content">
-                            <input class="form-input" type="number" min="1" formControlName="col">
+                            <input class="form-input" type="number" min="1" [(ngModel)]="inputCol" (input)="handleChange()" formControlName="col">
                         </div>
                     </div>
                     <div class="flex" style="justify-content: right;">
