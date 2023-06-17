@@ -14,6 +14,7 @@ export class ManagerSeatchartSeatComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
   /** */
   @Input() seatIndex: number = 0;
+  @Input() showType: string = '0';
   @Input() seatSetting!: number;
 
   @Output() activeOut = new EventEmitter<SeatData>();
@@ -21,6 +22,7 @@ export class ManagerSeatchartSeatComponent implements OnInit {
   type: seatType = '0';
 
   ngOnInit(): void {
+    this.type = this.showType as seatType;;
   }
 
   active(): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SeatData } from '../../interface/seat-data.interface';
+import { SeatSettingType } from '../../enums/seat-setting.enum';
 
 export interface SeatMapData {
   seatMap: string[];
@@ -23,11 +24,20 @@ export class ManagerSeatchartComponent implements OnInit {
   
   @Input() cols: number = 0; // col 個數
   @Input() rows: number = 0;; // row個數
+  @Input() isPreview: boolean = false; // 是否為檢視頁
+  @Input()  
+    getViewData: SeatMapData = {
+      seatMap: [],
+      rowLabel: [],
+      colLabel: []
+    };
+
   @Input() type: boolean = true; // row是英文還數字, true:英文; false:數字
   @Input() step: number = 1; // 步驟順序
 
   @Output() seatMapResult = new EventEmitter<SeatMapData>();
 
+  seatSetting!: SeatSettingType;
   constructor() { }
 
   ngOnInit(): void {
@@ -43,6 +53,16 @@ export class ManagerSeatchartComponent implements OnInit {
     if(this.colsOrder.length === 0 || this.colsOrder.length != this.cols){
       this.colsOrder = this.createRowsOrder(this.cols, false);
     } 
+
+    if(this.isPreview){
+    
+      console.log(this.getViewData);
+
+      this.responseArr = this.getViewData.seatMap;
+      this.rowsOrder = this.getViewData.rowLabel;
+      this.colsOrder = this.getViewData.colLabel;
+      this.seatSetting = 4 as SeatSettingType;
+    }
   }
 
   ngOnChanges(): void {
@@ -58,6 +78,16 @@ export class ManagerSeatchartComponent implements OnInit {
     if(this.colsOrder.length === 0 || this.colsOrder.length != this.cols){
       this.colsOrder = this.createRowsOrder(this.cols, false);
     } 
+
+    if(this.isPreview){
+    
+      console.log(this.getViewData);
+
+      this.responseArr = this.getViewData.seatMap;
+      this.rowsOrder = this.getViewData.rowLabel;
+      this.colsOrder = this.getViewData.colLabel;
+      this.seatSetting = 4 as SeatSettingType;
+    }
   }
 
   trackByIndex(index: number, item: any): number {
