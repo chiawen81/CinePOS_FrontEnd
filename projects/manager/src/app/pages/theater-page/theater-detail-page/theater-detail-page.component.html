@@ -113,7 +113,7 @@
                 <div class="flex-container"></div>
             </ng-template>
 
-            <div *ngIf="step < Step.finish && step !== Step.createMap" class="flex-container">
+            <div *ngIf="step < Step.seatTypeSetting && step !== Step.createMap" class="flex-container">
                 <div class="mt-[10px] mr-[8px]">下一步</div>
                 <button mat-raised-button color="primary" class="secondary btn-icon mr-[10px]"
                     (click)="onPositiveClick('next')">
@@ -121,7 +121,7 @@
                 </button>
             </div>
 
-            <div *ngIf="step === Step.finish" class="flex-container">
+            <div *ngIf="step === Step.seatTypeSetting" class="flex-container">
                 <button mat-raised-button color="primary" class='w-1/6' type="submit"
                     (click)="onPositiveClick('finish')">完成</button>
             </div>

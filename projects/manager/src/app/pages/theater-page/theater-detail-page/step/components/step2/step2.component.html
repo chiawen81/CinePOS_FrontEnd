@@ -8,9 +8,9 @@
     <div class="flex w-full p-5 pb-0">
         <!-- ABCD -->
         <ul *ngIf="colsArr.length > 0">
-            <li *ngFor="let order of rowsOrder; let i = index;" class="mx-3 my-0.5">
+            <li *ngFor="let order of rowsOrder; let i = index; trackBy: trackByIndex" class="mx-3 my-0.5">
                 <input class="w-8 h-7 p-1 mb-1 flex justify-center items-center text-center row-rank"
-                    [disabled]="step !== Step.rank" value={{order}} [(ngModel)]="rowsOrder[i]"
+                    [disabled]="step !== Step.rank" value={{order}} (input)="convertToUpperCase()" [(ngModel)]="rowsOrder[i]"
                     (click)="selectAllText()">
             </li>
         </ul>
@@ -35,7 +35,7 @@
         </div>
         <div class="flex-1">
             <ul *ngIf="rowsArr.length > 0" class="flex justify-between">
-                <li *ngFor="let order of colsOrder; let j = index;">
+                <li *ngFor="let order of colsOrder; let j = index; trackBy: trackByIndex">
                     <input class="w-full text-center h-6 col-rank" [disabled]="step !== Step.rank" value={{order}}
                         [(ngModel)]="colsOrder[j]" #inputRef="ngModel" (click)="selectAllText()">
                 </li>

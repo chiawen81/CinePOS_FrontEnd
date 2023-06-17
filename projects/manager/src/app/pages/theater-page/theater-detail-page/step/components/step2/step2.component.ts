@@ -38,7 +38,9 @@ export class Step2Component implements OnInit {
   ngOnInit(): void {
     // 裝進去一次之後，根表單會控管
     this.validateForm = this.fb.group({
-      responseArr: []
+      seatMap: [],
+      rowLabel: [],
+      colLabel: []
     })
     this.fg.emit(this.validateForm);
   }
@@ -56,7 +58,7 @@ export class Step2Component implements OnInit {
     
     this.responseArr = Array(rows * cols).fill('0'); // 生成 responseArr
     this.rowsArr = Array(rows).fill('0'); // 生成 rowsArr
-    this.colsArr = Array(rows).fill('0'); // 生成 colsArr
+    this.colsArr = Array(cols).fill('0'); // 生成 colsArr
     this.type = type
     this.rowsOrder = this.createRowsOrder(rows, type);
     this.colsOrder = this.createRowsOrder(cols, false);
@@ -71,8 +73,21 @@ export class Step2Component implements OnInit {
     this.responseArr[$event.seatIndex] = $event.type;
     console.log($event.seatIndex);
     console.log(this.responseArr);
-    this.validateForm.get('responseArr')?.patchValue(this.responseArr);
+    this.validateForm.get('seatMap')?.patchValue(this.responseArr);
+    this.validateForm.get('rowLabel')?.patchValue(this.rowsOrder);
+    this.validateForm.get('colLabel')?.patchValue(this.colsOrder);
   }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
+  convertToUpperCase() {
+    for (let i = 0; i < this.rowsOrder.length; i++) {
+      this.rowsOrder[i] = this.rowsOrder[i].toUpperCase();
+    }
+  }
+
   selectAllText(): void {
     if (document.activeElement instanceof HTMLInputElement) {
       document.activeElement.select();

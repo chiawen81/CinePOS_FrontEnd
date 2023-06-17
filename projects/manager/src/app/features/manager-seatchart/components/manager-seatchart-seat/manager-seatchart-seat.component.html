@@ -1,56 +1,32 @@
 <div [ngSwitch]="type">
   <ng-container *ngSwitchCase="'-1'">
-    <div class="seat seat-free" (click)="active()">
+    <div *ngIf="seatSetting!=2" class="seat seat-free" (click)="active()">
+      <img class="h-full mx-auto" src="assets/images/icon/no.svg" alt="no">
+    </div>
+    <div *ngIf="seatSetting===2" class="seat seat-sold">
       <img class="h-full mx-auto" src="assets/images/icon/no.svg" alt="no">
     </div>
   </ng-container>
 
   <ng-container *ngSwitchCase="'1'">
-    <div class="seat seat-free" (click)="active()">
+    <div *ngIf="seatSetting!=2" class="seat seat-free" (click)="active()">
+      <img class="h-full mx-auto" src="assets/images/icon/handicapped.png" alt="handicapped">
+    </div>
+    <div *ngIf="seatSetting===2" class="seat seat-sold">
       <img class="h-full mx-auto" src="assets/images/icon/handicapped.png" alt="handicapped">
     </div>
   </ng-container>
 
   <ng-container *ngSwitchCase="'N'">
-    <div class="seat seat-none" (click)="active()">
+    <div *ngIf="seatSetting!=1" class="seat seat-none" (click)="active()">
+    </div>
+    <div *ngIf="seatSetting===1" class="seat seat-none">
     </div>
   </ng-container>
 
   <ng-container *ngSwitchDefault>
-    <div class="seat seat-free" (click)="active()">
-    </div>
+    <div *ngIf="seatSetting!=2" class="seat seat-free" (click)="active()"></div>
+    <div *ngIf="seatSetting===2" class="seat seat-sold"></div>
   </ng-container>
 </div>
 
-
-<!-- <div [ngSwitch]="type">
-  <ng-container *ngSwitchCase="'-1'">
-    <div *ngIf="step===1 || step===3" class="seat seat-free" (click)="active()">
-      <img class="h-full mx-auto" src="assets/images/icon/no.svg" alt="no">
-    </div>
-    <div *ngIf="step===2" class="seat seat-sold">
-      <img class="h-full mx-auto" src="assets/images/icon/no.svg" alt="no">
-    </div>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'1'">
-    <div *ngIf="step===1 || step===3" class="seat seat-free" (click)="active()">
-      <img class="h-full mx-auto" src="assets/images/icon/handicapped.png" alt="handicapped">
-    </div>
-    <div *ngIf="step===2" class="seat seat-sold">
-      <img class="h-full mx-auto" src="assets/images/icon/handicapped.png" alt="handicapped">
-    </div>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'N'">
-    <div *ngIf="step===3" class="seat seat-none">
-    </div>
-    <div *ngIf="step!=3" class="seat seat-none" [class.step1-none]="step===1" (click)="active()">
-    </div>
-  </ng-container>
-
-  <ng-container *ngSwitchDefault>
-    <div *ngIf="step===1 || step===3" class="seat seat-free" (click)="active()"></div>
-    <div *ngIf="step===2" class="seat seat-sold"></div>
-  </ng-container>
-</div> -->

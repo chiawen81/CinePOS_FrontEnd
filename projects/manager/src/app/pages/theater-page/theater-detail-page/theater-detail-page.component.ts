@@ -39,6 +39,9 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
 
     //取得影廳類型資料
     this.getOptionAPI(2);
+
+    //default: row是英文
+    this.formGroup.get('rowType')?.setValue(1);
   }
 
   ngAfterViewInit() {
@@ -78,6 +81,9 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       case 'back':
         this.lastStep();
         break;
+      case 'finish':
+        this.finish();
+        break;
       default:
         break;
     }
@@ -87,33 +93,27 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   nextStep(): void {
     switch (this.step) {
       case Step.createMap:
-        // if(this.formGroup.invalid){
-        //   return;
-        // }
+        if(this.formGroup.invalid){
+          return;
+        }
         this.step++;
         const row = this.formGroup.get('row')?.value;
         const col = this.formGroup.get('col')?.value;
         const rowType = this.formGroup.get('rowType')?.value;
         this.step2?.seatChartGenerator(col, row, rowType);
-        this.step2?.setSeatSettingType(SeatSettingType.disable);
+        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
         this.formGroup.disable();
         break;
-      case Step.rank:
-
-        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
+      case Step.seatMapSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.disable);
         this.step++;
         break;
-      case Step.seatMapSetting:
+      case Step.rank:
         this.step2?.setSeatSettingType(SeatSettingType.seatType);
         this.step++;
         break;
       case Step.seatTypeSetting:
         this.step2?.setSeatSettingType(SeatSettingType.disable);
-        this.step++;
-        this.finish();
-        break;
-      case Step.finish:
-
         break;
       default:
         break;
@@ -121,24 +121,21 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   lastStep(): void {
+    this.step--;
+
     switch (this.step) {
       case Step.createMap:
-        break;
-      case Step.rank:
         this.formGroup.enable();
-        this.step--;
+        this.step2?.setSeatSettingType(SeatSettingType.disable);
         break;
       case Step.seatMapSetting:
+        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
+        break;
+      case Step.rank:
         this.step2?.setSeatSettingType(SeatSettingType.disable);
-        this.step--;
         break;
       case Step.seatTypeSetting:
-        this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
-        this.step--;
-        break;
-      case Step.finish:
         this.step2?.setSeatSettingType(SeatSettingType.seatType);
-        this.step--;
         break;
       default:
         break;
@@ -165,6 +162,8 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     console.log("=== get result ===");
     const formValue = this.formGroup.getRawValue();
     console.log(formValue);
+    console.log(this.rowLabel);
+    console.log(this.colLabel);
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
