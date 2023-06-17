@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../services/booking/booking.service';
+import { BookingService } from '../../services/booking.service';
 import { catchError, concatMap, filter, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';

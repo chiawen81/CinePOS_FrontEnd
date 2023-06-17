@@ -9,16 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { StaffOrderSearchSuccessDataTicketList } from './staffOrderSearchSuccessDataTicketList';
 
-export interface StaffOrderSearchSuccessData { 
+export interface PatchOrderReqInner { 
     /**
-     * 訂單ID
+     * orderID
      */
-    orderId: string;
+    id: string;
     /**
-     * 訂單總金額
+     * 付款狀態(-1:付款失敗,0:未付款,1:已付款,2:部分退款,3:全部退款)
      */
-    amount: number;
-    ticketList: Array<StaffOrderSearchSuccessDataTicketList>;
+    status: number;
+    /**
+     * 扣款金額
+     */
+    newAmount: number;
 }

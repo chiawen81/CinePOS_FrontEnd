@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SeatRes } from 'projects/staff/src/app/api/cinePOS-api';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
-import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking/booking.service';
+import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking.service';
 
 @Component({
   selector: 'app-seat-dialog',
