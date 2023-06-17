@@ -2,9 +2,12 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
+import { TheaterService } from './../services/theater.service';
 import { Step } from './step/enums/step';
 import { Step2Component } from './step/components/step2/step2.component';
 import { SeatSettingType } from '../../../features/manager-seatchart/enums/seat-setting.enum';
+import { Router } from '@angular/router';
+import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 type ACTION_CONFIG = 'next' | 'back' | 'finish';
 
@@ -30,6 +33,8 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   constructor(
     private commonAPIService: CommonAPIService,
     private changeDetectorRef: ChangeDetectorRef,
+    private theaterService: TheaterService,
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
@@ -147,6 +152,10 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     this.selectedText = item?.name;
   }
 
+  seatMap: string[] = [];
+  rowLabel: string[] = [];
+  colLabel: string[] = [];
+
   getSeatMapResult(result: any): void {
     // 在這裡處理回傳的 responseArr
     this.seatMap = result.seatMap;
@@ -154,16 +163,44 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     this.colLabel = result.colLabel;
   }
 
-  seatMap: string[] = [];
-  rowLabel: string[] = [];
-  colLabel: string[] = [];
-
   finish(): void {
     console.log("=== get result ===");
     const formValue = this.formGroup.getRawValue();
     console.log(formValue);
-    console.log(this.rowLabel);
-    console.log(this.colLabel);
+    console.log(formValue.step2.rowLabel);
+    console.log(formValue.step2.colLabel);
+
+    let totalCapacity: number = 0;
+    let wheelChairCapacity: number = 0;
+    for (const seatItem of formValue.step2.seatMap) {
+      if(seatItem != "N"){
+        totalCapacity++;
+      }
+
+      if(seatItem === "1"){
+        wheelChairCapacity++;
+      }
+    }
+
+    let para: any = {
+      name: formValue.theaterName,
+      type: formValue.theaterType,
+      floor: formValue.theaterFloor,
+      totalCapacity: totalCapacity,
+      wheelChairCapacity: wheelChairCapacity,
+      row: formValue.row,
+      col: formValue.col,
+      rowLabel: formValue.step2.rowLabel,
+      colLabel: formValue.step2.colLabel,
+      seatMap: formValue.step2.seatMap,
+      status: 0
+    };
+    
+    this.theaterService.createTheater(para).subscribe(res => {
+      console.log('新增影廳資訊-成功res', res);
+      this.router.navigate([STATIC_ROUTES.THEATER, res.data.theater._id]);
+      alert(res.message);
+    });
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
