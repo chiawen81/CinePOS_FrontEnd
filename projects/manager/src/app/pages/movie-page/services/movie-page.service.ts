@@ -2,24 +2,18 @@ import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
 import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
-import { MovieDetailUpdateSuccess } from '../../../api/cinePOS-api/model/movieDetailUpdateSuccess';
-import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
 import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
 import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
-import { StorageService } from '../../../core/services/storage/storage.service';
-import { ProfileData } from 'projects/staff/src/app/core/interface/profile-data';
-import { StorageEnum } from '../../../core/enums/storage/storage-enum';
-
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class MoviePageService {
 
   constructor(
-    private _ManagerService: ManagerService,
-    private _StorageService: StorageService,
+    private _ManagerService: ManagerService
   ) { }
 
   // 更新電影資訊

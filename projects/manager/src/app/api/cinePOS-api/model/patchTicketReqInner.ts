@@ -10,17 +10,17 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+export interface PatchTicketReqInner { 
     /**
-     * id
+     * ticketID
      */
     id: string;
     /**
-     * 票種名稱
+     * 是否退票
      */
-    type: string;
+    isRefund: boolean;
     /**
-     * 票價
+     * 退票方式(0:無、1:現金、2:line Pay)
      */
-    price: number;
+    refundMethod: number;
 }
