@@ -10,17 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+export interface CheckLockReq { 
     /**
-     * id
+     * 場次ID
      */
-    id: string;
-    /**
-     * 票種名稱
-     */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+    scheduleId: string;
+    seats: Array<string>;
 }

@@ -11,40 +11,40 @@
  */
 
 export interface ManagerMovieListSuccessDataInner {
-  /**
-   * 電影編號
-   */
-  _id?: string;
-  /**
-   * 上映狀態文字
-   */
-  statusName?: number;
-  /**
-   * 電影名稱
-   */
-  title?: string;
-  /**
-   * 劇情類型文字
-   */
-  genreName?: Array<string>;
-  /**
-   * 分級制度
-   */
-  rate?: number;
-  /**
-   * 分級制度文字
-   */
-  rateName?: string;
-  /**
-   * 發行日期
-   */
-  releaseDate?: any;
-  /**
-   * 片長
-   */
-  runtime: number;
-  /**
-   * 支援設備文字
-   */
-  provideVersionName?: Array<string>;
+    /**
+     * 電影編號
+     */
+    id?: string;
+    /**
+     * 上映狀態文字
+     */
+    statusName?: number;
+    /**
+     * 電影名稱
+     */
+    title?: string;
+    /**
+     * 劇情類型文字
+     */
+    genreName?: Array<string>;
+    /**
+     * 片長
+     */
+    runtime?: number;
+    /**
+     * 分級制度(0: 普通級,6: 保護級,12: 輔導十二級,15 : 輔導十五級,18: 限制級)
+     */
+    rate?: number;
+    /**
+     * 分級制度文字
+     */
+    rateName?: string;
+    /**
+     * 發行日期
+     */
+    releaseDate?: any;
+    /**
+     * 支援設備文字
+     */
+    provideVersionName?: Array<string>;
 }

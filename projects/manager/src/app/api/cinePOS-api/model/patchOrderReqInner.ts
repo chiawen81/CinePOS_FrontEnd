@@ -10,17 +10,17 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+export interface PatchOrderReqInner { 
     /**
-     * id
+     * orderID
      */
     id: string;
     /**
-     * 票種名稱
+     * 付款狀態(-1:付款失敗,0:未付款,1:已付款,2:部分退款,3:全部退款)
      */
-    type: string;
+    status: number;
     /**
-     * 票價
+     * 扣款金額
      */
-    price: number;
+    newAmount: number;
 }

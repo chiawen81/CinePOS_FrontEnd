@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CinePageSet } from '../../share/pagination/page-set';
-import { MoviePageService } from '../movie-page/services/movie-page.service';
-import { TimetableService } from '../timetable-page/services/timetable.service';
 import * as echarts from 'echarts';
+import { DashboardPageService } from './service/dashboard-page.service';
+import { DashboardBoxOfficeChartSuccessDataPercentChartData, DashboardBoxOfficeChartSuccessDataRankChartData, DashboardMetricSuccessData } from '../../api/cinePOS-api';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,22 +12,24 @@ import * as echarts from 'echarts';
 export class DashboardPageComponent implements OnInit {
   pageSet1 = new CinePageSet();
   isShowSchedule: boolean = false;                                                          // 是否顯示場次表
-
+  arrowWords: string = "";                                                                  // 漲幅文字
 
   /* API */
   scheduleListView: any = [];                                                               // API- 選項：狀態
   scheduleOriginalApiData: any = [];                                                        // API- 電影列表(原始資料)
+  metricData!: DashboardMetricSuccessData;                                                  // API- 當日營收資料
 
 
   constructor(
-    private _MoviePageService: MoviePageService,
-    private _TimetableService: TimetableService,
+    private _DashboardPageService: DashboardPageService,
     private _ChangeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
     this.getScheduleListAPI();                                                              // API- 取得選項資料
-
+    this.getBoxOfficeChartData("2023/06/12");                                               // API- 取得票房圖表資料
+    // ====  ps. 這裡之後可擴充做活的
+    this.getMetric("2023/06/12");                                                           // API- 取得當日營收
   }
 
 
@@ -36,14 +38,6 @@ export class DashboardPageComponent implements OnInit {
   // 圖表- 初始化
   initChart() {
     setTimeout(() => {
-      this.setIncomePercentChart();                                                         // 圖表- 電影票房佔比初始化
-    }, 2000);
-
-    setTimeout(() => {
-      this.setIncomeRankChart();                                                            // 圖表- 電影票房排行初始化
-    }, 3000);
-
-    setTimeout(() => {
       this.setCustomerChart();                                                              // 圖表- 觀影人數初始化
     }, 4000);
   }
@@ -51,34 +45,13 @@ export class DashboardPageComponent implements OnInit {
 
 
   // 圖表- 電影票房佔比初始化
-  setIncomePercentChart() {
+  setIncomePercentChart(percentChartData: DashboardBoxOfficeChartSuccessDataPercentChartData[]) {
     var myChart = echarts.init((document.getElementById('income-percent-chart') as any));
     var option = {
       series: [
         {
           type: 'pie',
-          data: [
-            {
-              value: 100,
-              name: '星際異攻隊3'
-            },
-            {
-              value: 200,
-              name: '梵蒂岡驅魔士'
-            },
-            {
-              value: 300,
-              name: '瑪利歐兄弟'
-            },
-            {
-              value: 400,
-              name: '玩命關頭12'
-            },
-            {
-              value: 500,
-              name: '鞋貓劍客3'
-            }
-          ],
+          data: percentChartData,
           roseType: 'area'
         }
       ],
@@ -92,17 +65,17 @@ export class DashboardPageComponent implements OnInit {
 
 
   // 圖表- 電影票房排行初始化
-  setIncomeRankChart() {
+  setIncomeRankChart(rankChartData: DashboardBoxOfficeChartSuccessDataRankChartData) {
     var myChart = echarts.init((document.getElementById('income-rank-chart') as any));
 
-    var data = [60, 120, 20, 70, 50, 180];
+    var data = rankChartData.value;
     var option = {
       xAxis: {
         max: 'dataMax'
       },
       yAxis: {
         type: 'category',
-        data: ['星際異攻隊3', '梵蒂岡驅魔士', '瑪利歐兄弟', '玩命關頭12', '鞋貓劍客3'],
+        data: rankChartData.name,
         inverse: true,
         animationDuration: 300,
         animationDurationUpdate: 300,
@@ -313,6 +286,35 @@ export class DashboardPageComponent implements OnInit {
     this.initChart();
   }
 
+
+
+  // API- 取得票房圖表資料
+  getBoxOfficeChartData(searchDate: string) {
+    this._DashboardPageService.getBoxOfficeChartData(searchDate).subscribe(res => {
+      console.log('電影票房圖表資料', res);
+
+      // 圖表- 電影票房佔比初始化
+      this.setIncomePercentChart(res.data!.percentChartData as DashboardBoxOfficeChartSuccessDataPercentChartData[]);
+
+      setTimeout(() => {
+        this.setIncomeRankChart(res.data!.rankChartData as DashboardBoxOfficeChartSuccessDataRankChartData);      // 圖表- 電影票房排行初始化
+      }, 2000);
+
+    });
+  }
+
+
+
+  // API- 取得當日營收
+  getMetric(searchDate: string) {
+    this._DashboardPageService.getMetric(searchDate).subscribe(res => {
+      this.metricData = res.data!;
+      this.arrowWords = ((this.metricData?.dailyIncome?.increasePercent as number) > 0) ? "↑" : "↓";
+      console.log('metricData', this.metricData?.dailyIncome);
+      this._ChangeDetectorRef.detectChanges();
+    });
+
+  }
 
 
 }

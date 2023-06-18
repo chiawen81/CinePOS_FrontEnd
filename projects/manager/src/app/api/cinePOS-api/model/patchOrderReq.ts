@@ -9,18 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { PatchOrderReqInner } from './patchOrderReqInner';
 
-export interface TicketTypeResData { 
-    /**
-     * id
-     */
-    id: string;
-    /**
-     * 票種名稱
-     */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+export interface PatchOrderReq extends Array<PatchOrderReqInner> { 
 }
