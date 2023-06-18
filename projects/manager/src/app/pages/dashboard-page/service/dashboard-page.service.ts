@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DashboardBoxOfficeChartSuccess, DashboardMetricSuccess, ManagerService } from '../../../api/cinePOS-api';
 import { Observable, filter, tap } from 'rxjs';
+import { ManagerService } from '../../../api/cinePOS-api/api/manager.service';
+import { DashboardMetricSuccess } from '../../../api/cinePOS-api/model/dashboardMetricSuccess';
+import { DashboardBoxOfficeChartSuccess } from '../../../api/cinePOS-api/model/dashboardBoxOfficeChartSuccess';
 
 @Injectable({
   providedIn: 'root'
