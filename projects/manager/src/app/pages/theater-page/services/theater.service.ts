@@ -99,14 +99,29 @@ export class TheaterService {
   //     )
   // }
 
-  // 更新電影資訊
-  updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
-    return (this.managerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
-      .pipe(
-        tap(res => res.code !== 1 && alert(res.message)),
-        filter(res => res.code === 1)
-      )
+  // 更新電影影廳
+  updateTheater(id: string, param: {
+    name: string,
+    type: number,
+    floor: number,
+    totalCapacity: number,
+    wheelChairCapacity: number,
+    row: number,
+    col: number,
+    rowLabel: string[],
+    colLabel: string[],
+    seatMap: string[]
+  }) {
+    const url = `theater/${id}`
+    return this.request(HTTP_METHOD.PATCH, param, url);
   }
+  // updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
+  //   return (this.managerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
+  //     .pipe(
+  //       tap(res => res.code !== 1 && alert(res.message)),
+  //       filter(res => res.code === 1)
+  //     )
+  // }
 
   // 發佈影廳
   updateStatus(id: string, param: {

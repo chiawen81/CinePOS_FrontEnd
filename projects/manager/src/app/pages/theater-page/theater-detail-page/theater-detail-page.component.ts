@@ -6,7 +6,7 @@ import { TheaterService } from './../services/theater.service';
 import { Step } from './step/enums/step';
 import { Step2Component } from './step/components/step2/step2.component';
 import { SeatSettingType } from '../../../features/manager-seatchart/enums/seat-setting.enum';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { STATIC_ROUTES } from '../../../core/constant/routes.constant';
 
 type ACTION_CONFIG = 'next' | 'back' | 'finish';
@@ -20,8 +20,10 @@ type ACTION_CONFIG = 'next' | 'back' | 'finish';
 export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild(Step2Component) step2?: Step2Component;
 
+  isEdit: boolean = false;
   Step = Step;
   formGroup!: FormGroup;
+  theaterId: string = "";
 
   /* API */
   typeOptions: CommonOptionSuccessDataItem[] = [];
@@ -34,6 +36,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     private commonAPIService: CommonAPIService,
     private changeDetectorRef: ChangeDetectorRef,
     private theaterService: TheaterService,
+    private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -41,12 +44,21 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.initForm();
+    this.isEdit = (this.route.snapshot?.url[1]?.path) === 'edit';
+    console.log('isEdit', this.isEdit, this.route.snapshot);
 
     //取得影廳類型資料
     this.getOptionAPI(2);
 
-    //default: row是英文
-    this.formGroup.get('rowType')?.setValue(1);
+    if (this.isEdit) {
+      // 編輯狀態
+      this.theaterId = this.route.snapshot.params['id'];
+      this.getTheaterInfoAPI(this.theaterId); // API- 取得影廳資訊
+    } else {
+      // 新增狀態
+      // default: row是英文
+      this.formGroup.get('rowType')?.setValue(1);
+    };
   }
 
   ngAfterViewInit() {
@@ -202,11 +214,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       status: 0
     };
     
-    this.theaterService.createTheater(para).subscribe(res => {
-      console.log('新增影廳資訊-成功res', res);
-      this.router.navigate([STATIC_ROUTES.THEATER, res.data.theater._id]);
-      alert(res.message);
-    });
+   this.postCreateTheaterAPI(para);
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
@@ -216,6 +224,37 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       console.log(typeId, '取得選項資料-成功res', res);
       this.typeOptions = res.data as CommonOptionSuccessDataItem[];
       this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  // API- 取得影廳資料
+  getTheaterInfoAPI(theaterId: string): void {
+    this.theaterService.getTheaterInfo(theaterId).subscribe(res => {
+      console.log(res)
+      // this.theaterData = res.data;
+      // this.rows = res.data.row;
+      // this.cols = res.data.col;
+      // this.getViewData.rowLabel = res.data.rowLabel;
+      // this.getViewData.colLabel = res.data.colLabel;
+      // this.getViewData.seatMap = res.data.seatMap;
+    });
+  }
+
+  // API- 新增影廳
+  postCreateTheaterAPI(para: any): void {
+    this.theaterService.createTheater(para).subscribe(res => {
+      console.log('新增影廳資訊-成功res', res);
+      this.router.navigate([STATIC_ROUTES.THEATER, res.data.theater._id]);
+      alert(res.message);
+    });
+  }
+
+  // API- 更新影廳
+  patchUpdateTheaterAPI(theaterId: string, para: any): void {
+    this.theaterService.updateTheater(theaterId, para).subscribe(res => {
+      console.log('更新影廳資訊-成功res', res);
+      this.router.navigate([STATIC_ROUTES.THEATER, STATIC_ROUTES.DETAIL, res.data.theater._id]);
+      alert(res.message);
     });
   }
 }
