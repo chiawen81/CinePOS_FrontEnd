@@ -9,16 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { StaffOrderSearchSuccessDataTicketList } from './staffOrderSearchSuccessDataTicketList';
 
-export interface StaffOrderSearchSuccessData { 
+export interface PatchSeatReqInner { 
     /**
-     * 訂單ID
+     * seatID
      */
-    orderId: string;
+    id: string;
     /**
-     * 訂單總金額
+     * 座位狀態(0:未售、1:已售、2:鎖定中、3:暫停販售)
      */
-    amount: number;
-    ticketList: Array<StaffOrderSearchSuccessDataTicketList>;
+    status: number;
 }

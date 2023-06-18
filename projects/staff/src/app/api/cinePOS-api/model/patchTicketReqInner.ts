@@ -9,16 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { StaffOrderSearchSuccessDataTicketList } from './staffOrderSearchSuccessDataTicketList';
 
-export interface StaffOrderSearchSuccessData { 
+export interface PatchTicketReqInner { 
     /**
-     * 訂單ID
+     * ticketID
      */
-    orderId: string;
+    id: string;
     /**
-     * 訂單總金額
+     * 是否退票
      */
-    amount: number;
-    ticketList: Array<StaffOrderSearchSuccessDataTicketList>;
+    isRefund: boolean;
+    /**
+     * 退票方式(0:無、1:現金、2:line Pay)
+     */
+    refundMethod: number;
 }

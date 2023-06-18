@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from '../../core/constant/routes.constant';
-import { BookingService } from './services/booking/booking.service';
+import { BookingService } from './services/booking.service';
 import { ScheduleListResData } from '../../api/cinePOS-api';
 import { MatDialog } from '@angular/material/dialog';
 import { SeatDialogComponent } from '../../features/dialog/components/seat-dialog/seat-dialog.component';

@@ -5,7 +5,7 @@ import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.const
 import { StorageEnum } from 'projects/staff/src/app/core/enums/storage/storage-enum';
 import { ShopCartInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
 import { StorageService } from 'projects/staff/src/app/core/services/storage/storage.service';
-import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking/booking.service';
+import { BookingService } from 'projects/staff/src/app/pages/booking-page/services/booking.service';
 import { DialogPaymentMethodComponent } from 'projects/staff/src/app/pages/payment-page/components/dialog-payment-method/dialog-payment-method.component';
 import { takeUntil } from 'rxjs';
 

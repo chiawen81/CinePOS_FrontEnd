@@ -10,23 +10,31 @@
  * Do not edit the class manually.
  */
 
-export interface StaffOrderSearchSuccessDataTicketList { 
+export interface RefundResTicketList { 
     /**
      * 電影名稱
      */
     title: string;
     /**
-     * 票券ID
+     * 電影票ID
      */
     ticketId: string;
+    /**
+     * 電影票狀態 0:未退,1已退
+     */
+    ticketStatus?: number;
+    /**
+     * 座位ID
+     */
+    seatId: string;
+    /**
+     * 座位名稱
+     */
+    seatName: string;
     /**
      * 票種名稱
      */
     ticketType: string;
-    /**
-     * 票券狀態(1:已退,0:未退)
-     */
-    ticketStatus: number;
     /**
      * 票價
      */
@@ -34,13 +42,5 @@ export interface StaffOrderSearchSuccessDataTicketList {
     /**
      * 場次開始時間
      */
-    time: string;
-    /**
-     * 座位ID
-     */
-    seatId: string;
-    /**
-     * 座位號
-     */
-    seatName: string;
+    startDate: string;
 }

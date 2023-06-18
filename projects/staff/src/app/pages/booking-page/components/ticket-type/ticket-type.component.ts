@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
-import { BookingService } from '../../services/booking/booking.service';
+
 import { TicketTypeResData } from 'projects/staff/src/app/core/interface/ticketTypeResData';
+import { BookingService } from '../../services/booking.service';
 
 interface TicketSelect {
   isAdd: boolean;
