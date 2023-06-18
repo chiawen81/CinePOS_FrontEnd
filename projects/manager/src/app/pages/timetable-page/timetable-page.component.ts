@@ -6,6 +6,7 @@ import { MovieData, RateCode, TheatreData, TimetableService } from './services/t
 import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
 import { ManagerMovieListSuccessDataInner, TimetableCreateReq } from '../../api/cinePOS-api';
+import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
 
 @Component({
   selector: 'app-timetable-page',
@@ -51,8 +52,8 @@ export class TimetablePageComponent implements OnInit {
 
   /**
    * 生成日期
-   * @param num 
-   * @returns 
+   * @param num
+   * @returns
    */
   createDates(num: number): Date[] {
     const dateArr: Date[] = [];
@@ -301,12 +302,12 @@ export class TimetablePageComponent implements OnInit {
   }
 
   /** 取得要顯示的電影 */
-  private getShowMovieList(data: ManagerMovieListSuccessDataInner[]): MovieData[] {
+  private getShowMovieList(data: ManagerMovieListSuccessDataInnerCustomer[]): MovieData[] {
     const result: MovieData[] = data.map((item) => {
       let movieData: MovieData = {
         id: item._id ?? '',
         text: item.title ?? '',
-        runtime: item.runtime ?? '',
+        runtime: (item.runtime as number) ?? null,
         color: this.transformRateNameColor(item.rateName),
         rateName: item.rateName,
         rate: this.transformRateNameToRate(item.rateName) as RateCode

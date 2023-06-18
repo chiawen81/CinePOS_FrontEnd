@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { STATIC_ROUTES } from 'projects/staff/src/app/core/constant/routes.constant';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
 import { BookingService } from '../../services/booking/booking.service';
-import { TicketTypeResData } from 'projects/manager/src/app/api/cinePOS-api';
+import { TicketTypeResData } from 'projects/staff/src/app/core/interface/ticketTypeResData';
+
 interface TicketSelect {
   isAdd: boolean;
   ticketTypeId: string;
@@ -26,7 +27,7 @@ export class TicketTypeComponent implements OnInit {
   ngOnInit(): void {
     // call API 取的票種
     this.bookingService.v1StaffTicketTypeGet$()
-      .subscribe((res)=>{
+      .subscribe((res) => {
         this.ticketTypeData = res.data
       })
   }
@@ -61,7 +62,7 @@ export class TicketTypeComponent implements OnInit {
     this.ticketData.forEach(item => {
       this.bookingService.setShopCart('ticket', item)
     });
-    console.log('選則票種後:',this.bookingService.getShopCart());
+    console.log('選則票種後:', this.bookingService.getShopCart());
     // 將選取的票種&票數存進services
     this.router.navigate(
       [`/${STATIC_ROUTES.BOOKING.ROOT}/${STATIC_ROUTES.BOOKING.SELECT_SEAT}`]
