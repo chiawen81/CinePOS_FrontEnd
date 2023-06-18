@@ -10,17 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+export interface PatchSeatReqInner { 
     /**
-     * id
+     * seatID
      */
     id: string;
     /**
-     * 票種名稱
+     * 座位狀態(0:未售、1:已售、2:鎖定中、3:暫停販售)
      */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+    status: number;
 }

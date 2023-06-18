@@ -9,18 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DashboardMetricSuccessData } from './dashboardMetricSuccessData';
 
-export interface TicketTypeResData { 
-    /**
-     * id
-     */
-    id: string;
-    /**
-     * 票種名稱
-     */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+export interface DashboardMetricSuccess { 
+    code?: number;
+    message?: string;
+    data?: DashboardMetricSuccessData;
 }

@@ -10,17 +10,11 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
-    /**
-     * id
-     */
-    id: string;
-    /**
-     * 票種名稱
-     */
-    type: string;
-    /**
-     * 票價
-     */
+export interface CreateTicketData { 
+    orderId: string;
+    movieId: string;
+    seatId: string;
     price: number;
+    isRefund: boolean;
+    paymentMethod: number;
 }

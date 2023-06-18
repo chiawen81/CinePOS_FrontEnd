@@ -10,17 +10,16 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+/**
+ * 票房資訊
+ */
+export interface DashboardMetricSuccessDataBoxOffice { 
     /**
-     * id
+     * 當日總收入
      */
-    id: string;
+    total?: number;
     /**
-     * 票種名稱
+     * 漲幅百分比(相較昨日)
      */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+    increasePercent?: number;
 }
