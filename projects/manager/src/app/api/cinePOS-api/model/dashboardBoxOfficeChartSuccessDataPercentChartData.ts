@@ -10,17 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+export interface DashboardBoxOfficeChartSuccessDataPercentChartData { 
     /**
-     * id
+     * 電影名稱
      */
-    id: string;
+    name?: string;
     /**
-     * 票種名稱
+     * 票房金額
      */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+    value?: number;
 }

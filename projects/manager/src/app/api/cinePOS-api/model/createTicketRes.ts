@@ -10,17 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
-    /**
-     * id
-     */
-    id: string;
-    /**
-     * 票種名稱
-     */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+export interface CreateTicketRes { 
+    code: number;
+    message: string;
+    data: Array<string>;
 }

@@ -10,17 +10,16 @@
  * Do not edit the class manually.
  */
 
-export interface TicketTypeResData { 
+/**
+ * 票房排行
+ */
+export interface DashboardBoxOfficeChartSuccessDataRankChartData { 
     /**
-     * id
+     * 電影名稱(Y軸)
      */
-    id: string;
+    name?: Array<string>;
     /**
-     * 票種名稱
+     * 電影票房金額(X軸)
      */
-    type: string;
-    /**
-     * 票價
-     */
-    price: number;
+    value?: Array<number>;
 }

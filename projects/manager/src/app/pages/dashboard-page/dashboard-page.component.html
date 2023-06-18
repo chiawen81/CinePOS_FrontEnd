@@ -5,12 +5,12 @@
         <div class="main-record-card">
           <span>本日累計營收</span>
           <div>
-            <span class="num">66.7W</span>
+            <span class="num">{{metricData?.dailyIncome?.total}}</span>
             <span class="unit">NT$</span>
           </div>
           <div class="increase">
-            <span>↑</span>
-            <span>123.5%</span>
+            <span> {{arrowWords}}</span>
+            <span>{{metricData?.dailyIncome?.increasePercent}}%</span>
           </div>
         </div>
         <div class="main-record-card">
@@ -79,8 +79,8 @@
               <td data-title="放映時間">{{item.startDate | date:'hh:mm a'}} - {{item.endDate| date:'hh:mm a'}}</td>
               <td data-title="時長">{{item.movieId.runtime}}</td>
               <!-- 以下欄位寫死 -->
-              <td data-title="上座率">68%</td>
-              <td data-title="退票數">0</td>
+              <td data-title="上座率">64%</td>
+              <td data-title="退票數">1</td>
             </tr>
           </tbody>
         </cine-table>
