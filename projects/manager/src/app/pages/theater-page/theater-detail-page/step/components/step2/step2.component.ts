@@ -45,6 +45,19 @@ export class Step2Component implements OnInit {
     this.fg.emit(this.validateForm);
   }
 
+  setSeatChart(seatMap: string[], rowLabel: string[], colLabel: string[]){
+    
+    this.rowsArr = Array(rowLabel.length).fill('0'); // 生成 rowsArr
+    this.colsArr = Array(colLabel.length).fill('0'); // 生成 colsArr
+
+    this.responseArr = seatMap;
+    this.rowsOrder = rowLabel;
+    this.colsOrder = colLabel;
+
+    this.validateForm.get('seatMap')?.patchValue(this.responseArr);
+    this.validateForm.get('rowLabel')?.patchValue(this.rowsOrder);
+    this.validateForm.get('colLabel')?.patchValue(this.colsOrder);
+  }
 
   /**
    * 根據提供的參數生成座位圖。

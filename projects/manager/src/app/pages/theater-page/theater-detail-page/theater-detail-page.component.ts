@@ -53,7 +53,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     if (this.isEdit) {
       // 編輯狀態
       this.theaterId = this.route.snapshot.params['id'];
-      this.getTheaterInfoAPI(this.theaterId); // API- 取得影廳資訊
+      this.getTheaterInfoAPI(); // API- 取得影廳資訊
     } else {
       // 新增狀態
       // default: row是英文
@@ -63,7 +63,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log(this.step2);
-
+    this.changeDetectorRef.detectChanges();
   }
 
   // 當row & col輸入為小數點時自動轉為整數
@@ -86,6 +86,47 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       step2: this.fb.group({})
     });
   }
+
+  // 帶回表單資料
+  setForm(data: any): void {
+    if (this.isEdit) {
+      // 直排排號判斷: true:英文, false:數字
+      const rowType = this.parseTheaterType(data.rowLabel);
+      const patchData = {
+        theaterName: data.name,
+        theaterFloor: data.floor,
+        theaterType: data.type,
+        row: data.row,
+        col: data.col,
+        rowType: rowType ? 1 : 0,
+        step2: {
+          seatMap: data.seatMap,
+          rowLabel: data.rowLabel,
+          colLabel: data.colLabel
+        }
+      };
+
+      this.formGroup.patchValue(patchData);
+    };
+    this.changeDetectorRef.detectChanges();
+    console.log('formGroup- 帶值', this.formGroup);
+  }
+
+  // 直排排號判斷: 暫時抓第rowLabel裡的資料來判斷
+  parseTheaterType(data: any): boolean{
+    
+    const arr = data;
+
+    // 篩選出英文字母
+    const letters = arr.filter((item: string) => /[A-Za-z]/.test(item));
+    // 篩選出數字
+    const numbers = arr.filter((item: string) => /\d/.test(item));
+    // 判斷英文字母數量是否比數字多
+    const isMoreLetters = letters.length > numbers.length;
+  
+    return isMoreLetters;
+  }
+
   /**
    * 設定子表單
    * @param event 傳入值
@@ -119,13 +160,24 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
           alert("請填寫所有欄位");
           return;
         }
-        this.step++;
-        const row = this.formGroup.get('row')?.value;
-        const col = this.formGroup.get('col')?.value;
-        const rowType = this.formGroup.get('rowType')?.value;
-        this.step2?.seatChartGenerator(col, row, rowType);
+
+        if (this.isEdit) {
+          // 編輯狀態
+          this.seatMap = this.formGroup.get('step2.seatMap')?.value;
+          this.rowLabel = this.formGroup.get('step2.rowLabel')?.value;
+          this.colLabel = this.formGroup.get('step2.colLabel')?.value;
+          this.step2?.setSeatChart(this.seatMap, this.rowLabel, this.colLabel);
+        } else {
+          // 新增狀態
+          const row = this.formGroup.get('row')?.value;
+          const col = this.formGroup.get('col')?.value;
+          const rowType = this.formGroup.get('rowType')?.value;
+          this.step2?.seatChartGenerator(col, row, rowType);
+        };
+
         this.step2?.setSeatSettingType(SeatSettingType.showOrNot);
         this.formGroup.disable();
+        this.step++;
         break;
       case Step.seatMapSetting:
         this.step2?.setSeatSettingType(SeatSettingType.disable);
@@ -185,8 +237,6 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     console.log("=== get result ===");
     const formValue = this.formGroup.getRawValue();
     console.log(formValue);
-    console.log(formValue.step2.rowLabel);
-    console.log(formValue.step2.colLabel);
 
     let totalCapacity: number = 0;
     let wheelChairCapacity: number = 0;
@@ -210,11 +260,20 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       col: formValue.col,
       rowLabel: formValue.step2.rowLabel,
       colLabel: formValue.step2.colLabel,
-      seatMap: formValue.step2.seatMap,
-      status: 0
+      seatMap: formValue.step2.seatMap
     };
     
-   this.postCreateTheaterAPI(para);
+    if (this.isEdit) {
+      // 編輯狀態
+      this.patchUpdateTheaterAPI(para);
+    } else {
+      // 新增狀態
+      para = {
+        ...para,
+        status: 0
+      };
+      this.postCreateTheaterAPI(para);
+    };
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
@@ -228,15 +287,16 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   // API- 取得影廳資料
-  getTheaterInfoAPI(theaterId: string): void {
-    this.theaterService.getTheaterInfo(theaterId).subscribe(res => {
-      console.log(res)
-      // this.theaterData = res.data;
-      // this.rows = res.data.row;
-      // this.cols = res.data.col;
-      // this.getViewData.rowLabel = res.data.rowLabel;
-      // this.getViewData.colLabel = res.data.colLabel;
-      // this.getViewData.seatMap = res.data.seatMap;
+  getTheaterInfoAPI(): void {
+    setTimeout(() => {
+      this.theaterService.getTheaterInfo(this.theaterId).subscribe(res => {
+        console.log(res)
+        this.changeDetectorRef.detectChanges();
+        this.setForm(res.data);
+  
+        //直接去第二步
+        this.nextStep();
+      });
     });
   }
 
@@ -250,10 +310,10 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   // API- 更新影廳
-  patchUpdateTheaterAPI(theaterId: string, para: any): void {
-    this.theaterService.updateTheater(theaterId, para).subscribe(res => {
+  patchUpdateTheaterAPI(para: any): void {
+    this.theaterService.updateTheater(this.theaterId, para).subscribe(res => {
       console.log('更新影廳資訊-成功res', res);
-      this.router.navigate([STATIC_ROUTES.THEATER, STATIC_ROUTES.DETAIL, res.data.theater._id]);
+      this.router.navigate([STATIC_ROUTES.THEATER, this.theaterId]);
       alert(res.message);
     });
   }
