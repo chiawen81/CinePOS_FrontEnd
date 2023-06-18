@@ -22,7 +22,7 @@ export * from './dashboardBoxOfficeChartSuccessDataPercentChartData';
 export * from './dashboardBoxOfficeChartSuccessDataRankChartData';
 export * from './dashboardMetricSuccess';
 export * from './dashboardMetricSuccessData';
-export * from './dashboardMetricSuccessDataBoxOffice';
+export * from './dashboardMetricSuccessDataDailyIncome';
 export * from './infoUpdateReq';
 export * from './infoUpdateRes';
 export * from './infoUpdateResData';

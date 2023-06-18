@@ -9,8 +9,17 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { DashboardMetricSuccessDataDailyIncome } from './dashboardMetricSuccessDataDailyIncome';
 
-export interface DashboardMetricSuccessData { 
-    dailyIncome?: DashboardMetricSuccessDataDailyIncome;
+/**
+ * 當日營收
+ */
+export interface DashboardMetricSuccessDataDailyIncome { 
+    /**
+     * 當日總收入
+     */
+    total?: number;
+    /**
+     * 漲幅百分比(相較昨日)
+     */
+    increasePercent?: number;
 }
