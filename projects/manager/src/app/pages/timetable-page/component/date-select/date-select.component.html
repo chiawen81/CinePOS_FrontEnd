@@ -1,0 +1,6 @@
+<div class="text-center py-2 text-light-400 rounded-2xl hover:bg-light-600 cursor-pointer"
+  [class.date-active]="isActive" (click)="dateOutput()">
+  {{ date| date:'M/d' }}
+  <br>
+  {{ dateIndex === 0 ? '今日' : weekdays[date.getDay()] }}
+</div>

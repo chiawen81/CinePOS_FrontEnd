@@ -14,7 +14,7 @@ export interface ManagerMovieListSuccessDataInner {
     /**
      * 電影編號
      */
-    id?: string;
+    _id?: string;
     /**
      * 上映狀態文字
      */
@@ -43,6 +43,10 @@ export interface ManagerMovieListSuccessDataInner {
      * 發行日期
      */
     releaseDate?: any;
+    /**
+     * 片長
+     */
+    runtime:number;
     /**
      * 支援設備文字
      */
