@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { environment } from 'projects/manager/src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, filter, tap } from 'rxjs';
+import { commonResDataString } from '../../../core/interface/common/commonResDataString';
 
 
 
@@ -10,12 +12,20 @@ import { environment } from 'projects/manager/src/environments/environment';
 
 export class ChatGPTService {
   apiUrl = "https://api.openai.com/v1/chat/completions";
-  token = "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";
+  token = "";
   config = {
     headers: {
       Authorization: `Bearer ${this.token}`,
     }
   };
+
+  constructor(
+    private http: HttpClient
+  ) {
+    this.getChatGPTToken().subscribe(res => {
+      this.token = res.data!;
+    });
+  }
 
   getAdvice = async (message: {
     role: string,
@@ -39,6 +49,15 @@ export class ChatGPTService {
     } catch (err) {
       console.log(err);
     };
+  }
+
+
+
+  getChatGPTToken(): Observable<commonResDataString> {
+    return this.http.get<commonResDataString>('https://api.cine-pos.com/v1/common/chatGPT/key').pipe(
+      tap(res => res.code !== 1 && alert(res.message)),
+      filter(res => res.code === 1)
+    )
   }
 
 
