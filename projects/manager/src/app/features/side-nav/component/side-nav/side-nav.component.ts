@@ -18,7 +18,7 @@ export class SideNavComponent implements OnInit {
       url: "",
       subMenu: [
         {
-          title: "電影資訊列表頁",
+          title: "電影列表",
           url: `/${STATIC_ROUTES.MOVIE}/${STATIC_ROUTES.LIST}`,
         }, {
           title: "新增電影",
@@ -37,11 +37,11 @@ export class SideNavComponent implements OnInit {
       subMenu: [
         {
           title: "影廳列表",
-          url: `/${STATIC_ROUTES.SEATING_PLAN}`,
+          url: `/${STATIC_ROUTES.THEATER}`,
         },
         {
           title: "新增影廳",
-          url: `/${STATIC_ROUTES.SEATING_PLAN}/${STATIC_ROUTES.DETAIL}/${STATIC_ROUTES.CREATE}`,
+          url: `/${STATIC_ROUTES.THEATER}/${STATIC_ROUTES.DETAIL}/${STATIC_ROUTES.CREATE}`,
         }
       ]
     }, {

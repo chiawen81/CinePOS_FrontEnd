@@ -1,0 +1,21 @@
+@import "../../guideline-back/guideline-back.component.scss";
+
+.etc-select-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.etc-select-action-button {
+    font-size: 12px;
+    flex: 1;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.left-aligned-button {
+    font-size: 12px;
+}

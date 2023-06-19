@@ -1,0 +1,46 @@
+<section class="w-full">
+    <!-- 螢幕 -->
+    <div>
+        <div class="screen-border"></div>
+        <div class="screen"></div>
+    </div>
+
+    <div class="flex w-full p-5 pb-0">
+        <!-- ABCD -->
+        <ul *ngIf="colsArr.length > 0">
+            <li *ngFor="let order of rowsOrder; let i = index; trackBy: trackByIndex" class="mx-3 my-0.5">
+                <input class="w-8 h-7 p-1 mb-1 flex justify-center items-center text-center row-rank"
+                    [disabled]="step !== Step.rank" value={{order}} (input)="convertToUpperCase()" [(ngModel)]="rowsOrder[i]"
+                    (click)="selectAllText()">
+            </li>
+        </ul>
+        <!-- </ng-template> -->
+
+        <!-- 主要座位 -->
+        <ul class="flex-1" *ngIf="step !== Step.createMap">
+            <li *ngFor="let row of rowsArr index as i">
+                <ul class="flex">
+                    <li *ngFor="let col of colsArr index as j" class="m-0.5 flex-1">
+                        <app-manager-seatchart-seat [seatIndex]="(i*colsArr.length) + j" [seatSetting]="seatSetting" [showType]="responseArr[(i*colsArr.length) + j]"
+                            (activeOut)="activeOut($event)"></app-manager-seatchart-seat>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- 下排數字 -->
+    <div class="flex w-full px-5 mt-0.5 mb-3">
+        <div class="w-14">
+            <span style="display: none;"></span>
+        </div>
+        <div class="flex-1">
+            <ul *ngIf="rowsArr.length > 0" class="flex justify-between">
+                <li *ngFor="let order of colsOrder; let j = index; trackBy: trackByIndex">
+                    <input class="w-full text-center h-6 col-rank" [disabled]="step !== Step.rank" value={{order}}
+                        [(ngModel)]="colsOrder[j]" #inputRef="ngModel" (click)="selectAllText()">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</section>

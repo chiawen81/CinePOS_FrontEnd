@@ -1,0 +1,72 @@
+<section class="w-full">
+    <!-- 螢幕 -->
+    <div>
+      <div class="screen-border"></div>
+      <div class="screen"></div>
+    </div>
+  
+    <div class="flex w-full p-5 pb-0">
+      <ng-template [ngIf]="step != 2" [ngIfElse]="canEditRow">
+        <!-- ABCD -->
+        <ul *ngIf="colsArr.length > 0">
+          <li *ngFor="let order of rowsOrder" class="mx-3">
+            <div class="w-6 h-8 rounded-t-lg rounded-b-md p-1 text-gray-400 flex justify-center items-center">{{ order }}</div>
+          </li>
+        </ul>
+      </ng-template>
+      <ng-template #canEditRow>
+        <!-- ABCD -->
+        <ul *ngIf="colsArr.length > 0">
+          <li *ngFor="let order of rowsOrder; let i = index; trackBy: trackByIndex" class="mx-3 my-0.5">
+            <input class="text-input w-8 h-7 p-1 mb-1 flex justify-center items-center text-center" style="color:#9C6DFF; border: 1px solid #9C6DFF;" value={{order}} [(ngModel)]="rowsOrder[i]" (input)="convertToUpperCase()" #inputRef="ngModel" (click)="selectAllText()">
+          </li>
+        </ul>
+      </ng-template>
+  
+      <!-- 主要座位 -->
+      <ul class="flex-1">
+        <li *ngFor="let row of rowsArr index as i">
+          <ul class="flex">
+            <li *ngFor="let col of colsArr index as j" class="m-0.5 flex-1">
+              <app-manager-seatchart-seat [seatIndex]="i*cols + j" [seatSetting]="seatSetting" [showType]="responseArr[i*cols + j]" (activeOut)="activeOut($event)"></app-manager-seatchart-seat>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  
+    
+    <ng-template [ngIf]="step != 2" [ngIfElse]="canEditCol">
+      <!-- 下排數字 -->
+      <div class="flex w-full px-5 mt-0.5 mb-3">
+        <div class="w-12">
+          <span style="display: none;"></span>
+        </div>
+        <div class="flex-1">
+        
+          <ul *ngIf="rowsArr.length > 0" class="flex justify-between">
+            <li *ngFor="let order of colsOrder" class="w-full text-center text-gray-400" style="font-size: 20%;">
+              {{order}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  
+    <ng-template #canEditCol>
+      <!-- 下排數字 -->
+      <div class="flex w-full px-5 mt-0.5 mb-3">
+        <div class="w-14">
+          <span style="display: none;"></span>
+        </div>
+        <div class="flex-1">
+          <ul *ngIf="rowsArr.length > 0" class="flex justify-between">
+            <li *ngFor="let order of colsOrder; let j = index; trackBy: trackByIndex">
+              <input class="text-input w-full text-center h-6" style="color:#71DDFF; border: 1px solid #71DDFF; font-size: 60%;" value={{order}} [(ngModel)]="colsOrder[j]" #inputRef="ngModel" (click)="selectAllText()">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+  

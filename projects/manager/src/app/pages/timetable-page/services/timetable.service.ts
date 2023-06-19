@@ -48,7 +48,7 @@ export class TimetableService {
     private managerService: ManagerService
   ) { }
 
-  /** 
+  /**
    * 取得時刻表
    */
   getTimetableList(startDate:number, endDate:number) {
@@ -62,7 +62,7 @@ export class TimetableService {
   /**
    * 刪除時刻表
    * @param id 時刻表id
-   * @returns 
+   * @returns
    */
   deleteTimetable(id: string) {
     // const url = `timetable/${id}`
@@ -72,8 +72,8 @@ export class TimetableService {
 
   /**
    * 更新時刻表
-   * @param param 
-   * @returns 
+   * @param param
+   * @returns
    */
   updateTimetable(param: TimetableUpdateReq) {
     // const url = `timetable/update`
@@ -83,8 +83,8 @@ export class TimetableService {
 
   /**
    * 新增時刻表
-   * @param param 
-   * @returns 
+   * @param param
+   * @returns
    */
   createTimetable(param: TimetableCreateReq) {
     // const url = `timetable/create`
@@ -95,7 +95,7 @@ export class TimetableService {
 
   /**
    * TODO: 先醜醜的寫
-   * @returns 
+   * @returns
    */
   getTheaterList(){
     const url = `theater/list`
@@ -231,7 +231,7 @@ export class MovieData {
   rate: RateCode;
 
   rateName?: string;
-  
+
 
   constructor(data: MovieData) {
     this.id = data.id;
@@ -253,7 +253,7 @@ export interface TheatreData {
 }
 
 export interface Data {
-  theatreId: string;
+  theaterId: string;
 
   movieId: string;
 
@@ -265,124 +265,6 @@ export interface Data {
 
   rateName: string;
 }
-
-// const moviesData: MovieData[] = [{
-//   id: 1,
-//   text: 'His Girl Friday',
-//   director: 'Howard Hawks',
-//   year: 1940,
-//   image: 'images/movies/HisGirlFriday.jpg',
-//   duration: 92,
-//   color: '#cb6bb2',
-// }, {
-//   id: 2,
-//   text: 'Royal Wedding',
-//   director: 'Stanley Donen',
-//   year: 1951,
-//   image: 'images/movies/RoyalWedding.jpg',
-//   duration: 93,
-//   color: '#56ca85',
-// }, {
-//   id: 3,
-//   text: 'A Star Is Born',
-//   director: 'William A. Wellman',
-//   year: 1937,
-//   image: 'images/movies/AStartIsBorn.jpg',
-//   duration: 111,
-//   color: '#1e90ff',
-// }, {
-//   id: 4,
-//   text: 'The Screaming Skull',
-//   director: 'Alex Nicol',
-//   year: 1958,
-//   image: 'images/movies/ScreamingSkull.jpg',
-//   duration: 68,
-//   color: '#ff9747',
-// }, {
-//   id: 5,
-//   text: "It's a Wonderful Life",
-//   director: 'Frank Capra',
-//   year: 1946,
-//   image: 'images/movies/ItsAWonderfulLife.jpg',
-//   duration: 130,
-//   color: '#f05797',
-// },
-// {
-//   id: 6,
-//   text: 'City Lights',
-//   director: 'Charlie Chaplin',
-//   year: 1931,
-//   image: 'images/movies/CityLights.jpg',
-//   duration: 87,
-//   color: '#2a9010',
-// }
-// ];
-
-const theatreData: TheatreData[] = [{
-  text: '第一廳',
-  id: 0,
-},
-{
-  text: '第二廳',
-  id: 1,
-},
-{
-  text: '第三廳',
-  id: 2,
-},
-];
-
-// const data: Data[] = [{
-//   theatreId: 0,
-//   movieId: 3,
-//   startDate: new Date('2021-04-26T16:10:00.000Z'),
-//   endDate: new Date('2021-04-26T18:01:00.000Z'),
-//   rate: 1,
-//   rateName: '普遍級'
-// }, {
-//   theatreId: 0,
-//   movieId: 1,
-//   startDate: new Date('2021-04-26T18:30:00.000Z'),
-//   endDate: new Date('2021-04-26T20:02:00.000Z'),
-//   rate: 2,
-//   rateName: '保護級'
-// }, {
-//   theatreId: 0,
-//   movieId: 3,
-//   startDate: new Date('2021-04-26T20:30:00.000Z'),
-//   endDate: new Date('2021-04-26T22:21:00.000Z'),
-//   rate: 3,
-//   rateName: '輔導級12+'
-// }, {
-//   theatreId: 1,
-//   movieId: 4,
-//   startDate: new Date('2021-04-26T23:00:00.000Z'),
-//   endDate: new Date('2021-04-27T00:08:00.000Z'),
-//   rate: 4,
-//   rateName: '輔導級15+'
-// }, {
-//   theatreId: 1,
-//   movieId: 2,
-//   startDate: new Date('2021-04-27T10:30:00.000Z'),
-//   endDate: new Date('2021-04-27T12:03:00.000Z'),
-//   rate: 5,
-//   rateName: '限制級'
-// }, {
-//   theatreId: 2,
-//   movieId: 1,
-//   startDate: new Date('2021-04-26T08:30:00.000Z'),
-//   endDate: new Date('2021-04-26T10:02:00.000Z'),
-//   rate: 3,
-//   rateName: '輔導級12+'
-// }, {
-//   theatreId: 2,
-//   movieId: 2,
-//   startDate: new Date('2021-04-27T04:20:00.000Z'),
-//   endDate: new Date('2021-04-27T05:53:00.000Z'),
-//   rate: 3,
-//   rateName: '輔導級12+'
-// }
-// ];
 
 export enum RateCode {
   g = 0,

@@ -6,6 +6,7 @@ import { MovieData, RateCode, TheatreData, TimetableService } from './services/t
 import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
 import { ManagerMovieListSuccessDataInner, TimetableCreateReq } from '../../api/cinePOS-api';
+import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
 
 @Component({
   selector: 'app-timetable-page',
@@ -22,7 +23,7 @@ export class TimetablePageComponent implements OnInit {
 
   moviesData: MovieData[] = [];
 
-  theatreData: TheatreData[] = [];
+  theaterData: TheatreData[] = [];
 
   movieList: MovieData[] = [];
 
@@ -51,8 +52,8 @@ export class TimetablePageComponent implements OnInit {
 
   /**
    * 生成日期
-   * @param num 
-   * @returns 
+   * @param num
+   * @returns
    */
   createDates(num: number): Date[] {
     const dateArr: Date[] = [];
@@ -73,7 +74,7 @@ export class TimetablePageComponent implements OnInit {
     const param = {
       id: event.newData._id,
       movieId: event.newData.movieId,
-      theaterId: event.newData.theatreId,
+      theaterId: event.newData.theaterId,
       startDate: moment(event.newData.startDate).toDate() as any,
       endDate: moment(event.newData.endDate).toDate() as any
     }
@@ -101,7 +102,7 @@ export class TimetablePageComponent implements OnInit {
 
     const param = {
       movieId: e.itemElement.id,
-      theaterId: e.itemData.theatreId,
+      theaterId: e.itemData.theaterId,
       startDate: new Date(e.itemData.startDate),
       endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
@@ -169,10 +170,10 @@ export class TimetablePageComponent implements OnInit {
     this.timetableService.getTheaterList().subscribe((res) => {
       if (res.data) {
         const theaterList = res.data as any[];
-        this.theatreData = theaterList.map((item) => {
+        this.theaterData = theaterList.map((item) => {
           const result = {
             id: item._id,
-            text: item.name,
+            text: `${item.name}(${item.type})`,
           }
           return result
         })
@@ -191,8 +192,8 @@ export class TimetablePageComponent implements OnInit {
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
         console.log(this.data);
-        // this.theatreData = this.getTheaters(filterData);
-        // console.log(this.theatreData);
+        // this.theaterData = this.getTheaters(filterData);
+        // console.log(this.theaterData);
         this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
       }
     })
@@ -206,7 +207,7 @@ export class TimetablePageComponent implements OnInit {
     //   item.movie = item.movieId;
     //   item.color = this.transformRateColor(item.movie.rate);
     //   item.movieId = item.movieId._id;
-    //   item.theatreId = item.theaterId._id;
+    //   item.theaterId = item.theaterId._id;
     //   return item;
     // });
 
@@ -220,7 +221,7 @@ export class TimetablePageComponent implements OnInit {
       item.movie = item.movieId;
       item.color = this.transformRateColor(item.movie.rate);
       item.movieId = item.movieId._id;
-      item.theatreId = item.theaterId._id;
+      item.theaterId = item.theaterId._id;
       return item;
     });;
     return result;
@@ -301,12 +302,12 @@ export class TimetablePageComponent implements OnInit {
   }
 
   /** 取得要顯示的電影 */
-  private getShowMovieList(data: ManagerMovieListSuccessDataInner[]): MovieData[] {
+  private getShowMovieList(data: ManagerMovieListSuccessDataInnerCustomer[]): MovieData[] {
     const result: MovieData[] = data.map((item) => {
       let movieData: MovieData = {
         id: item._id ?? '',
         text: item.title ?? '',
-        runtime: item.runtime ?? '',
+        runtime: (item.runtime as number) ?? null,
         color: this.transformRateNameColor(item.rateName),
         rateName: item.rateName,
         rate: this.transformRateNameToRate(item.rateName) as RateCode
