@@ -64,7 +64,9 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
     private _ChatGPTService: ChatGPTService,
     private _ChangeDetectorRef: ChangeDetectorRef,
     private _LoadingService: LoadingService
-  ) { }
+  ) {
+    this._ChatGPTService.getChatGPTToken();
+  }
 
   ngOnInit(): void {
     this.initForm();
