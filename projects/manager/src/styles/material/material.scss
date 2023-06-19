@@ -59,6 +59,13 @@ button {
     min-width: 0 !important;
 
   }
+
+  &.mat-accent{
+    background-color: theme('colors.lightPurple.200') !important;
+    color: theme('colors.primary.500') !important;
+    box-shadow: none !important;
+    @apply rounded-xl tracking-widest mr-3;
+  }
 }
 
 .mat-form-field-appearance-fill {

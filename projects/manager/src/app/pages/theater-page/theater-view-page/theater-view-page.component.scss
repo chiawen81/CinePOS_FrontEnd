@@ -1,0 +1,41 @@
+// @import "../guideline-back/guideline-back.component.scss";
+
+.wrapper-page {
+    margin: 0 30px 100px !important;
+  
+    .card-wrap {
+      margin-bottom: 50px !important;
+  
+      .collapse {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+  
+      // ——————————————————————— 北極行指標 ———————————————————————
+      .main-box {
+        padding: 0px 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 50px;
+  
+      .main-card {
+        .showBox {
+            margin-top: 10px;
+            border: rgba(255, 255, 255, 0.3) 1px solid;
+            border-radius: 12px;
+            text-align: center;
+
+            .showText {
+                font-size: 48px;
+                font-weight: bold;
+                color: #A7E8FF;
+                margin-bottom: 0;
+                padding: 15px;
+            }
+        }
+      }
+    }
+  }
+}
