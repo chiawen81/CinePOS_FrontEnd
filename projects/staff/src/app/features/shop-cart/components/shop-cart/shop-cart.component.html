@@ -14,7 +14,7 @@
       <ng-template [ngIf]="!!shopCartData" [ngIfElse]="noData">
         <ul>
           <li *ngFor="let item of shopCartData index as i">
-            <app-shop-cart-item [shopCart]="item" [shopCartIndex]="i" (dateEmit)="deleteShopCart($event)"></app-shop-cart-item>
+            <app-shop-cart-item [shopCart]="item" [shopCartIndex]="i" (deleteEmit)="deleteShopCart($event)"></app-shop-cart-item>
           </li>
         </ul>
       </ng-template>
@@ -37,7 +37,7 @@
       <button mat-raised-button color="primary" type="submit" class="w-full" (click)="goPayment()">結帳</button>
       </li>
     <li class="mt-4">
-      <button mat-button color="warn" class="w-full">刪除全部</button>
+      <button mat-button color="warn" class="w-full" (click)="sortDeleteData(shopCartData)">刪除全部</button>
     </li>
   </ul>
 </section>
