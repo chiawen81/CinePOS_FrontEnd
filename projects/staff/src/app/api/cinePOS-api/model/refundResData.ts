@@ -9,17 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { RefundResTicketList } from './refundResTicketList';
 
-/**
- * 票房資訊
- */
-export interface DashboardMetricSuccessDataBoxOffice { 
+export interface RefundResData { 
     /**
-     * 當日總收入
+     * 訂單ID
      */
-    total?: number;
-    /**
-     * 漲幅百分比(相較昨日)
-     */
-    increasePercent?: number;
+    orderId: string;
+    ticketList: Array<any>;
 }

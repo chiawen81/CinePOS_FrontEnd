@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TicketTypeResData } from 'projects/manager/src/app/api/cinePOS-api';
 import { ticketInterface } from 'projects/staff/src/app/core/interface/shop-cart.interface';
+import { TicketTypeResData } from 'projects/staff/src/app/core/interface/ticketTypeResData';
 interface TicketSelect {
   isAdd: boolean;
   ticketTypeId: string;

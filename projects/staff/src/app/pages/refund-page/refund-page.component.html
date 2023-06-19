@@ -1,1 +1,72 @@
-<p>退票頁</p>
+<div class="p-5 mt-6 w-8/12 mx-auto flex flex-col justify-center h-4/5">
+  <!-- 輸入訂單編號 -->
+  <div>
+    <form class="example-form flex flex-row items-stretch" [formGroup]="form" (ngSubmit)="findOrderInfo()">
+      <!-- 輸入訂單input -->
+      <div class="text-sm -mb-5 basis-10/12">
+        <mat-form-field class="example-full-width w-full text-sm" appearance="fill">
+          <mat-label>訂單編號</mat-label>
+          <input matInput formControlName="orderId" type="text">
+        </mat-form-field>
+      </div>
+      <style>
+        .html-content *:not(table){
+          width: auto !important;
+        }
+      </style>
+      <!-- 查詢按鈕 -->
+      <div class="ml-4 -mr-20 basis-1/12">
+        <button mat-raised-button color="primary" type="submit" class="h-full w-full"
+          [disabled]="form.invalid">查詢</button>
+      </div>
+    </form>
+  </div>
+  <!-- 顯示訂單內電影票資訊 -->
+  <div class="example-section  mt-6 pt-2 checkbox-item" *ngIf="this.checkData.length>0"
+    [class.pl-6]="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+    <!-- 全選 -->
+    <div class="example-list-section" *ngIf="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+      <mat-checkbox class="example-margin" [checked]="allCheck" [color]="'primary'" [indeterminate]="someCheck()"
+        (change)="setAll($event.checked)">
+        全選
+      </mat-checkbox>
+    </div>
+    <!-- 項目內容 -->
+    <div class="example-list-section ml-3 pr-4 w-11/12" [class.ml-5]="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+      <ul>
+        <li *ngFor="let item of checkData" class="border-b border-primary-400 pb-2 my-4  ">
+          <!-- 無退 -->
+          <ng-template [ngIf]="item.data.ticketStatus!==1" [ngIfElse]="cantRefund">
+            <!-- 開演前30可退 -->
+            <ng-template [ngIf]="checkTime(item.data.time)" [ngIfElse]="timeOver">
+              <mat-checkbox [(ngModel)]="item.isCheck" [color]="'accent'" (ngModelChange)="updateAllCheck()">
+                <app-refund-item [data]="item.data" [isOverTime]="false"></app-refund-item>
+              </mat-checkbox>
+            </ng-template>
+            <!-- 超過30分鐘無法退 -->
+            <ng-template #timeOver>
+              <app-refund-item [data]="item.data" [isOverTime]="true"></app-refund-item>
+            </ng-template>
+          </ng-template>
+          <!-- 已退 -->
+          <ng-template #cantRefund>
+            <div class="relative">
+              <div class="absolute inset-0 flex justify-center items-center">
+                <span class="origin-center -rotate-12 text-2xl">已退</span>
+              </div>
+              <app-refund-item [data]="item.data" class="opacity-25"></app-refund-item>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- 退票確認 -->
+<div class="absolute bottom-10 right-10" *ngIf="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+  <button mat-raised-button color="primary" class="w-60" type="button"
+    [disabled]="checkDataTrueCount()<=0"
+    (click)="refund()">
+    確認
+  </button>
+</div>
