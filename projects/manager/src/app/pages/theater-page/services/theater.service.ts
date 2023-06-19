@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap, catchError, throwError } from 'rxjs';
-import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
+import { MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
 import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'projects/manager/src/environments/environment';
+import { ManagerService } from 'projects/staff/src/app/api/cinePOS-api/api/manager.service';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -49,7 +50,7 @@ export class TheaterService {
     // return data;
     const url = 'theater/list'
 
-    return this.request(HTTP_METHOD.GET, { name: name, floor: floor, type: type, capacityFrom: capacityFrom, capacityTo: capacityTo, withDisabled: withDisabled, status: status  }, url);
+    return this.request(HTTP_METHOD.GET, { name: name, floor: floor, type: type, capacityFrom: capacityFrom, capacityTo: capacityTo, withDisabled: withDisabled, status: status }, url);
     // return this.managerService.v1ManagerTheaterListGet(name, floor, type, capacityFrom, capacityTo, withDisabled, status);
   }
   // getTheaterList(name: string, floor: number, type: [], capacityFrom: number, capacityTo: number, withDisabled: number, status: number): Observable<ManagerTheaterListSuccess> {
@@ -151,12 +152,12 @@ export class TheaterService {
   //     )
   // }
 
-/**
- * call HTTP 主要方法
- * @param method http method
- * @param requestParams request body
- * @param api api url
- */
+  /**
+   * call HTTP 主要方法
+   * @param method http method
+   * @param requestParams request body
+   * @param api api url
+   */
   private request(method: string, requestParams: any, api: string): Observable<{ code: ResponseCode, data: any, message?: string }> {
     // if (this.isCloseAllApi) {
     //   return this.closeAllAPI() as unknown as Observable<MercueResponse>;
