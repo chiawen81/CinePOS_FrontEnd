@@ -31,6 +31,7 @@ import { ErrorHeaderInterceptor } from './core/interceptor/error-interceptor';
 import { PlatformLocation } from '@angular/common';
 import { DxDraggableModule, DxSchedulerModule } from 'devextreme-angular';
 import { TimetablePageModule } from './pages/timetable-page/timetable-page.module';
+import { DialogModule } from './features/dialog/dialog.module';
 
 const materialModules = [
   MatInputModule,
@@ -47,7 +48,8 @@ const featureModules = [
   HeadersModule,
   TableModule,
   CardModule,
-  SideNavModule
+  SideNavModule,
+  DialogModule
 ];
 // 自訂日期格式
 export const MY_DATE_FORMATS = {

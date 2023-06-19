@@ -1,0 +1,20 @@
+<div class="text-center">
+  <div class="my-4">
+    <span class="text-lg">選擇特殊座位類型</span>
+  </div>
+
+  <div class="dialog-content mt-10">
+    <button mat-dialog-close class="dialog-button" (click)="chooseType('1')">
+      <img class="h-full mx-auto" src="assets/images/icon/seat-wheelchair.svg" alt="handicapped">
+      <div class="button-text">輪椅位</div>
+    </button>
+    <button mat-dialog-close class="dialog-button" (click)="chooseType('-1')">
+      <img src="assets/images/icon/seat-no.svg" alt="no">
+      <div class="button-text">故障</div>
+    </button>
+    <button mat-dialog-close class="dialog-button" (click)="chooseType('0')">
+      <img src="assets/images/icon/seat-default.svg" alt="default">
+      <div class="button-text">預設值</div>
+    </button>
+  </div>
+</div>

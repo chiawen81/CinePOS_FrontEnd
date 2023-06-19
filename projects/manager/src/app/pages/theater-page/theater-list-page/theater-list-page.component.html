@@ -1,0 +1,152 @@
+<section class="w-full px-[20px]">
+  <div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
+      <cine-card class="mb-[30px]">
+        <cine-card-header>查詢條件</cine-card-header>
+        <cine-card-content>
+          <div class="row">
+            <span class="form-title">名稱</span>
+            <div class="form-content">
+              <input class="form-input w-[300px]" type="text" formControlName="theaterName">
+            </div>
+
+            <span class="form-title">樓層</span>
+              <div class="form-content">
+                <div class="form-select select-small">
+                  <mat-form-field class="w-[300px]" appearance="fill">
+                    <mat-label>請選擇</mat-label>
+                    <mat-select formControlName="floor">
+                      <mat-option [value]="1">1F</mat-option>
+                      <mat-option [value]="2">2F</mat-option>
+                      <mat-option [value]="3">3F</mat-option>
+                      <mat-option [value]="4">4F</mat-option>
+                      <mat-divider></mat-divider>
+                      <div class="etc-select-action">
+                          <button mat-button class="etc-select-action-button" (click)="clearSelection()">
+                              <mat-icon fontIcon="remove_circle_outline"></mat-icon>
+                              <span> 清除</span>
+                          </button>
+                      </div>
+
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <span class="form-title">類型</span>
+              <div class="form-content">
+                <div class="form-select">
+                  <mat-form-field class="w-[300px]" appearance="fill">
+                    <mat-label>請選擇</mat-label>
+                    <mat-select placeholder="請選擇" formControlName="theaterType" multiple>
+                      <mat-option *ngFor="let item of typeOptions" [value]="item.value">{{item?.name}}</mat-option>
+                      <mat-divider></mat-divider>
+                      <div class="etc-select-action">
+                          <button mat-button class="etc-select-action-button" (click)="selectAll()">
+                              <mat-icon fontIcon="check_box_outline"></mat-icon>
+                              <span> 全選</span>
+                          </button>
+                          <button mat-button class="etc-select-action-button" (click)="clearAll()">
+                              <mat-icon fontIcon="check_box_outline_blank"></mat-icon>
+                              <span> 全不選</span>
+                          </button>
+                      </div>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <span class="form-title">席次</span>
+              <div class="form-content">
+                <input class="form-input w-[150px]" type="number" formControlName="capacityFrom">
+                ～
+                <input class="form-input w-[150px]" type="number" formControlName="capacityTo">
+              </div>
+          </div>
+
+          <div class="row">
+              <span class="form-title">殘障座位</span>
+              <div class="form-content" style="display: flex;">
+                <div class="form-radio list-row text-[12px]">
+                  <mat-radio-group aria-label="Select an option" formControlName="withDisabled">
+                    <mat-radio-button class='mr-[25px]' [value]="1">有</mat-radio-button>
+                    <mat-radio-button class='mr-[25px]' [value]="0">無</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <span class="form-title">狀態</span>
+              <div class="form-content" style="display: flex;">
+                <div class="form-radio list-row text-[12px]">
+                  <mat-radio-group aria-label="Select an option" formControlName="status">
+                    <mat-radio-button class='mr-[25px]' [value]="1">已發佈</mat-radio-button>
+                    <mat-radio-button class='mr-[25px]' [value]="0">暫存</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+          </div>
+
+          <div class="flex" style="justify-content: right;">
+              <button mat-raised-button color="primary" type="submit" (click)="search()">查詢</button>
+          </div>
+        </cine-card-content>
+      </cine-card>
+      
+      <cine-card>
+          <cine-card-header>查詢結果</cine-card-header>
+          <cine-card-content>
+              <p *ngIf="!theaterListView?.length" class="p-50 text-center">沒有符合條件的資料！</p>
+              <cine-table *ngIf="theaterListView?.length">
+                  <thead>
+                      <tr>
+                          <th>名稱</th>
+                          <th>樓層</th>
+                          <th>類型</th>
+                          <th>席次</th>
+                          <th>輪椅席次</th>
+                          <th>狀態</th>
+                          <th>功能</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of theaterListView">
+                          <td data-title="名稱">{{ item.name }}</td>
+                          <td data-title="樓層">{{ item.floor + 'F' }}</td>
+                          <td data-title="類型">{{ item.type }}</td>
+                          <td data-title="席次">{{ item.totalCapacity }}</td>
+                          <td data-title="輪椅席次">{{ item.wheelChairCapacity || '-' }}</td>
+                          <td data-title="狀態">{{ item.status === 1 ? '已發佈' : '暫存' }}</td>
+                          <td data-title="功能" class="w-[300px]">
+                            <div class="button-container">
+                                <button mat-button class="left-aligned-button" (click)="openDetailPage(item._id)">
+                                    <mat-icon fontIcon="remove_red_eye"></mat-icon>
+                                    <span> 檢視</span>
+                                </button>
+                                <button mat-button class="left-aligned-button" (click)="openEditPage(item._id)">
+                                    <mat-icon fontIcon="edit"></mat-icon>
+                                    <span> 編輯</span>
+                                </button>
+                                <button mat-button class="left-aligned-button" (click)="deleteTheater(item._id)">
+                                    <mat-icon fontIcon="delete"></mat-icon>
+                                    <span> 刪除</span>
+                                </button>
+                                <button *ngIf="item.status === 0" mat-button class="left-aligned-button" (click)="updateStatus(true,item._id)">
+                                    <mat-icon fontIcon="publish"></mat-icon>
+                                    <span> 發佈</span>
+                                </button>
+                            </div>
+                          </td>
+                      </tr>
+                  </tbody>
+              </cine-table>
+      
+              <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="pageSet1.totalCounts"
+                  [pageSize]="pageSet1.currentPageSize" [showFirstLastButtons]="true"
+                  [pageIndex]="pageSet1.currentPage-1" aria-label="Select page">
+              </mat-paginator>
+          </cine-card-content>
+      </cine-card>
+      <span>&nbsp;</span>
+  </div>
+</section>
