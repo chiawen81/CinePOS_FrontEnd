@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CommonOptionSuccess, CommonService, CommonUploadSuccess } from '../../../api/cinePOS-api';
 import { Observable, filter, tap } from 'rxjs';
+import { CommonService } from '../../../api/cinePOS-api/api/common.service';
+import { CommonUploadSuccess } from '../../../api/cinePOS-api/model/commonUploadSuccess';
+import { CommonOptionSuccess } from '../../../api/cinePOS-api/model/commonOptionSuccess';
 
 @Injectable({
   providedIn: 'root'
