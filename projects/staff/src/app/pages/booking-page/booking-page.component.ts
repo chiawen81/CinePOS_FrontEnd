@@ -21,7 +21,8 @@ export class BookingPageComponent implements OnInit {
   dateCount = 7;
   dateArr: Date[] = [];
 
-  data: ScheduleListResData[] = [];
+  scheduleData: ScheduleListResData[] = [];
+  checkScheduleGet = false;
   tempTime = '';
 
   ngOnInit(): void {
@@ -31,16 +32,18 @@ export class BookingPageComponent implements OnInit {
 
 
   getScheduleList($event: string): void {
+    this.checkScheduleGet = false;
     this.tempTime = $event;
     this.bookingService.dateSelect$.next($event);
     const startTime = $event;
     const endDate = new Date(Number(startTime));
     endDate.setHours(23, 59, 59, 999);
     const endTime = String(endDate.getTime());
-    this.data = [];
+    this.scheduleData = [];
     this.bookingService.v1StaffScheduleListGet$({ startDate: startTime, endDate: endTime })
       .subscribe((res) => {
-        this.data = res.data;
+        this.checkScheduleGet = true;
+        this.scheduleData = res.data;
       })
   }
 
