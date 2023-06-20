@@ -10,6 +10,7 @@ import { BookingService } from 'projects/staff/src/app/pages/booking-page/servic
 import { DialogPaymentMethodComponent } from 'projects/staff/src/app/pages/payment-page/components/dialog-payment-method/dialog-payment-method.component';
 import { Subject, takeUntil } from 'rxjs';
 import { ShopCartService } from '../../services/shop-cart.service';
+import { DeleteAllDialogComponent } from '../../../dialog/components/delete-all-dialog/delete-all-dialog.component';
 
 @Component({
   selector: 'app-shop-cart',
@@ -23,6 +24,7 @@ export class ShopCartComponent implements OnInit {
     private storageService: StorageService,
     private bookingService: BookingService,
     private dialog: MatDialog,
+    private deleteDialog: MatDialog,
     private shopCartService: ShopCartService
   ) { }
 
@@ -35,6 +37,8 @@ export class ShopCartComponent implements OnInit {
       .subscribe(() => {
         this.getShopCartData();
       })
+
+
   }
   goPayment(): void {
 
@@ -60,16 +64,29 @@ export class ShopCartComponent implements OnInit {
   }
 
   getShopCartData(): void {
-    this.shopCartData = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[];
+    this.shopCartData = this.storageService.getLocalStorage(StorageEnum.shopCartData) as ShopCartInterface[] ?? [];
   }
-  deleteShopCart($event: number) {
+  deleteShopCart($event: number): void{
     const tempData: ShopCartInterface[] = [];
     tempData.push(this.shopCartData[$event]);
-    this.sortDeleteData(tempData,$event);
+    this.deleteData(tempData,$event);
     // this.bookingService.setShopCartToLocal(false, $event);
   }
 
-  sortDeleteData(deleteData: ShopCartInterface[],deleteIndex?:number): void {
+  deleteAllShopCart(): void{
+    const deleteDialog = this.deleteDialog.open(DeleteAllDialogComponent, {
+      width: '450px',
+    });
+
+    deleteDialog.afterClosed().subscribe((isConfirm) => {
+      if(!!isConfirm){
+        this.deleteData(this.shopCartData);
+      }
+    });
+
+  }
+
+  deleteData(deleteData: ShopCartInterface[],deleteIndex?:number): void {
     console.log(deleteData);
     const ticketArr: string[] = [];
     const seatArr: PatchSeatReqInner[] = [];
@@ -86,10 +103,11 @@ export class ShopCartComponent implements OnInit {
     this.shopCartService.deleteShopCart$(ticketArr, seatArr)
       .subscribe(() => {
         console.log(deleteIndex);
-        if(deleteIndex !== undefined){
+        if(deleteIndex !== undefined){// 單筆
           this.bookingService.setShopCartToLocal(false, deleteIndex);
-        }else{
-
+        }else{ // 多筆
+          this.storageService.removeLocalStorage(StorageEnum.shopCartData);
+          this.getShopCartData();
         }
       })
   }
