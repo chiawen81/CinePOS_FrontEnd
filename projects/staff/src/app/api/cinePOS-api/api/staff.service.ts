@@ -452,6 +452,53 @@ export class StaffService {
     }
 
     /**
+     * 刪除電影票
+     * 
+     * @param body 資料格式
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1StaffTicketDelete(body: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<CommonResSuccess>;
+    public v1StaffTicketDelete(body: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CommonResSuccess>>;
+    public v1StaffTicketDelete(body: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CommonResSuccess>>;
+    public v1StaffTicketDelete(body: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling v1StaffTicketDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CommonResSuccess>('delete',`${this.basePath}/v1/staff/ticket`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * 更新電影票狀態
      * 
      * @param body 資料格式

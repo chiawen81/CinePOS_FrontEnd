@@ -8,12 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SeatDialogComponent } from './components/seat-dialog/seat-dialog.component';
 import { SeatchartModule } from '../seatchart/seatchart.module';
+import { DeleteAllDialogComponent } from './components/delete-all-dialog/delete-all-dialog.component';
 
 
 @NgModule({
   declarations: [
     ProfileGialogComponent,
-    SeatDialogComponent
+    SeatDialogComponent,
+    DeleteAllDialogComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { BookingModule } from '../../features/booking/booking.module';
 import { SelectSeatComponent } from './components/select-seat/select-seat.component';
 import { TicketTypeComponent } from './components/ticket-type/ticket-type.component';
 import { SeatchartModule } from '../../features/seatchart/seatchart.module';
+import { BookingGuard } from './guards/booking.guard';
 
 const routes: Routes = [
   /**訂票頁(場次查詢) */
@@ -18,11 +19,13 @@ const routes: Routes = [
   /**選擇票種頁 */
   {
     path: STATIC_ROUTES.BOOKING.TICKET_TYPE,
+    canActivate: [BookingGuard],
     component: TicketTypeComponent,
   },
   /**劃位頁 */
   {
     path: STATIC_ROUTES.BOOKING.SELECT_SEAT,
+    canActivate: [BookingGuard],
     component: SelectSeatComponent,
   },
 ]

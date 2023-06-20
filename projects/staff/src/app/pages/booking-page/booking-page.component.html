@@ -16,15 +16,15 @@
 
 <!-- 主要區塊 -->
 <div class="movie-main mr-2 mt-2">
-  <ng-template [ngIf]="data.length>0" [ngIfElse]="noData">
+  <ng-template [ngIf]="scheduleData.length>0" [ngIfElse]="noData">
     <ul class="px-4 py-1 ">
-      <li *ngFor="let item of data" class="bg-dark-400 rounded-2xl border border-light-600 tracking-widest my-3 p-4">
+      <li *ngFor="let item of scheduleData" class="bg-dark-400 rounded-2xl border border-light-600 tracking-widest my-3 p-4">
         <app-movie [movieData]="item" class="flex" (clickMovieEmit)="opneSeatPOP($event)"></app-movie>
       </li>
     </ul>
   </ng-template>
   <ng-template #noData>
-    <div class="p-4">
+    <div *ngIf="checkScheduleGet" class="p-4">
       沒有任何時刻!
     </div>
 

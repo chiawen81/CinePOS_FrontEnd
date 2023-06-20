@@ -21,6 +21,8 @@ import { CommonResFailed } from '../model/commonResFailed';
 import { CommonResFailedAuthInvalid } from '../model/commonResFailedAuthInvalid';
 import { CommonResFailedNoFound } from '../model/commonResFailedNoFound';
 import { CommonUploadSuccess } from '../model/commonUploadSuccess';
+import { DashboardBoxOfficeChartSuccess } from '../model/dashboardBoxOfficeChartSuccess';
+import { DashboardMetricSuccess } from '../model/dashboardMetricSuccess';
 import { InfoUpdateReq } from '../model/infoUpdateReq';
 import { InfoUpdateRes } from '../model/infoUpdateRes';
 import { LoginReq } from '../model/loginReq';
@@ -205,6 +207,100 @@ export class ManagerService {
         return this.httpClient.request<TimetableRes>('patch',`${this.basePath}/v1/manager/timetable/update`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得圖表資料(票房統計)
+     * 
+     * @param searchDate 查詢日期
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerDashboardBoxOfficeGet(searchDate: string, observe?: 'body', reportProgress?: boolean): Observable<DashboardBoxOfficeChartSuccess>;
+    public v1ManagerDashboardBoxOfficeGet(searchDate: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DashboardBoxOfficeChartSuccess>>;
+    public v1ManagerDashboardBoxOfficeGet(searchDate: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DashboardBoxOfficeChartSuccess>>;
+    public v1ManagerDashboardBoxOfficeGet(searchDate: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (searchDate === null || searchDate === undefined) {
+            throw new Error('Required parameter searchDate was null or undefined when calling v1ManagerDashboardBoxOfficeGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (searchDate !== undefined && searchDate !== null) {
+            queryParameters = queryParameters.set('searchDate', <any>searchDate);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DashboardBoxOfficeChartSuccess>('get',`${this.basePath}/v1/manager/dashboard/boxOffice`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 取得儀表板北極星指標
+     * 
+     * @param searchDate 查詢日期
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public v1ManagerDashboardMetricGet(searchDate: string, observe?: 'body', reportProgress?: boolean): Observable<DashboardMetricSuccess>;
+    public v1ManagerDashboardMetricGet(searchDate: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DashboardMetricSuccess>>;
+    public v1ManagerDashboardMetricGet(searchDate: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DashboardMetricSuccess>>;
+    public v1ManagerDashboardMetricGet(searchDate: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (searchDate === null || searchDate === undefined) {
+            throw new Error('Required parameter searchDate was null or undefined when calling v1ManagerDashboardMetricGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (searchDate !== undefined && searchDate !== null) {
+            queryParameters = queryParameters.set('searchDate', <any>searchDate);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DashboardMetricSuccess>('get',`${this.basePath}/v1/manager/dashboard/metric`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
