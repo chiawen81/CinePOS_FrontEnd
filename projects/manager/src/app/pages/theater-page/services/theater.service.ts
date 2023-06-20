@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import { filter, Observable, tap, catchError, throwError } from 'rxjs';
-import { MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
-import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
-import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
-import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
-import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
+import { filter, Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'projects/manager/src/environments/environment';
-import { ManagerService } from 'projects/staff/src/app/api/cinePOS-api/api/manager.service';
 
 /** Request Method */
 export const enum HTTP_METHOD {
@@ -41,8 +35,7 @@ export class TheaterService {
   isPopupInvalidMsg = false;
 
   constructor(
-    private http: HttpClient,
-    private managerService: ManagerService
+    private http: HttpClient
   ) { }
 
   // 取得影廳列表
@@ -51,15 +44,7 @@ export class TheaterService {
     const url = 'theater/list'
 
     return this.request(HTTP_METHOD.GET, { name: name, floor: floor, type: type, capacityFrom: capacityFrom, capacityTo: capacityTo, withDisabled: withDisabled, status: status }, url);
-    // return this.managerService.v1ManagerTheaterListGet(name, floor, type, capacityFrom, capacityTo, withDisabled, status);
   }
-  // getTheaterList(name: string, floor: number, type: [], capacityFrom: number, capacityTo: number, withDisabled: number, status: number): Observable<ManagerTheaterListSuccess> {
-  //   return this.managerService.v1ManagerTheaterListGet(name, floor, type, capacityFrom, capacityTo, withDisabled, status)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   // 取得影廳資訊
   getTheaterInfo(id: string) {
@@ -67,13 +52,6 @@ export class TheaterService {
 
     return this.request(HTTP_METHOD.GET, {}, url);
   }
-  // getMovieDetail(id: string): Observable<MovieDetailGetInfoSuccess> {
-  //   return this.managerService.v1ManagerMovieIdGet(id)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   // 新增影廳
   createTheater(param: {
@@ -92,13 +70,6 @@ export class TheaterService {
     const url = `theater`
     return this.request(HTTP_METHOD.POST, param, url);
   }
-  // createTheater(para: MovieDetailCreateParameterCustomer): Observable<MovieDetailCreateSuccess> {
-  //   return this.managerService.v1ManagerMoviePost(para as MovieDetailCreateParameter)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   // 更新電影影廳
   updateTheater(id: string, param: {
@@ -116,13 +87,6 @@ export class TheaterService {
     const url = `theater/${id}`
     return this.request(HTTP_METHOD.PATCH, param, url);
   }
-  // updateMovieDetail(para: MovieDetailUpdateParameter): Observable<MovieDetailUpdateSuccessCustomer> {
-  //   return (this.managerService.v1ManagerMoviePatch(para) as Observable<MovieDetailUpdateSuccessCustomer>)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   // 發佈影廳
   updateStatus(id: string, param: {
@@ -131,26 +95,12 @@ export class TheaterService {
     const url = `theater/${id}/onoffline`
     return this.request(HTTP_METHOD.PATCH, param, url);
   }
-  // updateReleaseStatus(para: MovieStatusPara): Observable<MovieDetailDeleteSuccess> {
-  //   return this.managerService.v1ManagerMovieStatusPut(para)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   // 刪除影廳
   deleteTheater(id: string) {
     const url = `theater/${id}`
     return this.request(HTTP_METHOD.DELETE, {}, url);
   }
-  // deleteTheater(theaterId: string): Observable<TheaterDetailDeleteSuccess> {
-  //   return this.managerService.v1ManagerTheaterIdDelete(theaterId)
-  //     .pipe(
-  //       tap(res => res.code !== 1 && alert(res.message)),
-  //       filter(res => res.code === 1)
-  //     )
-  // }
 
   /**
    * call HTTP 主要方法
