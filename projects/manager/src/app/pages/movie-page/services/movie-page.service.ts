@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
-import { ManagerService, MovieDetailCreateParameter, MovieDetailCreateSuccess, MovieDetailDeleteSuccess, MovieStatusPara, } from '../../../api/cinePOS-api';
 import { MovieDetailGetInfoSuccess } from '../../../api/cinePOS-api/model/movieDetailGetInfoSuccess';
 import { ManagerMovieListSuccess } from '../../../api/cinePOS-api/model/managerMovieListSuccess';
 import { MovieDetailUpdateParameter } from '../../../api/cinePOS-api/model/movieDetailUpdateParameter';
 import { MovieDetailCreateParameterCustomer, MovieDetailUpdateSuccessCustomer } from '../../../core/interface/movie';
+import { ManagerService } from '../../../api/cinePOS-api/api/manager.service';
+import { MovieDetailCreateSuccess } from '../../../api/cinePOS-api/model/movieDetailCreateSuccess';
+import { MovieDetailCreateParameter } from '../../../api/cinePOS-api/model/movieDetailCreateParameter';
+import { MovieDetailDeleteSuccess } from '../../../api/cinePOS-api/model/movieDetailDeleteSuccess';
+import { MovieStatusPara } from '../../../api/cinePOS-api/model/movieStatusPara';
 
 @Injectable({
   providedIn: 'root'
