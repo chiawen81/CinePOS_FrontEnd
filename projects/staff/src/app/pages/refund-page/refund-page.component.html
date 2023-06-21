@@ -6,18 +6,16 @@
       <div class="text-sm -mb-5 basis-10/12">
         <mat-form-field class="example-full-width w-full text-sm" appearance="fill">
           <mat-label>訂單編號</mat-label>
-          <input matInput formControlName="orderId" type="text">
+          <input matInput formControlName="orderId" noWhiteSpace type="text">
+          <mat-error *ngIf="validOpen && form.get('orderId')?.errors?.['mongoIdInvalid']">
+            請輸入正確的訂單編號
+          </mat-error>
         </mat-form-field>
       </div>
-      <style>
-        .html-content *:not(table){
-          width: auto !important;
-        }
-      </style>
       <!-- 查詢按鈕 -->
       <div class="ml-4 -mr-20 basis-1/12">
         <button mat-raised-button color="primary" type="submit" class="h-full w-full"
-          [disabled]="form.invalid">查詢</button>
+          [disabled]="!form.get('orderId')?.value">查詢</button>
       </div>
     </form>
   </div>
