@@ -4,6 +4,7 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { PatchOrderReqInner, PatchSeatReqInner, PatchTicketReqInner, StaffOrderSearchSuccessDataTicketList } from '../../api/cinePOS-api';
 import { Subject, takeUntil } from 'rxjs';
+import { mongoIdFormatValidator } from '../../core/validators/mongo-id-format.validator';
 export interface Task {
   name: string;
   completed: boolean;
@@ -26,7 +27,7 @@ export interface Checkbox {
 })
 export class RefundPageComponent implements OnInit {
   form = this.fb.group({
-    orderId: ['', [Validators.required]],
+    orderId: ['', [Validators.required,mongoIdFormatValidator()]],
   });
 
 
@@ -34,23 +35,12 @@ export class RefundPageComponent implements OnInit {
   allTimeOver: boolean = true;
   allIsRefund: boolean = true;
 
+  validOpen: boolean = false;
+
   checkData: CheckboxItem[] = [];
   tempOrderId = ''; // 暫存OrderId，後續退票用
   tempAmount = 0; // 暫存目前總金額，後續扣款用
   teamData: CheckboxItem[] = [
-    {
-      isCheck: false,
-      data: {
-        title: '關於我和鬼變成家人的那件事',
-        ticketId: '6471e9fcbe714b8e2a3dd228',
-        ticketType: '優待票',
-        ticketStatus: 1,
-        price: 280,
-        time: '2023-06-06T02:30:00.000Z',
-        seatId: '645a2bd0d658869fb83b1b96',
-        seatName: 'A8'
-      }
-    },
     {
       isCheck: true,
       data: {
@@ -152,7 +142,12 @@ export class RefundPageComponent implements OnInit {
 
   // 查詢訂單
   findOrderInfo(): void {
-    if (this.form.invalid) { return };
+    // 重製狀態
+    this.allCheck = false;
+    this.allTimeOver = true;
+    this.allIsRefund = true;
+
+    if (this.form.invalid) { this.validOpen = true; return ;};
     this.refundService.v1StaffRefundOrderIdGet$(this.form.value.orderId)
       .pipe(
         takeUntil(this.onDestroy$)

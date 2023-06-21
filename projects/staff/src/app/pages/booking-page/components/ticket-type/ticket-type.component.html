@@ -1,7 +1,7 @@
-<div class="m-6">
+<div class="m-6 h-4/5">
   <app-stepper></app-stepper>
 
-  <ul class=" pt-5">
+  <ul class="pt-5 h-4/5 flex flex-col items-center justify-center">
     <li *ngFor="let item of ticketTypeData">
       <app-ticket-select [ticketItem]="item" (ticketControl)="ticketControl($event)"></app-ticket-select>
     </li>
