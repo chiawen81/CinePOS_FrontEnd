@@ -21,16 +21,16 @@
   </div>
   <!-- 顯示訂單內電影票資訊 -->
   <div class="example-section  mt-6 pt-2 checkbox-item" *ngIf="this.checkData.length>0"
-    [class.pl-6]="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+    [class.pl-6]="checkData.length>1 && !allTimeOver && !allIsRefund">
     <!-- 全選 -->
-    <div class="example-list-section" *ngIf="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+    <div class="example-list-section" *ngIf="checkData.length>1 && !allTimeOver && !allIsRefund">
       <mat-checkbox class="example-margin" [checked]="allCheck" [color]="'primary'" [indeterminate]="someCheck()"
         (change)="setAll($event.checked)">
         全選
       </mat-checkbox>
     </div>
     <!-- 項目內容 -->
-    <div class="example-list-section ml-3 pr-4 w-11/12" [class.ml-5]="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+    <div class="example-list-section ml-3 pr-4 w-11/12" [class.ml-5]="checkData.length>1 && !allTimeOver && !allIsRefund">
       <ul>
         <li *ngFor="let item of checkData" class="border-b border-primary-400 pb-2 my-4  ">
           <!-- 無退 -->
@@ -61,7 +61,7 @@
   </div>
 </div>
 <!-- 退票確認 -->
-<div class="absolute bottom-10 right-10" *ngIf="this.checkData.length>1 && !allTimeOver && !allIsRefund">
+<div class="absolute bottom-10 right-10" *ngIf="checkData.length>0 && !allTimeOver && !allIsRefund">
   <button mat-raised-button color="primary" class="w-60" type="button"
     [disabled]="checkDataTrueCount()<=0"
     (click)="refund()">
