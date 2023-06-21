@@ -1,14 +1,14 @@
-<section class="w-full">
+<section class="max-w-full mx-auto" [style.width]="(6 * colsOrder.length) + '%'">
     <!-- 螢幕 -->
     <div>
         <div class="screen-border"></div>
         <div class="screen"></div>
     </div>
 
-    <div class="flex w-full p-5 pb-0">
+    <div class="flex w-full p-5 pl-3 pb-0">
         <!-- ABCD -->
         <ul *ngIf="colsArr.length > 0">
-            <li *ngFor="let order of rowsOrder; let i = index; trackBy: trackByIndex" class="mx-3 my-0.5">
+            <li *ngFor="let order of rowsOrder; let i = index; trackBy: trackByIndex" class="mx-1 my-0.5">
                 <input class="w-8 h-7 p-1 mb-1 flex justify-center items-center text-center row-rank"
                     [disabled]="step !== Step.rank" value={{order}} (input)="convertToUpperCase()" [(ngModel)]="rowsOrder[i]"
                     (click)="selectAllText()">
@@ -29,8 +29,8 @@
         </ul>
     </div>
     <!-- 下排數字 -->
-    <div class="flex w-full px-5 mt-0.5 mb-3">
-        <div class="w-14">
+    <div class="flex w-full px-5 pl-3 mt-0.5 mb-3">
+        <div class="w-10">
             <span style="display: none;"></span>
         </div>
         <div class="flex-1">
