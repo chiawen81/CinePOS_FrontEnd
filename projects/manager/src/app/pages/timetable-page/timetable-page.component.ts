@@ -204,11 +204,10 @@ export class TimetablePageComponent implements OnInit {
 
   /** 取得時刻表 */
   private getTimetableList() {
+    const today = moment().add(7, 'day').startOf('week').valueOf();
+    const endDate = moment(today).add('day', 7).valueOf();
 
-    // this.currentDate = new Date(startDate);
-    // const startDate = moment('20230521').valueOf();
-    // const endDate = moment(startDate).add('day', 7).valueOf();
-    this.timetableService.getTimetableList(0, 0).subscribe((res: any) => {
+    this.timetableService.getTimetableList(today, endDate).subscribe((res: any) => {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
@@ -218,8 +217,6 @@ export class TimetablePageComponent implements OnInit {
   }
 
   private mapTimetable(data: any[]) {
-
-
     const result = data.filter((item) => {
       if (item.movieId) {
         return item;
@@ -234,40 +231,6 @@ export class TimetablePageComponent implements OnInit {
       return item;
     });;
     return result;
-  }
-
-  private transformRateNameColor(type: string | undefined): string {
-    switch (type) {
-      case '普通級':
-        return '#363E31';
-      case '保護級':
-        return '#273B44';
-      case '輔12':
-        return '#3E3928';
-      case '輔15':
-        return '#473729';
-      case '限制級':
-        return '#442727';
-      default:
-        return '';
-    }
-  }
-
-  private transformRateNameToRate(type: string | undefined): RateCode | null {
-    switch (type) {
-      case '普通級':
-        return RateCode.g;
-      case '保護級':
-        return RateCode.pg;
-      case '輔12':
-        return RateCode.pg12;
-      case '輔15':
-        return RateCode.pg15;
-      case '限制級':
-        return RateCode.r;
-      default:
-        return null;
-    }
   }
 
   private transformRateColor(type: RateCode): string {
@@ -317,9 +280,9 @@ export class TimetablePageComponent implements OnInit {
         id: item._id ?? '',
         text: item.title ?? '',
         runtime: (item.runtime as number) ?? null,
-        color: this.transformRateNameColor(item.rateName),
+        color: this.transformRateColor(item.rate as RateCode),
         rateName: item.rateName,
-        rate: this.transformRateNameToRate(item.rateName) as RateCode,
+        rate: item.rate as RateCode,
         provideVersionName: item.provideVersionName
       }
       return movieData;

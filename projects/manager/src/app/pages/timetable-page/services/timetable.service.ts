@@ -56,7 +56,7 @@ export class TimetableService {
 
     // return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
     // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
-    return this.managerService.v1ManagerTimetableListGet(0, 0);
+    return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
   }
 
   /**
