@@ -1,4 +1,4 @@
-import { map } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Data } from '@angular/router';
 import { DxSchedulerComponent } from 'devextreme-angular';
@@ -17,11 +17,12 @@ export class TimetablePageComponent implements OnInit {
 
   @ViewChild(DxSchedulerComponent, { static: false }) scheduler!: DxSchedulerComponent;
 
-  data: any[] = [];
+  timetableList: any[] = [];
+  timetableList$ = new Observable<any>();
 
   currentDate!: Date;
 
-  moviesData: MovieData[] = [];
+  moviesData$ = new Observable<any>();
 
   theaterData: TheatreData[] = [];
 
@@ -88,7 +89,7 @@ export class TimetablePageComponent implements OnInit {
       alert('該廳不支援此電影類型');
       return
     }
-    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate);
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate, param.theaterId, param.id);
 
     if (checkDateConflict) {
       event.cancel = true;
@@ -133,7 +134,7 @@ export class TimetablePageComponent implements OnInit {
       return
     }
 
-    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate);
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate, param.theaterId);
 
     if (checkDateConflict) {
       e.cancel = true;
@@ -149,15 +150,28 @@ export class TimetablePageComponent implements OnInit {
     })
   }
 
-  checkDateConflict(newStartDate: any, newEndDate: any) {
+  /**
+   * 
+   * @param newStartDate 
+   * @param newEndDate 
+   * @param theaterId 
+   * @param timetableId 
+   * @returns 
+   */
+  checkDateConflict(newStartDate: any, newEndDate: any, theaterId: string, timetableId?: string) {
 
-    for (var i = 0; i < this.data.length; i++) {
-      const existingAppointmentStart = moment(this.data[i].startDate).valueOf();
-      const existingAppointmentEnd = moment(this.data[i].endDate).valueOf();
+    for (var i = 0; i < this.timetableList.length; i++) {
+      if (this.timetableList[i].theaterId === theaterId) {
+        const existingAppointmentStart = moment(this.timetableList[i].startDate).valueOf();
+        const existingAppointmentEnd = moment(this.timetableList[i].endDate).valueOf();
 
-      if (moment(newStartDate).valueOf() < existingAppointmentEnd && moment(newEndDate).valueOf() > existingAppointmentStart) {
-        // 新的日程和現有的日程有時間衝突
-        return true;
+        if (moment(newStartDate).valueOf() < existingAppointmentEnd && moment(newEndDate).valueOf() > existingAppointmentStart
+          && (this.timetableList[i]._id !== timetableId)) {
+            console.log(this.timetableList[i] , timetableId);
+            
+          // 新的日程和現有的日程有時間衝突
+          return true;
+        }
       }
     }
 
@@ -231,11 +245,16 @@ export class TimetablePageComponent implements OnInit {
     const today = moment().add(7, 'day').startOf('week').valueOf();
     const endDate = moment(today).add('day', 7).valueOf();
 
+
     this.timetableService.getTimetableList(today, endDate).subscribe((res: any) => {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
-        this.data = filterData;
-        this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
+        this.timetableList = filterData;
+        // this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
+        this.moviesData$ = of(JSON.parse(JSON.stringify(this.getShowMovies(filterData))));
+
+        // this.timetableList$ = this.mapTimetable$(res.data.timetable);
+
       }
     })
   }
@@ -256,6 +275,21 @@ export class TimetablePageComponent implements OnInit {
     });;
     return result;
   }
+  private mapTimetable$(data: any[]): Observable<any[]> {
+    return of(data).pipe(
+      map(items => items.filter(item => !!item.movieId)),
+      map(items => items.map(item => {
+        item.startDate = new Date(item.startDate);
+        item.endDate = new Date(item.endDate);
+        item.movie = item.movieId;
+        item.color = this.transformRateColor(item.movie.rate);
+        item.movieId = item.movieId._id;
+        item.theaterId = item.theaterId._id;
+        return item;
+      }))
+    );
+  }
+
 
   private transformRateColor(type: RateCode): string {
     switch (type) {

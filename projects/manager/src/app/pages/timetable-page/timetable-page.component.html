@@ -9,7 +9,7 @@
   </div>
   <div class="dx-viewport overflow-y-auto">
     <div style="overflow: auto;">
-      <dx-scheduler id="scheduler" [dataSource]="data" [views]="['timelineDay']" currentView="timelineDay"
+      <dx-scheduler id="scheduler" [dataSource]="timetableList" [views]="['timelineDay']" currentView="timelineDay"
         [firstDayOfWeek]="0" [startDayHour]="0" [endDayHour]="24" [showAllDayPanel]="false" [groups]="['theaterId']"
         [currentDate]="currentDate" [crossScrollingEnabled]="true" [cellDuration]="30" [height]="500"
         appointmentTemplate="appointment-template" timeCellTemplate="timeCellTemplate"
@@ -20,7 +20,7 @@
                 </div> -->
         <div *dxTemplate="let data of 'timeCellTemplate'" class="text-white">
           {{data.date.getHours()}}:{{(data.date.getMinutes() < 10 ? '0' : '' ) + data.date.getMinutes()}} </div>
-            <dxi-resource fieldExpr="movieId" [useColorAsDefault]="true" [dataSource]="moviesData">
+            <dxi-resource fieldExpr="movieId" [useColorAsDefault]="true" [dataSource]="moviesData$ |async">
             </dxi-resource>
             <!-- <dxi-resource fieldExpr="movieId"[useColorAsDefault]="true"  [dataSource]="moviesData">
                 </dxi-resource> -->
