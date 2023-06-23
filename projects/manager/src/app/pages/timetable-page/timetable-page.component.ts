@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
 import { ManagerMovieListSuccessDataInner, TimetableCreateReq } from '../../api/cinePOS-api';
 import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
+import { RatePipe } from './pipe/rate.pipe';
 
 @Component({
   selector: 'app-timetable-page',
@@ -167,8 +168,8 @@ export class TimetablePageComponent implements OnInit {
 
         if (moment(newStartDate).valueOf() < existingAppointmentEnd && moment(newEndDate).valueOf() > existingAppointmentStart
           && (this.timetableList[i]._id !== timetableId)) {
-            console.log(this.timetableList[i] , timetableId);
-            
+          console.log(this.timetableList[i], timetableId);
+
           // 新的日程和現有的日程有時間衝突
           return true;
         }
@@ -223,6 +224,23 @@ export class TimetablePageComponent implements OnInit {
     this.timetableService.dateSelect$.next(event);
   }
 
+  getRateWordColor(type: RateCode) {
+    switch (type) {
+      case RateCode.g:
+        return '#74B147';
+      case RateCode.pg:
+        return '#009EE2';
+      case RateCode.pg12:
+        return '#E9D375';
+      case RateCode.pg15:
+        return '#E26C00';
+      case RateCode.r:
+        return '#F44545';
+      default:
+        return '';
+    }
+  }
+
   /** 取得廳院列表 */
   private getTheaterList() {
     this.timetableService.getTheaterList().subscribe((res) => {
@@ -250,6 +268,8 @@ export class TimetablePageComponent implements OnInit {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
         this.timetableList = filterData;
+        console.log(this.timetableList);
+
         // this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
         this.moviesData$ = of(JSON.parse(JSON.stringify(this.getShowMovies(filterData))));
 
@@ -268,6 +288,8 @@ export class TimetablePageComponent implements OnInit {
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
+      item.rate = item.movie.rate;
+      item.movie.rateName = new RatePipe().transform(item.movie.rate);
       item.color = this.transformRateColor(item.movie.rate);
       item.movieId = item.movieId._id;
       item.theaterId = item.theaterId._id;
@@ -275,21 +297,6 @@ export class TimetablePageComponent implements OnInit {
     });;
     return result;
   }
-  private mapTimetable$(data: any[]): Observable<any[]> {
-    return of(data).pipe(
-      map(items => items.filter(item => !!item.movieId)),
-      map(items => items.map(item => {
-        item.startDate = new Date(item.startDate);
-        item.endDate = new Date(item.endDate);
-        item.movie = item.movieId;
-        item.color = this.transformRateColor(item.movie.rate);
-        item.movieId = item.movieId._id;
-        item.theaterId = item.theaterId._id;
-        return item;
-      }))
-    );
-  }
-
 
   private transformRateColor(type: RateCode): string {
     switch (type) {
