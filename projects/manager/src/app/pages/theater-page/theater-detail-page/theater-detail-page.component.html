@@ -6,8 +6,10 @@
                 <cine-card-content>
                     <div class="row">
                         <span class="form-title">名稱</span>
-                        <div class="form-content">
-                            <input class="form-input" type="text" formControlName="theaterName">
+                        <div class="main-box form-content">
+                            <div class="showText">第</div>
+                            <input class="form-input w-[70%] text-center" type="number" min="1" [(ngModel)]="inputName" (input)="handleChange()" formControlName="theaterName">
+                            <div class="showText">廳</div>
                         </div>
                     </div>
                     <div class="row">
@@ -64,18 +66,18 @@
                     <div class="row">
                         <span class="form-title">直排格數</span>
                         <div class="form-content">
-                            <input class="form-input" type="number" min="1" [(ngModel)]="inputRow" (input)="handleChange()" formControlName="row">
+                            <input class="form-input" type="number" min="5" [(ngModel)]="inputRow" (input)="handleChange()" formControlName="row">
                         </div>
                     </div>
                     <div class="row">
                         <span class="form-title">橫排格數</span>
                         <div class="form-content">
-                            <input class="form-input" type="number" min="1" [(ngModel)]="inputCol" (input)="handleChange()" formControlName="col">
+                            <input class="form-input" type="number" min="5" [(ngModel)]="inputCol" (input)="handleChange()" formControlName="col">
                         </div>
                     </div>
                     <div class="flex" style="justify-content: right;">
                         <button class='w-2/3' mat-raised-button color="primary" type="submit" [disabled]="step !== Step.createMap"
-                            (click)="onPositiveClick('next')">產生座位圖</button>
+                            (click)="onPositiveClick('next')">{{ btnText }}</button>
                     </div>
                 </cine-card-content>
             </cine-card>
@@ -86,7 +88,7 @@
         <div class="wrapper-page form-common-back utility-common-back">
             <cine-card class="mb-[30px]">
                 <cine-card-header class="text-center mb-[30px]"
-                    style="font-size: 14px;">※點選以設定非座位區(ex:走道)</cine-card-header>
+                    style="font-size: 14px;">{{ hintText }}</cine-card-header>
                 <cine-card-content>
                     <!-- <app-manager-seatchart [step]="step" [row]="row" [col]="col" [type]="type"
                         (seatMapResult)="getSeatMapResult($event)"></app-manager-seatchart> -->
