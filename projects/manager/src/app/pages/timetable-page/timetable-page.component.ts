@@ -27,6 +27,9 @@ export class TimetablePageComponent implements OnInit {
 
   movieList: MovieData[] = [];
 
+  /** TODO: 沒型別 */
+  originTheaterList: any[] = []
+
   movieTitle = '';
 
   dateCount = 7;
@@ -70,7 +73,12 @@ export class TimetablePageComponent implements OnInit {
   }
 
   updateAppointment(event: any) {
-    console.log('update', event);
+    const checkCineType = this.checkTheaterConflict(event.newData.theaterId, event.newData.movieId);
+    if (!checkCineType) {
+      event.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
     const param = {
       id: event.newData._id,
       movieId: event.newData.movieId,
@@ -87,7 +95,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   deleteAppointment(event?: any) {
-    console.log(event);
+    // console.log(event);
     this.timetableService.deleteTimetable(event.appointmentData._id).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -100,13 +108,18 @@ export class TimetablePageComponent implements OnInit {
       return item.id === e.itemElement.id;
     });
 
+    const checkCineType = this.checkTheaterConflict(e.itemData.theaterId, e.itemElement.id);
+    if (!checkCineType) {
+      e.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
     const param = {
       movieId: e.itemElement.id,
       theaterId: e.itemData.theaterId,
       startDate: new Date(e.itemData.startDate),
       endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
-    console.log(param);
     this.timetableService.createTimetable(param as TimetableCreateReq).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -115,14 +128,21 @@ export class TimetablePageComponent implements OnInit {
     })
   }
 
+  checkTheaterConflict(theaterId: string, movieId: string) {
+    const movieCineType = this.movieList.find((item) => { return item.id === movieId })?.provideVersionName;
+    const theaterType = this.originTheaterList.find((item) => { return String(item._id) === theaterId })?.type;
+
+    return movieCineType?.includes(theaterType);
+  }
+
   onListDragStart(e: any) {
 
     e.cancel = true;
   }
 
   onItemDragStart(e: any) {
-    console.log(e);
-    console.log(e.fromData);
+    // console.log(e);
+    // console.log(e.fromData);
     e.itemData = e.fromData;
   }
 
@@ -170,6 +190,7 @@ export class TimetablePageComponent implements OnInit {
     this.timetableService.getTheaterList().subscribe((res) => {
       if (res.data) {
         const theaterList = res.data as any[];
+        this.originTheaterList = theaterList;
         this.theaterData = theaterList.map((item) => {
           const result = {
             id: item._id,
@@ -191,25 +212,13 @@ export class TimetablePageComponent implements OnInit {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
         this.data = filterData;
-        console.log(this.data);
-        // this.theaterData = this.getTheaters(filterData);
-        // console.log(this.theaterData);
         this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
       }
     })
   }
 
   private mapTimetable(data: any[]) {
-    // const result = data.map((item) => {
 
-    //   item.startDate = new Date(item.startDate);
-    //   item.endDate = new Date(item.endDate);
-    //   item.movie = item.movieId;
-    //   item.color = this.transformRateColor(item.movie.rate);
-    //   item.movieId = item.movieId._id;
-    //   item.theaterId = item.theaterId._id;
-    //   return item;
-    // });
 
     const result = data.filter((item) => {
       if (item.movieId) {
@@ -310,7 +319,8 @@ export class TimetablePageComponent implements OnInit {
         runtime: (item.runtime as number) ?? null,
         color: this.transformRateNameColor(item.rateName),
         rateName: item.rateName,
-        rate: this.transformRateNameToRate(item.rateName) as RateCode
+        rate: this.transformRateNameToRate(item.rateName) as RateCode,
+        provideVersionName: item.provideVersionName
       }
       return movieData;
     });
