@@ -73,12 +73,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   updateAppointment(event: any) {
-    const checkCineType = this.checkTheaterConflict(event.newData.theaterId, event.newData.movieId);
-    if (!checkCineType) {
-      event.cancel = true;
-      alert('該廳不支援此電影類型');
-      return
-    }
+
     const param = {
       id: event.newData._id,
       movieId: event.newData.movieId,
@@ -86,6 +81,22 @@ export class TimetablePageComponent implements OnInit {
       startDate: moment(event.newData.startDate).toDate() as any,
       endDate: moment(event.newData.endDate).toDate() as any
     }
+
+    const isCineTypeMatch = this.isCineTypeMatch(param.theaterId, param.movieId);
+    if (!isCineTypeMatch) {
+      event.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate);
+
+    if (checkDateConflict) {
+      event.cancel = true;
+      alert('請確認播放時段');
+      return
+    }
+
+
     this.timetableService.updateTimetable(param).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -108,18 +119,28 @@ export class TimetablePageComponent implements OnInit {
       return item.id === e.itemElement.id;
     });
 
-    const checkCineType = this.checkTheaterConflict(e.itemData.theaterId, e.itemElement.id);
-    if (!checkCineType) {
-      e.cancel = true;
-      alert('該廳不支援此電影類型');
-      return
-    }
     const param = {
       movieId: e.itemElement.id,
       theaterId: e.itemData.theaterId,
       startDate: new Date(e.itemData.startDate),
       endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
+
+    const checkCineType = this.isCineTypeMatch(param.theaterId, param.movieId);
+    if (!checkCineType) {
+      e.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
+
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate);
+
+    if (checkDateConflict) {
+      e.cancel = true;
+      alert('請確認播放時段');
+      return
+    }
+
     this.timetableService.createTimetable(param as TimetableCreateReq).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -128,11 +149,19 @@ export class TimetablePageComponent implements OnInit {
     })
   }
 
-  checkTheaterConflict(theaterId: string, movieId: string) {
-    const movieCineType = this.movieList.find((item) => { return item.id === movieId })?.provideVersionName;
-    const theaterType = this.originTheaterList.find((item) => { return String(item._id) === theaterId })?.type;
+  checkDateConflict(newStartDate: any, newEndDate: any) {
 
-    return movieCineType?.includes(theaterType);
+    for (var i = 0; i < this.data.length; i++) {
+      const existingAppointmentStart = moment(this.data[i].startDate).valueOf();
+      const existingAppointmentEnd = moment(this.data[i].endDate).valueOf();
+
+      if (moment(newStartDate).valueOf() < existingAppointmentEnd && moment(newEndDate).valueOf() > existingAppointmentStart) {
+        // 新的日程和現有的日程有時間衝突
+        return true;
+      }
+    }
+
+    return false;
   }
 
   onListDragStart(e: any) {
@@ -174,11 +203,6 @@ export class TimetablePageComponent implements OnInit {
     });
   }
 
-  // isDisableDate(date: Date): boolean {
-  //   const startDate = moment().add('day', 7).startOf('week').valueOf();
-  //   const endDate = moment(startDate).add('day', 7).valueOf();
-  //   return moment(date).isBefore(startDate) || moment(date).isAfter(endDate);
-  // }
 
   onCurrentDateChange(event: any) {
     this.currentDate = moment(event).toDate();
@@ -288,6 +312,13 @@ export class TimetablePageComponent implements OnInit {
       return movieData;
     });
     return result;
+  }
+
+  private isCineTypeMatch(theaterId: string, movieId: string) {
+    const movieCineType = this.movieList.find((item) => { return item.id === movieId })?.provideVersionName;
+    const theaterType = this.originTheaterList.find((item) => { return String(item._id) === theaterId })?.type;
+
+    return movieCineType?.includes(theaterType);
   }
 
 }
