@@ -268,6 +268,13 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     switch (this.step) {
       case Step.createMap:
         this.formGroup.enable();
+
+        if (this.isEdit) {
+          this.formGroup.controls['rowType'].disable();
+          this.formGroup.controls['row'].disable();
+          this.formGroup.controls['col'].disable();
+        }
+
         this.step2?.setSeatSettingType(SeatSettingType.disable);
         break;
       case Step.seatMapSetting:
@@ -330,18 +337,17 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       seatMap: formValue.step2.seatMap
     };
 
-    console.log(para);
-    // if (this.isEdit) {
-    //   // 編輯狀態
-    //   this.patchUpdateTheaterAPI(para);
-    // } else {
-    //   // 新增狀態
-    //   para = {
-    //     ...para,
-    //     status: 0
-    //   };
-    //   this.postCreateTheaterAPI(para);
-    // };
+    if (this.isEdit) {
+      // 編輯狀態
+      this.patchUpdateTheaterAPI(para);
+    } else {
+      // 新增狀態
+      para = {
+        ...para,
+        status: 0
+      };
+      this.postCreateTheaterAPI(para);
+    };
   }
 
   // ————————————————————————————————  API  ————————————————————————————————
