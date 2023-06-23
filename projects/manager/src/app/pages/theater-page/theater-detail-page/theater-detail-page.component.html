@@ -1,8 +1,39 @@
+<div class="flex-container px-[20px]">
+    <table class="table">
+        <tr>
+            <td>
+                <div class="text-row" [ngClass]="{ 'active-step': step === 0 }">
+                    <div class="text">1 {{ btnText }}</div>
+                    <div class="underline"></div>
+                </div>
+            </td>
+            <td>
+                <div class="text-row" [ngClass]="{ 'active-step': step === 1 }">
+                    <div class="text">2 設定非座位區</div>
+                    <div class="underline"></div>
+                </div>
+            </td>
+            <td>
+                <div class="text-row" [ngClass]="{ 'active-step': step === 2 }">
+                    <div class="text">3 調整排號</div>
+                    <div class="underline"></div>
+                </div>
+            </td>
+            <td>
+                <div class="text-row" [ngClass]="{ 'active-step': step === 3 }">
+                    <div class="text">4 設定特殊座位</div>
+                    <div class="underline"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <div class="flex-container">
     <section class="w-[30%] px-[20px]">
         <div class="wrapper-page form-common-back utility-common-back" [formGroup]="formGroup">
             <cine-card class="mb-[30px]">
-                <cine-card-header class="mb-[20px]" style="font-size: 14px;;">基礎資訊</cine-card-header>
+                <cine-card-header style="font-size: 14px;">基礎資訊</cine-card-header>
                 <cine-card-content>
                     <div class="row">
                         <span class="form-title">名稱</span>
