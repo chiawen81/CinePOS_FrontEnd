@@ -53,10 +53,10 @@
 <div class="w-full bg-dark-300  p-9 custom-drag h-[calc(100%-500px-106px)] overflow-y-auto">
   <div class="title flex justify-between">
     <div>電影列表</div>
-    <div>
-      <input class="form-input w-80 mr-10" type="text" [(ngModel)]="movieTitle">
-      <button mat-raised-button color="primary" type="submit" class="w-[60px]"
-        (click)="getMovieList(movieTitle)">送出</button>
+    <div class="form-common-back utility-common-back">
+      <input class="form-input w-80 mr-10" type="text" [(ngModel)]="movieTitle" placeholder="搜尋電影...">
+      <button mat-raised-button type="submit" class="w-[60px] " color="primary"
+        (click)="getMovieList(movieTitle)">查詢</button>
     </div>
   </div>
   <div>
