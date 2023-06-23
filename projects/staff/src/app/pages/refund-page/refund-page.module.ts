@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RefundModule } from '../../features/refund/refund.module';
+import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const materialModules = [
     ReactiveFormsModule,
     FormsModule,
     RefundModule,
+    CoreDirectivesModule,
     ...materialModules
   ]
 })
