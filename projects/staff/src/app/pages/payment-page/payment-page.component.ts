@@ -112,6 +112,7 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
             ticketTypeId: ticket.ticketTypeId,
             movieId: item.movieId,
             scheduleId: item.scheduleId,
+            seatId: seat.seatId,
             seatName: seat.seatName
           };
 
