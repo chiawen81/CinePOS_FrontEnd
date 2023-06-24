@@ -100,7 +100,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
       rate: new FormControl(null, [Validators.required]),
       director: new FormControl(""),
       cast: new FormArray([]),
-      description: new FormControl("", [Validators.maxLength(300)]),
+      description: new FormControl(""),
       status: new FormControl(0, [Validators.required]),
       releaseDate: new FormControl(null, [Validators.required]),
       trailerLink: new FormControl("", [Validators.pattern(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/)]),
