@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CardModule } from '../../features/card/card.module';
 import { TableModule } from "../../features/table/table.module";
 import { ManagerSeatchartModule } from "../../features/manager-seatchart/manager-seatchart.module";
+import { CoreDirectivesModule } from 'projects/share-libs/src/lib/core/directives/core-directives.module';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { ManagerSeatchartModule } from "../../features/manager-seatchart/manager
         MatPaginatorModule,
         CardModule,
         TableModule,
-        ManagerSeatchartModule
+        ManagerSeatchartModule,
+        CoreDirectivesModule
     ]
 })
 export class TheaterPageModule { }

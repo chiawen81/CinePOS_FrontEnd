@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonOptionSuccessDataItem } from '../../../api/cinePOS-api';
 import { CommonAPIService } from '../../../core/services/common-api/common.service';
 import { TheaterService } from './../services/theater.service';
@@ -24,6 +24,8 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   Step = Step;
   formGroup!: FormGroup;
   theaterId: string = "";
+  hintText: string = "";
+  btnText: string = "產生座位圖";
 
   /* API */
   typeOptions: CommonOptionSuccessDataItem[] = [];
@@ -54,6 +56,11 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       // 編輯狀態
       this.theaterId = this.route.snapshot.params['id'];
       this.getTheaterInfoAPI(); // API- 取得影廳資訊
+      this.btnText = "修改基礎資訊";
+
+      this.formGroup.controls['rowType'].disable();
+      this.formGroup.controls['row'].disable();
+      this.formGroup.controls['col'].disable();
     } else {
       // 新增狀態
       // default: row是英文
@@ -69,15 +76,17 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
   // 當row & col輸入為小數點時自動轉為整數
   inputRow!: number;
   inputCol!: number;
+  inputName!: number;
   handleChange() {
     this.inputRow = Math.ceil(this.inputRow);
     this.inputCol = Math.ceil(this.inputCol);
+    this.inputName = Math.ceil(this.inputName);
   }
 
   // 查詢- 初始化表單
   initForm() {
     this.formGroup = this.fb.group({
-      theaterName: ['', [Validators.required]],
+      theaterName: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       theaterFloor: ['', [Validators.required]],
       theaterType: ['', [Validators.required]],
       row: ['', [Validators.required, Validators.pattern('[0-9]*')]],
@@ -92,8 +101,9 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     if (this.isEdit) {
       // 直排排號判斷: true:英文, false:數字
       const rowType = this.parseTheaterType(data.rowLabel);
+      const splitName = data.name.match(/\d+/)?.[0];
       const patchData = {
-        theaterName: data.name,
+        theaterName: splitName,
         theaterFloor: data.floor,
         theaterType: data.type,
         row: data.row,
@@ -152,10 +162,65 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  setHintText(){
+    switch (this.step) {
+      case 3:
+        this.hintText = "※點選以設定特殊座位(ex:殘障座位)";
+        break;
+      case 2:
+        this.hintText = "※根據實際情況調整直排、橫排的排號";
+        break;
+      case 1:
+      default:
+        this.hintText = "※點選以設定非座位區(ex:走道)";
+        break;
+    }
+  }
+
+  // 驗證
+  inputValidator(key:string, min: number, max: number): boolean {
+    
+    let returnValue = true;
+    switch(key){
+      case "name":
+          if (this.formGroup.get('theaterName')?.value < min) {
+            returnValue = false;
+          }
+        break;
+      case "row":
+          if (this.formGroup.get('row')?.value < min || this.formGroup.get('row')?.value > max) {
+            returnValue = false;
+          }
+        break;
+      case "col":
+          if (this.formGroup.get('col')?.value < min || this.formGroup.get('col')?.value > max) {
+            returnValue = false;
+          }
+        break;
+    }
+    
+    return returnValue;
+  }
+
   step: Step = Step.createMap; // 步驟順序
   nextStep(): void {
     switch (this.step) {
       case Step.createMap:
+        if(!this.inputValidator("name", 1, -1)){
+          alert("影廳名稱須為1以上");
+          return;
+        }
+
+        if(!this.inputValidator("row", 5, 26)){
+          alert("直排格數須介於5~26之間");
+          return;
+        }
+
+        if(!this.inputValidator("col", 5, 35)){
+          alert("橫排格數須介於5~35之間");
+          return;
+        }
+
         if(this.formGroup.invalid){
           alert("請填寫所有欄位");
           return;
@@ -193,14 +258,23 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+    this.setHintText();
   }
 
   lastStep(): void {
     this.step--;
+    this.setHintText();
 
     switch (this.step) {
       case Step.createMap:
         this.formGroup.enable();
+
+        if (this.isEdit) {
+          this.formGroup.controls['rowType'].disable();
+          this.formGroup.controls['row'].disable();
+          this.formGroup.controls['col'].disable();
+        }
+
         this.step2?.setSeatSettingType(SeatSettingType.disable);
         break;
       case Step.seatMapSetting:
@@ -251,7 +325,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
     }
 
     let para: any = {
-      name: formValue.theaterName,
+      name: "第" + formValue.theaterName + "廳",
       type: formValue.theaterType,
       floor: formValue.theaterFloor,
       totalCapacity: totalCapacity,
@@ -262,7 +336,7 @@ export class TheaterDetailPageComponent implements OnInit, AfterViewInit {
       colLabel: formValue.step2.colLabel,
       seatMap: formValue.step2.seatMap
     };
-    
+
     if (this.isEdit) {
       // 編輯狀態
       this.patchUpdateTheaterAPI(para);

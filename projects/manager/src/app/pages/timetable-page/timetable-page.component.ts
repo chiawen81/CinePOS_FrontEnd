@@ -1,4 +1,4 @@
-import { map } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Data } from '@angular/router';
 import { DxSchedulerComponent } from 'devextreme-angular';
@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { MoviePageService } from '../movie-page/services/movie-page.service';
 import { ManagerMovieListSuccessDataInner, TimetableCreateReq } from '../../api/cinePOS-api';
 import { ManagerMovieListSuccessDataInnerCustomer } from '../../core/interface/movie';
+import { RatePipe } from './pipe/rate.pipe';
 
 @Component({
   selector: 'app-timetable-page',
@@ -17,15 +18,19 @@ export class TimetablePageComponent implements OnInit {
 
   @ViewChild(DxSchedulerComponent, { static: false }) scheduler!: DxSchedulerComponent;
 
-  data: any[] = [];
+  timetableList: any[] = [];
+  timetableList$ = new Observable<any>();
 
   currentDate!: Date;
 
-  moviesData: MovieData[] = [];
+  moviesData$ = new Observable<any>();
 
   theaterData: TheatreData[] = [];
 
   movieList: MovieData[] = [];
+
+  /** TODO: 沒型別 */
+  originTheaterList: any[] = []
 
   movieTitle = '';
 
@@ -70,7 +75,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   updateAppointment(event: any) {
-    console.log('update', event);
+
     const param = {
       id: event.newData._id,
       movieId: event.newData.movieId,
@@ -78,6 +83,22 @@ export class TimetablePageComponent implements OnInit {
       startDate: moment(event.newData.startDate).toDate() as any,
       endDate: moment(event.newData.endDate).toDate() as any
     }
+
+    const isCineTypeMatch = this.isCineTypeMatch(param.theaterId, param.movieId);
+    if (!isCineTypeMatch) {
+      event.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate, param.theaterId, param.id);
+
+    if (checkDateConflict) {
+      event.cancel = true;
+      alert('請確認播放時段');
+      return
+    }
+
+
     this.timetableService.updateTimetable(param).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -87,7 +108,7 @@ export class TimetablePageComponent implements OnInit {
   }
 
   deleteAppointment(event?: any) {
-    console.log(event);
+    // console.log(event);
     this.timetableService.deleteTimetable(event.appointmentData._id).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -106,7 +127,22 @@ export class TimetablePageComponent implements OnInit {
       startDate: new Date(e.itemData.startDate),
       endDate: moment(e.itemData.startDate).add('minute', moviesData[0].runtime).toDate()
     }
-    console.log(param);
+
+    const checkCineType = this.isCineTypeMatch(param.theaterId, param.movieId);
+    if (!checkCineType) {
+      e.cancel = true;
+      alert('該廳不支援此電影類型');
+      return
+    }
+
+    const checkDateConflict = this.checkDateConflict(param.startDate, param.endDate, param.theaterId);
+
+    if (checkDateConflict) {
+      e.cancel = true;
+      alert('請確認播放時段');
+      return
+    }
+
     this.timetableService.createTimetable(param as TimetableCreateReq).subscribe((res) => {
       if (res) {
         alert(res.message);
@@ -115,14 +151,42 @@ export class TimetablePageComponent implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param newStartDate 
+   * @param newEndDate 
+   * @param theaterId 
+   * @param timetableId 
+   * @returns 
+   */
+  checkDateConflict(newStartDate: any, newEndDate: any, theaterId: string, timetableId?: string) {
+
+    for (var i = 0; i < this.timetableList.length; i++) {
+      if (this.timetableList[i].theaterId === theaterId) {
+        const existingAppointmentStart = moment(this.timetableList[i].startDate).valueOf();
+        const existingAppointmentEnd = moment(this.timetableList[i].endDate).valueOf();
+
+        if (moment(newStartDate).valueOf() < existingAppointmentEnd && moment(newEndDate).valueOf() > existingAppointmentStart
+          && (this.timetableList[i]._id !== timetableId)) {
+          console.log(this.timetableList[i], timetableId);
+
+          // 新的日程和現有的日程有時間衝突
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   onListDragStart(e: any) {
 
     e.cancel = true;
   }
 
   onItemDragStart(e: any) {
-    console.log(e);
-    console.log(e.fromData);
+    // console.log(e);
+    // console.log(e.fromData);
     e.itemData = e.fromData;
   }
 
@@ -154,15 +218,27 @@ export class TimetablePageComponent implements OnInit {
     });
   }
 
-  // isDisableDate(date: Date): boolean {
-  //   const startDate = moment().add('day', 7).startOf('week').valueOf();
-  //   const endDate = moment(startDate).add('day', 7).valueOf();
-  //   return moment(date).isBefore(startDate) || moment(date).isAfter(endDate);
-  // }
 
   onCurrentDateChange(event: any) {
     this.currentDate = moment(event).toDate();
     this.timetableService.dateSelect$.next(event);
+  }
+
+  getRateWordColor(type: RateCode) {
+    switch (type) {
+      case RateCode.g:
+        return '#74B147';
+      case RateCode.pg:
+        return '#009EE2';
+      case RateCode.pg12:
+        return '#E9D375';
+      case RateCode.pg15:
+        return '#E26C00';
+      case RateCode.r:
+        return '#F44545';
+      default:
+        return '';
+    }
   }
 
   /** 取得廳院列表 */
@@ -170,6 +246,7 @@ export class TimetablePageComponent implements OnInit {
     this.timetableService.getTheaterList().subscribe((res) => {
       if (res.data) {
         const theaterList = res.data as any[];
+        this.originTheaterList = theaterList;
         this.theaterData = theaterList.map((item) => {
           const result = {
             id: item._id,
@@ -183,34 +260,26 @@ export class TimetablePageComponent implements OnInit {
 
   /** 取得時刻表 */
   private getTimetableList() {
+    const today = moment().add(7, 'day').startOf('week').valueOf();
+    const endDate = moment(today).add('day', 7).valueOf();
 
-    // this.currentDate = new Date(startDate);
-    // const startDate = moment('20230521').valueOf();
-    // const endDate = moment(startDate).add('day', 7).valueOf();
-    this.timetableService.getTimetableList(0, 0).subscribe((res: any) => {
+
+    this.timetableService.getTimetableList(today, endDate).subscribe((res: any) => {
       if (res.data) {
         const filterData = this.mapTimetable(res.data.timetable);
-        this.data = filterData;
-        console.log(this.data);
-        // this.theaterData = this.getTheaters(filterData);
-        // console.log(this.theaterData);
-        this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
+        this.timetableList = filterData;
+        console.log(this.timetableList);
+
+        // this.moviesData = JSON.parse(JSON.stringify(this.getShowMovies(filterData)));
+        this.moviesData$ = of(JSON.parse(JSON.stringify(this.getShowMovies(filterData))));
+
+        // this.timetableList$ = this.mapTimetable$(res.data.timetable);
+
       }
     })
   }
 
   private mapTimetable(data: any[]) {
-    // const result = data.map((item) => {
-
-    //   item.startDate = new Date(item.startDate);
-    //   item.endDate = new Date(item.endDate);
-    //   item.movie = item.movieId;
-    //   item.color = this.transformRateColor(item.movie.rate);
-    //   item.movieId = item.movieId._id;
-    //   item.theaterId = item.theaterId._id;
-    //   return item;
-    // });
-
     const result = data.filter((item) => {
       if (item.movieId) {
         return item;
@@ -219,46 +288,14 @@ export class TimetablePageComponent implements OnInit {
       item.startDate = new Date(item.startDate);
       item.endDate = new Date(item.endDate);
       item.movie = item.movieId;
+      item.rate = item.movie.rate;
+      item.movie.rateName = new RatePipe().transform(item.movie.rate);
       item.color = this.transformRateColor(item.movie.rate);
       item.movieId = item.movieId._id;
       item.theaterId = item.theaterId._id;
       return item;
     });;
     return result;
-  }
-
-  private transformRateNameColor(type: string | undefined): string {
-    switch (type) {
-      case '普通級':
-        return '#363E31';
-      case '保護級':
-        return '#273B44';
-      case '輔12':
-        return '#3E3928';
-      case '輔15':
-        return '#473729';
-      case '限制級':
-        return '#442727';
-      default:
-        return '';
-    }
-  }
-
-  private transformRateNameToRate(type: string | undefined): RateCode | null {
-    switch (type) {
-      case '普通級':
-        return RateCode.g;
-      case '保護級':
-        return RateCode.pg;
-      case '輔12':
-        return RateCode.pg12;
-      case '輔15':
-        return RateCode.pg15;
-      case '限制級':
-        return RateCode.r;
-      default:
-        return null;
-    }
   }
 
   private transformRateColor(type: RateCode): string {
@@ -308,13 +345,21 @@ export class TimetablePageComponent implements OnInit {
         id: item._id ?? '',
         text: item.title ?? '',
         runtime: (item.runtime as number) ?? null,
-        color: this.transformRateNameColor(item.rateName),
+        color: this.transformRateColor(item.rate as RateCode),
         rateName: item.rateName,
-        rate: this.transformRateNameToRate(item.rateName) as RateCode
+        rate: item.rate as RateCode,
+        provideVersionName: item.provideVersionName
       }
       return movieData;
     });
     return result;
+  }
+
+  private isCineTypeMatch(theaterId: string, movieId: string) {
+    const movieCineType = this.movieList.find((item) => { return item.id === movieId })?.provideVersionName;
+    const theaterType = this.originTheaterList.find((item) => { return String(item._id) === theaterId })?.type;
+
+    return movieCineType?.includes(theaterType);
   }
 
 }

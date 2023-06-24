@@ -85,20 +85,55 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
 
   /** 取得訂單資料 */
   getOrder(): void{
-    this.staffOrderCreateReq.amount = this.getSubtotal();
-    let i = 0;
-    this.shopCar?.forEach(data => {
 
-      const item = {
-          "ticketId" : data.ticket[i].ticketId,
-          "price" : data.ticket[i].price,
-          "ticketTypeId": data.ticket[i].ticketTypeId,
-          "movieId": data.movieId,
-          "scheduleId": data.scheduleId,
-          "seatName": data.seat[i].seatName
-      };
-      i++;
-      this.staffOrderCreateReq.ticketList.push(item);
+    this.staffOrderCreateReq = {
+      /*** 付款方式(1:現金,2:Line Pay) */
+      paymentMethod: 1,
+      /***  訂單總金額 */
+      amount: 0,
+      ticketList: []
+    };
+
+    this.staffOrderCreateReq.amount = this.getSubtotal();
+
+    this.shopCar?.forEach(item => {
+      /** 購物車訂單筆數 */
+
+        const tickets = item.ticket;
+        const seats = item.seat;
+
+        for (let i = 0; i < Math.min(tickets.length, seats.length); i++) {
+          const ticket = tickets[i];
+          const seat = seats[i];
+
+          const newData = {
+            ticketId: ticket.ticketId,
+            price: ticket.price,
+            ticketTypeId: ticket.ticketTypeId,
+            movieId: item.movieId,
+            scheduleId: item.scheduleId,
+            seatId: seat.seatId,
+            seatName: seat.seatName
+          };
+
+          this.staffOrderCreateReq.ticketList.push(newData);
+         console.log('迴圈筆數', i );
+         console.log('迴圈茲裡', newData);
+        }
+
+
+      // console.log(result);
+
+      // const item = {
+      //     "ticketId" : data.ticket[i].ticketId,
+      //     "price" : data.ticket[i].price,
+      //     "ticketTypeId": data.ticket[i].ticketTypeId,
+      //     "movieId": data.movieId,
+      //     "scheduleId": data.scheduleId,
+      //     "seatName": data.seat[i].seatName
+      // };
+      // i++;
+      // this.staffOrderCreateReq.ticketList.push(item);
     });
 
     console.log('ticketList', this.staffOrderCreateReq);
@@ -110,6 +145,7 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
     this.getOrder();
     /** 檢查localstorage訂單資料 */
     if (!!this.staffOrderCreateReq) {
+
       /** 檢查付款金額是否大於訂單金額 */
       if(this.payTotal >= this.getSubtotal()){
 
@@ -204,9 +240,19 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       this.payString += value;
       this.payTotal = this.convertToNumber(this.payString);
     }else if(method === 'method'){
-      /** 歸零 */
-      this.payTotal = 0;
-      this.payString = this.convertToString(this.payTotal);
+
+      if(value === 'remove'){
+        // 刪除鍵
+        const str = this.payString;
+        const newStr = str.substring(0, str.length - 1);
+        console.log(newStr); // 输出 "Hello Worl"
+        this.payString = newStr;
+        this.payTotal = parseInt(this.payString)
+      }else{
+        /** 歸零 */
+        this.payTotal = 0;
+        this.payString = this.convertToString(this.payTotal);
+      }
     }else if(method === 'number'){
       /** 直接加減 */
       const numbeValue = this.convertToNumber(value);
@@ -214,6 +260,14 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       this.payString = this.payTotal.toString();
     }else{
       /** 例外狀況 */
+    }
+
+    /** 輸入付款金額 */
+    if(this.payTotal > 100000){
+      alert('付款金額不得大於100,000元');
+
+      // 清付款款金額
+      this.calculate('zero', 'method');
     }
   }
 

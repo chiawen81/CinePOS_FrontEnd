@@ -21,3 +21,60 @@
     // @apply bg-dark-100 $fill-disabled-background;
     background-color:  rgba(255, 255, 255, 0.05);
 }
+
+.main-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .showText {
+        font-size: 15px;
+        margin-bottom: 0;
+        padding-top: 15px;
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    
+    td {
+        width: 25%;
+        padding: 15px 10px 0px;
+    }
+}
+
+.text-row {
+    position: relative;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 400;
+    color:rgba(221, 221, 221, 0.5);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.underline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(221, 221, 221, 0.5);
+}
+
+.active-step {
+    .text {
+        color: transparent; /* 文字顏色設定透明 */
+        background-image: linear-gradient(90deg, #9C6DFF 0%, #71DDFF 100%); /* 設定漸層角度及顏色 */
+        -webkit-background-clip: text; /* 背景裁剪成文字的前景色 */
+        background-clip: text;
+    }
+
+    .underline {
+        background-image: linear-gradient(90deg, #9C6DFF 0%, #71DDFF 100%); /* 設定底線顏色 */
+    }
+}
