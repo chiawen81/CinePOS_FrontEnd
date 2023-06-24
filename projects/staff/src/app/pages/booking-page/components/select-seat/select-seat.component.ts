@@ -19,12 +19,13 @@ export class SelectSeatComponent implements OnInit {
   ngOnInit(): void {
     this.getSeatData();
   }
-
+  openSeat = false;
   getSeatData(): void {
     const shopCart = this.bookingService.getShopCart();
     this.bookingService.v1StaffSeatScheduleIdGet$(shopCart.scheduleId)
       .subscribe((res) => {
         this.seatData = res.data;
+        this.openSeat = true;
       })
   }
   complete(): void {

@@ -23,8 +23,8 @@
 
     (function () {
       sessionStorage.redirect = location.href;
-      var redirectTo = "/staff/";
-      var title = "CineFront";
+      var redirectTo = "/intro/";
+      var title = "CinePosLandingPage";
 
       if (location.pathname.startsWith("/manager/")) {
         redirectTo = "/manager/";
@@ -32,6 +32,9 @@
       } else if (location.pathname.startsWith("/staff/")) {
         redirectTo = "/staff/";
         title = "CineFront";
+      }else if (location.pathname.startsWith("/intro/")) {
+        redirectTo = "/intro/";
+        title = "CinePosLandingPage";
       }
 
       document.title = title;

@@ -17,7 +17,7 @@ export class ShopCartItemComponent implements OnInit {
     scheduleId: ''
   }
   @Input() shopCartIndex = 0;
-  @Output() dateEmit = new EventEmitter<number>();
+  @Output() deleteEmit = new EventEmitter<number>();
 
   ngOnInit(): void {
   }
@@ -28,7 +28,7 @@ export class ShopCartItemComponent implements OnInit {
     });
     return subtotal;
   }
-  date():void{
-    this.dateEmit.emit(this.shopCartIndex);
+  delete():void{
+    this.deleteEmit.emit(this.shopCartIndex);
   }
 }

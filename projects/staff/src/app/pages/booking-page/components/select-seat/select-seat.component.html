@@ -1,8 +1,10 @@
-<div class="m-6">
+<div class="m-6 h-4/5">
   <app-stepper></app-stepper>
 
-  <div class="mt-6 pt-6">
-    <app-seatchart [seatData]="seatData" [isPreview]="false"></app-seatchart>
+  <div class="mt-6 pt-6 h-4/5 flex items-center" *ngIf="openSeat">
+    <div class="w-full">
+      <app-seatchart [seatData]="seatData" [isPreview]="false"></app-seatchart>
+    </div>
   </div>
 
   <div class="absolute bottom-10 right-0 left-0 flex justify-between px-6 mx-6">
@@ -17,6 +19,7 @@
       mat-raised-button
       color="primary"
       class="w-1/3"
+
       type="button" (click)="complete()">
       完成
     </button>

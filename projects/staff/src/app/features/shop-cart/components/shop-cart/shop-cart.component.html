@@ -11,10 +11,10 @@
     </div>
     <!-- 項目內容 -->
     <div class="mt-2 main-item">
-      <ng-template [ngIf]="!!shopCartData" [ngIfElse]="noData">
+      <ng-template [ngIf]="shopCartData.length > 0" [ngIfElse]="noData">
         <ul>
           <li *ngFor="let item of shopCartData index as i">
-            <app-shop-cart-item [shopCart]="item" [shopCartIndex]="i" (dateEmit)="deleteShopCart($event)"></app-shop-cart-item>
+            <app-shop-cart-item [shopCart]="item" [shopCartIndex]="i" (deleteEmit)="deleteShopCart($event)"></app-shop-cart-item>
           </li>
         </ul>
       </ng-template>
@@ -33,11 +33,12 @@
         <span>{{ getTotal() }}</span>
       </p>
     </li>
+
     <li class="mt-6">
-      <button mat-raised-button color="primary" type="submit" class="w-full" (click)="goPayment()">結帳</button>
+      <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="shopCartData.length <= 0" (click)="goPayment()">結帳</button>
       </li>
     <li class="mt-4">
-      <button mat-button color="warn" class="w-full">刪除全部</button>
+      <button mat-button color="warn" class="w-full" [disabled]="shopCartData.length <= 0" (click)="deleteAllShopCart()">刪除全部</button>
     </li>
   </ul>
 </section>
