@@ -127,14 +127,18 @@
                                     <mat-icon fontIcon="edit"></mat-icon>
                                     <span> 編輯</span>
                                 </button>
-                                <button mat-button class="left-aligned-button" (click)="deleteTheater(item._id)">
-                                    <mat-icon fontIcon="delete"></mat-icon>
-                                    <span> 刪除</span>
+                                <button *ngIf="item.status === 1" mat-button class="left-aligned-button" (click)="updateStatus(false,item._id)">
+                                    <mat-icon fontIcon="get_app"></mat-icon>
+                                    <span> 下架</span>
                                 </button>
                                 <button *ngIf="item.status === 0" mat-button class="left-aligned-button" (click)="updateStatus(true,item._id)">
                                     <mat-icon fontIcon="publish"></mat-icon>
                                     <span> 發佈</span>
                                 </button>
+                                <button *ngIf="item.status === 0" mat-button class="left-aligned-button" (click)="deleteTheater(item._id)">
+                                  <mat-icon fontIcon="delete"></mat-icon>
+                                  <span> 刪除</span>
+                              </button>
                             </div>
                           </td>
                       </tr>
