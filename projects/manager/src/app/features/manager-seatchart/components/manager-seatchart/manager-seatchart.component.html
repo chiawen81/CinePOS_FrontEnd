@@ -1,4 +1,4 @@
-<section class="max-w-full mx-auto" [style.width]="(6 * colsOrder.length) + '%'">
+<section class="max-w-full mx-auto" [style.width]="(5 * colsOrder.length) + '%'">
     <!-- 螢幕 -->
     <div>
       <div class="screen-border"></div>
@@ -10,7 +10,7 @@
         <!-- ABCD -->
         <ul *ngIf="colsArr.length > 0">
           <li *ngFor="let order of rowsOrder" class="mx-1 my-0.5">
-            <div class="w-6 h-8 rounded-t-lg rounded-b-md p-1 text-gray-400 flex justify-center items-center">{{ order }}</div>
+            <div class="w-8 h-7 p-1 mb-1 text-gray-400 flex justify-center items-center text-center row-rank">{{ order }}</div>
           </li>
         </ul>
       </ng-template>
