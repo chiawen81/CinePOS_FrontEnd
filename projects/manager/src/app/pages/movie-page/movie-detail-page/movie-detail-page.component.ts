@@ -93,14 +93,14 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   initForm(): void {
     this.formGroup = new FormGroup({
       title: new FormControl("", [Validators.required]),
-      enTitle: new FormControl("", [Validators.pattern(/^[a-zA-Z0-9\s]*$/)]),
+      enTitle: new FormControl("", [Validators.pattern(/^[^\u4e00-\u9fa5]+$/)]),
       genre: new FormControl(null, [Validators.required]),
       runtime: new FormControl(null, [Validators.required]),
       provideVersion: new FormControl(null, [Validators.required]),
       rate: new FormControl(null, [Validators.required]),
       director: new FormControl(""),
       cast: new FormArray([]),
-      description: new FormControl("", [Validators.maxLength(300)]),
+      description: new FormControl(""),
       status: new FormControl(0, [Validators.required]),
       releaseDate: new FormControl(null, [Validators.required]),
       trailerLink: new FormControl("", [Validators.pattern(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/)]),
