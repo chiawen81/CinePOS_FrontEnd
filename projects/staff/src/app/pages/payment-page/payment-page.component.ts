@@ -85,20 +85,54 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
 
   /** 取得訂單資料 */
   getOrder(): void{
-    this.staffOrderCreateReq.amount = this.getSubtotal();
-    let i = 0;
-    this.shopCar?.forEach(data => {
 
-      const item = {
-          "ticketId" : data.ticket[i].ticketId,
-          "price" : data.ticket[i].price,
-          "ticketTypeId": data.ticket[i].ticketTypeId,
-          "movieId": data.movieId,
-          "scheduleId": data.scheduleId,
-          "seatName": data.seat[i].seatName
-      };
-      i++;
-      this.staffOrderCreateReq.ticketList.push(item);
+    this.staffOrderCreateReq = {
+      /*** 付款方式(1:現金,2:Line Pay) */
+      paymentMethod: 1,
+      /***  訂單總金額 */
+      amount: 0,
+      ticketList: []
+    };
+
+    this.staffOrderCreateReq.amount = this.getSubtotal();
+
+    this.shopCar?.forEach(item => {
+      /** 購物車訂單筆數 */
+
+        const tickets = item.ticket;
+        const seats = item.seat;
+
+        for (let i = 0; i < Math.min(tickets.length, seats.length); i++) {
+          const ticket = tickets[i];
+          const seat = seats[i];
+
+          const newData = {
+            ticketId: ticket.ticketId,
+            price: ticket.price,
+            ticketTypeId: ticket.ticketTypeId,
+            movieId: item.movieId,
+            scheduleId: item.scheduleId,
+            seatName: seat.seatName
+          };
+
+          this.staffOrderCreateReq.ticketList.push(newData);
+         console.log('迴圈筆數', i );
+         console.log('迴圈茲裡', newData);
+        }
+
+
+      // console.log(result);
+
+      // const item = {
+      //     "ticketId" : data.ticket[i].ticketId,
+      //     "price" : data.ticket[i].price,
+      //     "ticketTypeId": data.ticket[i].ticketTypeId,
+      //     "movieId": data.movieId,
+      //     "scheduleId": data.scheduleId,
+      //     "seatName": data.seat[i].seatName
+      // };
+      // i++;
+      // this.staffOrderCreateReq.ticketList.push(item);
     });
 
     console.log('ticketList', this.staffOrderCreateReq);
