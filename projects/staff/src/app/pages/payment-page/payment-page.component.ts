@@ -205,9 +205,19 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       this.payString += value;
       this.payTotal = this.convertToNumber(this.payString);
     }else if(method === 'method'){
-      /** 歸零 */
-      this.payTotal = 0;
-      this.payString = this.convertToString(this.payTotal);
+
+      if(value === 'remove'){
+        // 刪除鍵
+        const str = this.payString;
+        const newStr = str.substring(0, str.length - 1);
+        console.log(newStr); // 输出 "Hello Worl"
+        this.payString = newStr;
+        this.payTotal = parseInt(this.payString)
+      }else{
+        /** 歸零 */
+        this.payTotal = 0;
+        this.payString = this.convertToString(this.payTotal);
+      }
     }else if(method === 'number'){
       /** 直接加減 */
       const numbeValue = this.convertToNumber(value);
