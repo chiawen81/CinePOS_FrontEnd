@@ -93,7 +93,7 @@ export class MovieDetailPageComponent implements OnInit, AfterViewInit {
   initForm(): void {
     this.formGroup = new FormGroup({
       title: new FormControl("", [Validators.required]),
-      enTitle: new FormControl("", [Validators.pattern(/^[a-zA-Z0-9\s]*$/)]),
+      enTitle: new FormControl("", [Validators.pattern(/^[^\u4e00-\u9fa5]+$/)]),
       genre: new FormControl(null, [Validators.required]),
       runtime: new FormControl(null, [Validators.required]),
       provideVersion: new FormControl(null, [Validators.required]),
