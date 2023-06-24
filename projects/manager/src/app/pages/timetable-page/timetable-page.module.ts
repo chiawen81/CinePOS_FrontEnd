@@ -7,6 +7,7 @@ import { RatePipe } from './pipe/rate.pipe';
 import { DxDraggableModule, DxSchedulerModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
     DxDraggableModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatButtonModule,
     FormsModule,
   ]
 })

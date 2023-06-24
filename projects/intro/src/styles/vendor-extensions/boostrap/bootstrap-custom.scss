@@ -1,0 +1,66 @@
+@import "../../bootstrap/bootstrap.scss";
+
+
+.display-1{
+  font-size: 48px;
+  line-height: 120%;
+}
+
+.gradient-text {
+  background-image: linear-gradient(to right, $main-color-1, $main-color-2); /* 設定漸層背景 */
+  -webkit-background-clip: text; /* 使用文字作為背景範圍 */
+  -webkit-text-fill-color: transparent; /* 將文字填充色設定為透明 */
+}
+
+.btn-cust{
+  background-image: linear-gradient(to right, $main-color-1, $main-color-2);
+  border: none;
+  color: #fff;
+  border-radius: 12px;
+}
+
+.btn-width-150{
+  width: 150px;
+  max-width: 100%;
+}
+
+.btn-width-240{
+  width: 240px;
+  max-width: 100%;
+}
+
+.text-color-gray{
+  color: #DDDDDD80;
+}
+
+.vh100{
+  min-height: 100vh;
+}
+
+.vh80{
+  min-height: 80vh;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: end;
+
+  .nav-link{
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+}
+
+.navbar .container {
+  background-color: rgba(21, 21, 21, 0.8); /* 設置導覽列內容的背景為不透明 */
+}
+
+.bg-cust-dark-1{
+  background: linear-gradient(0deg, #222222, #222222),
+linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+

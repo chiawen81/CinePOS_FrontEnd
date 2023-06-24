@@ -1,15 +1,14 @@
 {
   "name": "CinePOS_FrontEnd",
-  "version": "0.0.59",
+  "version": "0.0.66",
   "scripts": {
     "ng": "ng",
     "start:front": "ng serve staff --port 4202 --host 0.0.0.0",
     "start:back": "ng serve manager --port 4203 --host 0.0.0.0",
+    "start:intro": "ng serve intro --port 4204 --host 0.0.0.0",
     "move-file": "node postbuild.js",
     "patchVersion": "npm --no-git-tag-version version patch",
-    "build:front:patch": "npm run patchVersion && ng build staff --base-href /staff/ --configuration production --output-hashing=all && npm run move-file",
-    "build:back:patch": "npm run patchVersion && ng build manager --base-href /manager/ --configuration production --output-hashing=all && npm run move-file",
-    "build:patch": "npm run patchVersion && ng build staff --base-href /staff/ --configuration production && ng build manager --base-href /manager/ --configuration production --output-hashing=all && npm run move-file",
+    "build:patch": "npm run patchVersion && ng build staff --base-href /staff/ --configuration production && ng build manager --base-href /manager/ --configuration production && ng build intro --base-href /intro/ --configuration production --output-hashing=all && npm run move-file",
     "deploy": "npx angular-cli-ghpages --dir=dist/CinePOS_FrontEnd",
     "start": "ng serve",
     "build": "ng build",
@@ -38,6 +37,7 @@
     "devextreme-angular": "^22.2.6",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "ngx-typed-js": "^2.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

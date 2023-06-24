@@ -51,12 +51,12 @@ export class TimetableService {
   /**
    * 取得時刻表
    */
-  getTimetableList(startDate:number, endDate:number) {
+  getTimetableList(startDate: number, endDate: number) {
     // const url = 'timetable/list'
 
     // return this.request(HTTP_METHOD.GET, { startDate: startDate, endDate: endDate }, url);
     // return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
-    return this.managerService.v1ManagerTimetableListGet(0,0);
+    return this.managerService.v1ManagerTimetableListGet(startDate, endDate);
   }
 
   /**
@@ -95,11 +95,12 @@ export class TimetableService {
 
   /**
    * TODO: 先醜醜的寫
+   * 1:已發布
    * @returns
    */
-  getTheaterList(){
+  getTheaterList() {
     const url = `theater/list`
-    return this.request(HTTP_METHOD.GET, '', url);
+    return this.request(HTTP_METHOD.GET, { status: 1 }, url);
   }
 
   /**
@@ -232,6 +233,8 @@ export class MovieData {
 
   rateName?: string;
 
+  /** 提供的類型 ex:2D、3D */
+  provideVersionName?: string[]
 
   constructor(data: MovieData) {
     this.id = data.id;
@@ -243,6 +246,7 @@ export class MovieData {
     this.color = data.color;
     this.rate = data.rate;
     this.rateName = data.rateName;
+    this.provideVersionName = this.provideVersionName;
   }
 }
 
