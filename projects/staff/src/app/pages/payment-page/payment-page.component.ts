@@ -110,6 +110,7 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
     this.getOrder();
     /** 檢查localstorage訂單資料 */
     if (!!this.staffOrderCreateReq) {
+
       /** 檢查付款金額是否大於訂單金額 */
       if(this.payTotal >= this.getSubtotal()){
 
@@ -214,6 +215,14 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       this.payString = this.payTotal.toString();
     }else{
       /** 例外狀況 */
+    }
+
+    /** 輸入付款金額 */
+    if(this.payTotal > 100000){
+      alert('付款金額不得大於100,000元');
+
+      // 清付款款金額
+      this.calculate('zero', 'method');
     }
   }
 
