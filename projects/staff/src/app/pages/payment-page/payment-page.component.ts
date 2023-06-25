@@ -267,7 +267,7 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
       alert('付款金額不得大於100,000元');
 
       // 清付款款金額
-      this.calculate('zero', 'method');
+      // this.calculate('zero', 'method');
     }
   }
 
