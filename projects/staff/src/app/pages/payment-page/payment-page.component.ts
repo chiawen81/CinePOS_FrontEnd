@@ -248,6 +248,7 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
 
       if(value === 'remove'){
         // 刪除鍵
+        if(prePayTotal == 0) return;
         const str = prePayString;
         const newStr = str.substring(0, str.length - 1);
         prePayString = newStr;
