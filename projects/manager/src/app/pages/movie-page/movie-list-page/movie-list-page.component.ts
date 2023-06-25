@@ -122,6 +122,13 @@ export class MovieListPageComponent implements OnInit {
 
 
 
+  // 前往編輯頁
+  openEditPage(_id: string | undefined) {
+    this._Router.navigate([STATIC_ROUTES.MOVIE, STATIC_ROUTES.DETAIL, STATIC_ROUTES.EDIT, _id]);
+  }
+
+
+
   // 更新上架狀態
   updateReleaseStatus(isRelease: boolean, movieId: string | undefined) {
     let status: number = isRelease ? 1 : -1;

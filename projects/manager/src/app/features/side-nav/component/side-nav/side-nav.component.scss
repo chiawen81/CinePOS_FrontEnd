@@ -11,6 +11,25 @@
     background-color: #222222;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     margin: 0;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      // 整體
+      width: 5px; //粗度
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+      // 底層
+      background-color: transparent;
+      border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      // 有在動的
+      background-color: theme('colors.dark.200');
+      border-radius: 20px;
+    }
 
     .logo {
       width: 32px;
@@ -25,7 +44,6 @@
       li {
         display: flex;
         padding-top: 40px;
-        cursor: pointer;
 
         img {
           padding-right: 12px;
@@ -37,6 +55,8 @@
         padding-top: 12px;
 
         li {
+          cursor: pointer;
+
           &:nth-child(1) {
             padding-top: 0px;
           }

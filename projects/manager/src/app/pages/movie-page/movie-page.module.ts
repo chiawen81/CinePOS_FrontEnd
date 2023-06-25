@@ -16,6 +16,7 @@ import { MovieListPageComponent } from './movie-list-page/movie-list-page.compon
 import { CardModule } from '../../features/card/card.module';
 import { TableModule } from '../../features/table/table.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 
 const materialModules = [
@@ -25,7 +26,8 @@ const materialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatIconModule
 ];
 
 @NgModule({

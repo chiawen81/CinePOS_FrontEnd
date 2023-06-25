@@ -18,7 +18,7 @@ export interface ManagerMovieListSuccessDataInnerCustomer {
   /**
   * 上映狀態文字
   */
-  statusName?: number;
+  statusName?: string;
   /**
    * 電影名稱
    */

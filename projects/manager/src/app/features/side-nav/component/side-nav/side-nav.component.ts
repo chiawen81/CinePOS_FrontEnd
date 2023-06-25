@@ -28,8 +28,13 @@ export class SideNavComponent implements OnInit {
     }, {
       title: "排片規劃",
       iconFilePath: "assets/images/icon/menu-timetable.svg",
-      url: `/${STATIC_ROUTES.TIMETABLE}`,
-      subMenu: []
+      url: "",
+      subMenu: [
+        {
+          title: "場次設定",
+          url: `/${STATIC_ROUTES.TIMETABLE}`,
+        }
+      ]
     }, {
       title: "影廳管理",
       iconFilePath: "assets/images/icon/menu-seat.svg",
@@ -47,12 +52,17 @@ export class SideNavComponent implements OnInit {
     }, {
       title: "營運分析",
       iconFilePath: "assets/images/icon/menu-dashboard.svg",
-      url: `/${STATIC_ROUTES.DASHBOARD}`,
-      subMenu: []
+      url: "",
+      subMenu: [
+        {
+          title: "儀表板",
+          url: `/${STATIC_ROUTES.DASHBOARD}`,
+        }
+      ]
     }
   ];
 
-  profileData!:ProfileData;
+  profileData!: ProfileData;
   currentVersion = environment.appVersion;
   constructor(
     public storageService: StorageService,
@@ -64,7 +74,7 @@ export class SideNavComponent implements OnInit {
     // this.profileData = this.storageService.getProfileData();
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
   }
 

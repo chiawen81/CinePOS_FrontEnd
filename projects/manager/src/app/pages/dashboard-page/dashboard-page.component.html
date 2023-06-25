@@ -52,10 +52,10 @@
 
 
 
-  <div class="card-wrap mb-[100px] cursor-pointer" (click)="triggerSchedule()">
+  <div class="card-wrap mb-[100px] cursor-pointer">
     <cine-card>
       <cine-card-header>放映中場次表
-        <span class="mr-[15px] float-right text-30" [ngClass]="{'trans-arrow-open':isShowSchedule}">⏏︎</span>
+        <span class="mr-[15px] float-right text-30" [ngClass]="{'trans-arrow-open':isShowSchedule}" (click)="triggerSchedule()">⏏︎</span>
       </cine-card-header>
 
       <cine-card-content *ngIf="isShowSchedule">

@@ -63,9 +63,8 @@
         <cine-table *ngIf="movieListView?.length">
           <thead>
             <tr>
-              <th>系統編號</th>
-              <th>上線狀態</th>
               <th>電影名稱</th>
+              <th>上線狀態</th>
               <th>電影類型</th>
               <th>分級</th>
               <th>上映日期</th>
@@ -75,21 +74,18 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of movieListView">
-              <td data-title="系統編號">
-                <span class="cursor-pointer" (click)="openDetailPage(item._id)">
-                  {{ item._id }}
-                </span>
-
-              </td>
-              <td data-title="上線狀態">{{ item.statusName}}</td>
               <td data-title="電影名稱">
                 <span class="cursor-pointer" (click)="openDetailPage(item._id)">
                   {{ item.title }}
                 </span>
               </td>
+              <td data-title="上線狀態">{{ item.statusName}}</td>
               <td data-title="電影類型">
                 <span *ngIf="!item.genreName">-</span>
-                <span *ngFor="let subItem of item.genreName;let subIdx=index">{{subItem}}</span>
+                <span *ngFor="let subItem of item.genreName;let subIdx=index">
+                  {{subItem}}
+                  <span *ngIf="(subIdx+1)!==item.genreName?.length">/</span>
+                </span>
               </td>
               <td data-title="分級">{{ item.rateName }}</td>
               <td data-title="上映日期">{{ item.releaseDate | date:'YYYY/MM/dd'}}</td>
@@ -97,16 +93,31 @@
                 <span *ngIf="!item.provideVersionName">-</span>
                 <span *ngFor="let subItem of item.provideVersionName">{{subItem}}</span>
               </td>
-              <td>
-                <span class="mr-[15px]">
-                  <button mat-raised-button color="primary" type="submit" class="w-[60]" (click)="updateReleaseStatus(true,item._id)">發佈</button>
-                </span>
-                <span class="mr-[15px]">
-                  <button mat-raised-button color="primary" type="submit" class="w-[60]" (click)="updateReleaseStatus(false,item._id)">下架</button>
-                </span>
-                <span>
-                  <button mat-raised-button color="primary" type="submit" class="w-[60]" (click)="deleteMovie(item._id)">刪除</button>
-                </span>
+              <td class="flex justify-start">
+                <button mat-button class="left-aligned-button" (click)="openDetailPage(item._id)">
+                  <mat-icon fontIcon="remove_red_eye"></mat-icon>
+                  <span> 檢視</span>
+                </button>
+
+                <button mat-button class="left-aligned-button" (click)="openEditPage(item._id)">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                  <span> 編輯</span>
+                </button>
+
+                <button *ngIf="item?.statusName !== '上映中' " mat-button class="left-aligned-button" (click)="updateReleaseStatus(true,item._id)">
+                  <mat-icon fontIcon="publish"></mat-icon>
+                  <span> 發佈</span>
+                </button>
+
+                <button *ngIf="item.statusName !== '已下線'" mat-button class="left-aligned-button" (click)="updateReleaseStatus(false,item._id)">
+                  <mat-icon fontIcon="get_app"></mat-icon>
+                  <span> 下架</span>
+                </button>
+
+                <button *ngIf="item.statusName === '籌備中'" mat-button class="left-aligned-button" (click)="deleteMovie(item._id)">
+                  <mat-icon fontIcon="delete"></mat-icon>
+                  <span> 刪除</span>
+                </button>
               </td>
             </tr>
           </tbody>
