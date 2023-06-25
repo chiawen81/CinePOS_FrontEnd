@@ -67,7 +67,7 @@ export class BookingService {
         filter(res => res.code === 1)
       )
   }
-  /**檢查座位是否有被鎖住PI */
+  /**檢查座位是否有被鎖住API */
   v1StaffSeatCheckLockPost$(): Observable<CheckLockRes> {
     const checkLockReq: CheckLockReq = {
       scheduleId: this.shopCart.scheduleId,

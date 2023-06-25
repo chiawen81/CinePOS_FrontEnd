@@ -2,7 +2,7 @@
 a{
     text-decoration:none;
   }
-  
+
   .header-bg{
     background: #151515;
     opacity: 0.8;
@@ -15,7 +15,7 @@ a{
     min-height: 600px;
     padding-top: 94px;
   }
-  
+
   .multiple-bg {
     background-image: url('../assets/images/bg/bg2.png'), url('../assets/images/bg/bg3.png'); /* 設定多個背景圖片 */
     background-repeat: no-repeat, no-repeat, no-repeat; /* 設定背景重複方式 */
@@ -23,7 +23,7 @@ a{
     background-size: 243px, 200px; /* 設定背景尺寸 */
     backdrop-filter: blur(10px); /* 設定模糊效果 */
   }
-  
+
   .multiple-bg-1 {
     background-image: url('../assets/images/bg/bg5.png'); /* 設定多個背景圖片 */
     background-repeat: no-repeat; /* 設定背景重複方式 */
@@ -31,7 +31,7 @@ a{
     background-size: 200px; /* 設定背景尺寸 */
     backdrop-filter: blur(10px); /* 設定模糊效果 */
   }
-  
+
   .multiple-bg-2 {
     background-image: url('../assets/images/bg/bg-ellipse.png'); /* 設定多個背景圖片 */
     background-repeat: no-repeat; /* 設定背景重複方式 */
@@ -39,25 +39,30 @@ a{
     background-size: 1000px; /* 設定背景尺寸 */
     min-height: 700px;
   }
-  
+
   .border-radius-15{
     border-radius: 15px;
   }
-  
+
   .home-cont-icon{
     width: 558px;
     max-width: 100%;
   }
-  
+
   .navbar-nav{
     min-width: 400px;
   }
-  
+
   .pross-nav-container{
     width: 100%;
     max-width: 370px;
   }
-  
+
+  .porss-nav li{
+    margin-right: 15px;
+    line-height: 2.5;
+  }
+
   .porss-nav li::before {
       content: url("../assets/images/icon/vector.svg"); /* 设置图标图片的路径 */
       display: inline-block;
@@ -65,14 +70,14 @@ a{
       height: 22px; /* 图片的高度 */
       margin-right: 15px; /* 可选的，设置图标与文本之间的间距 */
   }
-  
-  
+
+
   .container-558{
     width: 558px;
     max-width: 100%;
     margin: 0 auto;
   }
-  
+
   .pross-cont{
     box-sizing: border-box;
     padding: 48px;
@@ -84,59 +89,62 @@ a{
     min-height: 794px;
     flex-wrap: wrap;
   }
-  
+
   .cont-2{
     margin-top: 150px;
   }
-  
+
   .pross-cont-img{
     border-radius: 15px;
     width: 100%;
     height: 424px;
-    background-image: url('/assets/images/des/des-front.png');
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
   }
-  
+
+  .pross-cont-img-0{
+    background-image: url('../assets/images/des/des-front.png');
+  }
+
   .pross-cont-img-1{
-    background-image: url('/assets/images/des/des-backstage.png');
+    background-image: url('../assets/images/des/des-backstage.png');
   }
-  
+
   .pross-cont-img-2{
-    background-image: url('/assets/images/des/des-front-1.png');
+    background-image: url('../assets/images/des/des-front-1.png');
   }
-  
+
   .pross-cont-img-3{
-    background-image: url('/assets/images/des/des-backstage-1.png');
+    background-image: url('../assets/images/des/des-backstage-1.png');
   }
-  
+
   .container-bg-gradient{
     background: linear-gradient(90deg, rgba(156, 109, 255, 0.8) 0%, rgba(113, 221, 255, 0.8) 100%);
     border-radius: 15px;
     // background-image: url('/assets/images/bg/bg-6.png');
     // backdrop-filter: blur(30px); /* 設定模糊效果 */
   }
-  
+
   .box-proccess{
     padding: 128px;
     color: white;
   }
-  
+
   .cont-icon-statistics{
     width: 760px;
   }
-  
+
   .container-statistics{
     min-height:600px;
     position: relative;
   }
-  
+
   .container-statistics-text{
     min-height: 557px;
   }
-  
-  
+
+
   .team-nav{
     li{
       width: 380px;
@@ -144,7 +152,7 @@ a{
       padding: 20px;
     }
   }
-  
+
   .team-box-img{
     border:solid 1px white;
     border-radius: 15px;
@@ -156,22 +164,22 @@ a{
     background-repeat: no-repeat;
   }
   .team-box-img-1{
-    background-image: url('/assets/images/team/team-img-1.png');
+    background-image: url('../assets/images/team/team-img-1.png');
   }
   .team-box-img-2{
-    background-image: url('/assets/images/team/team-img-2.png');
+    background-image: url('../assets/images/team/team-img-2.png');
   }
   .team-box-img-3{
-    background-image: url('/assets/images/team/team-img-3.png');
+    background-image: url('../assets/images/team/team-img-3.jpg');
   }
   .team-box-img-4{
-    background-image: url('/assets/images/team/team-img-4.png');
+    background-image: url('../assets/images/team/team-img-4.jpg');
   }
   .team-box-img-5{
-    background-image: url('/assets/images/team/team-img-5.png');
+    background-image: url('../assets/images/team/image_cute zoe_round@3x.png');
   }
-  
-  
+
+
   .experience-box{
     width: 323px;
     height: 380px;
@@ -179,21 +187,21 @@ a{
     background-repeat: no-repeat; /* 設定背景重複方式 */
     background-position: bottom -50px right -50px; /* 設定背景位置 */
     background-size: contain; /* 設定背景尺寸 */
-  
+
   }
-  
+
   .experience-box:hover{
     cursor: pointer;
   }
   .experience-box-light{
-    background-image: url('/assets/images/icon/logo-light.svg');
+    background-image: url('../assets/images/icon/logo-light.svg');
   }
-  
+
   .experience-box-dark{
-    background-image: url('/assets/images/icon/logo-dark.svg');
+    background-image: url('../assets/images/icon/logo-dark.svg');
   }
-  
-  
+
+
   .experience-title{
     position: relative;
   }
@@ -206,7 +214,7 @@ a{
     position: absolute;
     top: 5px;
   }
-  
+
   footer{
     min-height: 100px;
     background: transparent;
@@ -214,41 +222,40 @@ a{
     justify-content: center;
     align-items: center;
   }
-  
+
   footer p{
     color: #DDDDDD80;
   }
-  
-  
+
+
   @media (max-width: 1440px) {
-  
+
     .pross-cont-img{
       border:solid 1px white;
       border-radius: 12px;
       width: 100%;
-      height: 230px;
-      background-image: url('/assets/images/des/des-front.png');
+      height: 420px;
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
     }
-  
+
     .pross-cont{
       min-height: 532px;
     }
-  
+
     .cont-2{
       margin-top: 100px;
     }
-  
+
     .box-proccess{
       padding: 30px;
     }
-  
+
     .cont-icon-statistics{
       width: 600px;
     }
-  
+
     .container-statistics{
       max-width: 100%;
       overflow: hidden;
@@ -266,42 +273,42 @@ a{
       background: linear-gradient(180deg, rgba(21, 21, 21, 0.9) 0%, rgba(21, 21, 21, 0) 100%);
       width: 100%;
     }
-  
+
     .hidden-box-1{
       display: none;
     }
-  
-  
+
+
     .team-nav{
       li{
         width: 100%;
       }
     }
-  
+
     .container-team{
       padding: 72px;
       border-radius: 12px;
     }
-  
+
     .team-box-desc{
       width: calc(100% - 122px);
       padding-left: 20px;
     }
-  
+
     .team-box-img{
       width: 112px;
       height: 112px;
       max-width: 100%;
     }
-  
+
     .team-box{
       width: 100%;
       display: flex;
     }
-  
-  
+
+
   }
-  
+
   @media (max-width: 990px) {
     .cont-icon-statistics{
       width: 400px;
@@ -309,20 +316,20 @@ a{
     .bg-statistics{
       right: -100px;
     }
-  
+
     .home-bg-banner, .container-features{
       min-height: 1000px;
     }
-  
+
     .container-features{
       position: relative;
     }
-  
+
     .container-features-text{
       position: absolute;
       top:600px;
     }
-  
+
     .container-features-img{
       position: absolute;
       right: -200px;
@@ -332,16 +339,19 @@ a{
       }
     }
   }
-  
-  
+
+
   @media (max-width: 576px) {
-  
-  
+
+    .pross-cont-img{
+      height: 230px;
+    }
+
+
     .bg-statistics{
       position: absolute;
       z-index: -1;
       right: -200px;
     }
-  
+
   }
-  
