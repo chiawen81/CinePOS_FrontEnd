@@ -36,24 +36,23 @@ export class SelectSeatComponent implements OnInit {
     }
     this.bookingService.v1StaffSeatCheckLockPost$()
       .pipe(
-        catchError(err => {
-          return throwError(err);
-        }),
-        tap(
-          (res) => {
-            // 將目前選擇的座位寫入shopCart
-            res.data.forEach(item => {
-              this.bookingService.setShopCart('seat', item)
-            });
-            this.bookingService.deleteTempSeatArray();
-          },
-          (err) => {
+        tap((res)=> {
+          if(res.code === -1){
+            alert(res.message);
             this.getSeatData();
             this.bookingService.deleteTempSeatArray();
           }
-        ),
+        }),
         filter(res => res.code === 1),
+        tap((res)=> {
+          res.data.forEach(item => {
+            this.bookingService.setShopCart('seat', item);
+          });
+          this.bookingService.deleteTempSeatArray();
+        }),
         concatMap(() => {
+
+
           return this.bookingService.v1StaffTicketPost$()
         })
       ).subscribe((res) => {
