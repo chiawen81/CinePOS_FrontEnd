@@ -235,40 +235,49 @@ export class PaymentPageComponent implements OnInit,OnDestroy {
   /** 計算機 */
   calculate(value: any, method: string): void{
     if(!value) return;
+
+    // 預計算
+    let prePayTotal = this.payTotal;
+    let prePayString = this.payString;
+
     if(method === 'str'){
       /** 拼湊字串 */
-      this.payString += value;
-      this.payTotal = this.convertToNumber(this.payString);
+      prePayString += value;
+      prePayTotal = this.convertToNumber(prePayString);
     }else if(method === 'method'){
 
       if(value === 'remove'){
         // 刪除鍵
-        const str = this.payString;
+        const str = prePayString;
         const newStr = str.substring(0, str.length - 1);
-        console.log(newStr); // 输出 "Hello Worl"
-        this.payString = newStr;
-        this.payTotal = parseInt(this.payString)
+        prePayString = newStr;
+        prePayTotal = parseInt(prePayString)
       }else{
         /** 歸零 */
-        this.payTotal = 0;
-        this.payString = this.convertToString(this.payTotal);
+        prePayTotal = 0;
+        prePayString = this.convertToString(prePayTotal);
       }
     }else if(method === 'number'){
       /** 直接加減 */
       const numbeValue = this.convertToNumber(value);
-      this.payTotal = this.payTotal + numbeValue;
-      this.payString = this.payTotal.toString();
+      prePayTotal = prePayTotal + numbeValue;
+      prePayString = prePayTotal.toString();
     }else{
       /** 例外狀況 */
     }
 
     /** 輸入付款金額 */
-    if(this.payTotal > 100000){
+    if(prePayTotal > 100000){
       alert('付款金額不得大於100,000元');
-
+      return;
       // 清付款款金額
       // this.calculate('zero', 'method');
+    }else{
+      this.payTotal = prePayTotal;
+      this.payString = prePayString;
     }
+
+
   }
 
   ngOnDestroy(): void {
